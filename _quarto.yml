@@ -1,0 +1,45 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Mastering Shiny Book Club"
+  author: "Lucio Cornejo"
+  date: "01/8/2022"
+  output-file: "Mastering-Shiny-Book-Club"
+  highlight-style: github
+  sidebar:
+    style: docked
+    background: light
+    tools:
+      - icon: github
+        href: "https://github.com/lucio-cornejo/Mastering-Shiny_Bookclub"
+  search:
+    location: navbar
+    type: overlay # textbox or overlay
+  page-footer: 
+    background: light
+    left:
+      "R-Ladies Lima"
+  chapters:
+    - index.qmd
+    - sesion_01.qmd
+    - sesion_02.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    toc: true
+    toc-title: Tabla de contenidos
+    theme:
+      - lux
+      - slate
+      - theme.scss
+    code-copy: true
+    code-link: true
+  pdf:
+    documentclass: scrreprt
+
+
+

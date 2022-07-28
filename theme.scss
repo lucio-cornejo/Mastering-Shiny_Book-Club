@@ -1,0 +1,23 @@
+/*-- scss:defaults --*/
+
+/*-- scss:rules --*/
+@for $i from 1 through 6 {
+  h#{$i} {
+    color: whitesmoke;
+  }
+}
+
+strong {
+  color: crimson;
+}
+
+
+div.sourceCode {
+  background-color: black;
+}
+
+p > code, li > code {
+  margin-right: 0.5em !important;
+  padding: 0.3em 0.4em !important;
+  background-color: aliceblue !important;
+}

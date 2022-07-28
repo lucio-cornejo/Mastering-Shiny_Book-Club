@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Mastering Shiny Book Club - 2&nbsp; Interfaz básica de usuario</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./sesion_01.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Interfaz básica de usuario</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Mastering Shiny Book Club</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/lucio-cornejo/Mastering-Shiny_Bookclub" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Sílabo</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sesion_01.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Tu primera aplicación Shiny</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sesion_02.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Interfaz básica de usuario</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"> <span class="header-section-number">2.1</span> Introducción</a></li>
+  <li><a href="#inputs" id="toc-inputs" class="nav-link" data-scroll-target="#inputs"> <span class="header-section-number">2.2</span> Inputs</a>
+  <ul class="collapse">
+  <li><a href="#estructura-común" id="toc-estructura-común" class="nav-link" data-scroll-target="#estructura-común"> <span class="header-section-number">2.2.1</span> Estructura común</a></li>
+  <li><a href="#texto-libre" id="toc-texto-libre" class="nav-link" data-scroll-target="#texto-libre"> <span class="header-section-number">2.2.2</span> Texto libre</a></li>
+  <li><a href="#inputs-numéricos" id="toc-inputs-numéricos" class="nav-link" data-scroll-target="#inputs-numéricos"> <span class="header-section-number">2.2.3</span> Inputs numéricos</a></li>
+  <li><a href="#fechas" id="toc-fechas" class="nav-link" data-scroll-target="#fechas"> <span class="header-section-number">2.2.4</span> Fechas</a></li>
+  <li><a href="#lista-de-opciones" id="toc-lista-de-opciones" class="nav-link" data-scroll-target="#lista-de-opciones"> <span class="header-section-number">2.2.5</span> Lista de opciones</a></li>
+  <li><a href="#cargar-archivos" id="toc-cargar-archivos" class="nav-link" data-scroll-target="#cargar-archivos"> <span class="header-section-number">2.2.6</span> Cargar archivos</a></li>
+  <li><a href="#botones-de-acción" id="toc-botones-de-acción" class="nav-link" data-scroll-target="#botones-de-acción"> <span class="header-section-number">2.2.7</span> Botones de acción</a></li>
+  </ul></li>
+  <li><a href="#outputs" id="toc-outputs" class="nav-link" data-scroll-target="#outputs"> <span class="header-section-number">2.3</span> Outputs</a>
+  <ul class="collapse">
+  <li><a href="#texto" id="toc-texto" class="nav-link" data-scroll-target="#texto"> <span class="header-section-number">2.3.1</span> Texto</a></li>
+  <li><a href="#tablas" id="toc-tablas" class="nav-link" data-scroll-target="#tablas"> <span class="header-section-number">2.3.2</span> Tablas</a></li>
+  <li><a href="#gráficos" id="toc-gráficos" class="nav-link" data-scroll-target="#gráficos"> <span class="header-section-number">2.3.3</span> Gráficos</a></li>
+  <li><a href="#descargas" id="toc-descargas" class="nav-link" data-scroll-target="#descargas"> <span class="header-section-number">2.3.4</span> Descargas</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"> <span class="header-section-number">2.3.5</span> Resumen</a></li>
+  <li><a href="#ejercicio" id="toc-ejercicio" class="nav-link" data-scroll-target="#ejercicio"> <span class="header-section-number">2.3.6</span> Ejercicio</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Interfaz básica de usuario</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>Objetivos:</p>
+<ul>
+<li>Explorar más tipos de controles de input.</li>
+<li>Explorar más tipos de controles de output.</li>
+</ul>
+<section id="introducción" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="introducción"><span class="header-section-number">2.1</span> Introducción</h2>
+<p>Recordemos que la UI (interfaz de usuario) de la aplicación Shiny se encarga del frontend de nuestra app, y que la función servidor (server) define el backend de la apliación.</p>
+<p>En este capítulo, nos enfocaremos en la interfaz de usuario.</p>
+</section>
+<section id="inputs" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="inputs"><span class="header-section-number">2.2</span> Inputs</h2>
+<section id="estructura-común" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="estructura-común"><span class="header-section-number">2.2.1</span> Estructura común</h3>
+<ul>
+<li><code>funcionInput(inputId = "", ...)</code></li>
+<li>El identificador conecta el frontend (ui) con el backend (server).</li>
+<li>El identificador debe ser único en la app.</li>
+<li>El identificador debe ser una <strong>cadena de texto</strong> (character) que solo puede contener letras, números y guiones bajos.</li>
+<li>Ejemplo:<br>
+<code>sliderInput("min", label = "Límite (mínimo)", value = 50, min = 0, max = 100)</code></li>
+</ul>
+<p><a href="https://shiny.rstudio.com/gallery/widget-gallery.html">Más ejemplos</a></p>
+</section>
+<section id="texto-libre" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="texto-libre"><span class="header-section-number">2.2.2</span> Texto libre</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textInput</span>(<span class="st">"ejemplo1"</span>, <span class="st">"¿Cómo te llamas?"</span>),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">passwordInput</span>(<span class="st">"ejemplo2"</span>, <span class="st">"¿Cuál es tu contraseña?"</span>),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textAreaInput</span>(<span class="st">"ejemplo3"</span>, <span class="st">"Cuéntame sobre ti ..."</span>, <span class="at">rows =</span> <span class="dv">3</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="inputs-numéricos" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="inputs-numéricos"><span class="header-section-number">2.2.3</span> Inputs numéricos</h3>
+<p>Para adquirir valores numéricos, tenemos dos opciones: <code>numericInput()</code> y <code>sliderInput()</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">numericInput</span>(<span class="st">"ejemplo1"</span>, <span class="st">"Número uno"</span>, <span class="at">value =</span> <span class="dv">0</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">100</span>),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sliderInput</span>(<span class="st">"ejemplo2"</span>, <span class="st">"Número dos"</span>, <span class="at">value =</span> <span class="dv">50</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">100</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sliderInput</span>(<span class="st">"ejemplo3"</span>, <span class="st">"Rango"</span>, <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>), <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">100</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Incluso es posible hacer <a href="https://shiny.rstudio.com/articles/sliders.html">animaciones</a> con tales sliders.</p>
+</section>
+<section id="fechas" class="level3" data-number="2.2.4">
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="fechas"><span class="header-section-number">2.2.4</span> Fechas</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Adquiere una fecha</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dateInput</span>(<span class="st">"ejemplo1"</span>, <span class="st">"¿Cuándo naciste?"</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Adquiere un rango de fechas</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dateRangeInput</span>(<span class="st">"ejemplo2"</span>, <span class="st">"¿Cuándo son tus vacaciones?"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="lista-de-opciones" class="level3" data-number="2.2.5">
+<h3 data-number="2.2.5" class="anchored" data-anchor-id="lista-de-opciones"><span class="header-section-number">2.2.5</span> Lista de opciones</h3>
+<ul>
+<li>Tenemos varias alternativas:
+<ul>
+<li><code>selectInput()</code>: Permite seleccionar más de una opción.</li>
+<li><code>radioButtons()</code>: Solo una opción seleccionable.</li>
+<li><code>checkboxGroupInput()</code>: Permite seleccionar más de una opción.</li>
+<li><code>checkboxInput()</code>: Solo una opción seleccionable.</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>animales <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Perro"</span>, <span class="st">"Gato"</span>, <span class="st">"Ratón"</span>, <span class="st">"Odio a los animales"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">selectInput</span>(<span class="st">"ejemplo1"</span>, <span class="st">"¿Cuál es tu estado favorito de EEUU?"</span>, state.name),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">selectInput</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ejemplo2"</span>, <span class="st">"¿Cuál es tu estado favorito de EEUU?"</span>, </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    state.name, <span class="at">multiple =</span> <span class="cn">TRUE</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">radioButtons</span>(<span class="st">"ejemplo3"</span>, <span class="st">"¿Cuál es tu animal favorito?"</span>, animales),</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">checkboxGroupInput</span>(<span class="st">"ejemplo4"</span>, <span class="st">"¿Qué animales no odias?"</span>, animales),</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">checkboxInput</span>(<span class="st">"ejemplo5"</span>, <span class="st">"¿Se entiende?"</span>, <span class="at">value =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">checkboxInput</span>(<span class="st">"ejemplo6"</span>, <span class="st">"¿Muchos ejemplos ya?"</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="cargar-archivos" class="level3" data-number="2.2.6">
+<h3 data-number="2.2.6" class="anchored" data-anchor-id="cargar-archivos"><span class="header-section-number">2.2.6</span> Cargar archivos</h3>
+<ul>
+<li>Esta opción es muy útil para la creación de <strong>reportes parametrizados</strong>, pero la exploraremos con mayor detalle en la sesión 3.</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fileInput</span>(<span class="st">"carga"</span>, <span class="cn">NULL</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="botones-de-acción" class="level3" data-number="2.2.7">
+<h3 data-number="2.2.7" class="anchored" data-anchor-id="botones-de-acción"><span class="header-section-number">2.2.7</span> Botones de acción</h3>
+<ul>
+<li>El uso no trivial de los botones de acción, <code>actionButton()</code> y <code>actionLink()</code>, requerirá conocer las funciones <code>observeEvent()</code> or <code>eventReactive()</code>, asociadas a la <strong>función servidor</strong>.</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fluidRow</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">actionButton</span>(<span class="st">"ejemplo1"</span>, <span class="st">"¡Presiona aquí!"</span>, <span class="at">class =</span> <span class="st">"btn-success"</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">actionLink</span>(<span class="st">"ejemplo2"</span>, <span class="st">"¿Aguita?"</span>, <span class="at">icon =</span> <span class="fu">icon</span>(<span class="st">"cocktail"</span>))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fluidRow</span>(</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">actionButton</span>(</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">"ejemplo3"</span>, </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">class =</span> <span class="fu">c</span>(<span class="st">"btn-danger"</span>, <span class="st">"btn-block"</span>),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">label =</span> <span class="st">"¡¡ERES NUESTRO VISITANTE 1.000.000!!"</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://bootstrapshuffle.com/classes">Chuleta</a> de opciones de <strong>Bootstrap</strong> para <code>class = ""</code>.</p>
+</section>
+</section>
+<section id="outputs" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="outputs"><span class="header-section-number">2.3</span> Outputs</h2>
+<section id="texto" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="texto"><span class="header-section-number">2.3.1</span> Texto</h3>
+<ul>
+<li><p><code>textOutput()</code>, junto con <code>renderText({})</code>, se emplean para impprimir texto estándar (cadenas de caracteres).</p></li>
+<li><p><code>verbatimTextOutput()</code>, junto con <code>renderPrint({})</code>, se usa cuando se requiere imprimir el resultado (textual) del código dentro de <code>renderPrint</code>.</p></li>
+<li><p>Las llaves <code>{}</code> se utilizan para incluir más de una línea de código dentro de, por ejemplo, <code>renderText({})</code>, sin necesidad de usar <strong>comas</strong> como hemos estado haciendo para <code>fluidRow()</code>.</p></li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textOutput</span>(<span class="st">"texto"</span>),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">verbatimTextOutput</span>(<span class="st">"codigo"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>texto <span class="ot">&lt;-</span> <span class="fu">renderText</span>(<span class="st">"Hola, buenas."</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>codigo <span class="ot">&lt;-</span> <span class="fu">renderPrint</span>({</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Hola, buenas."</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="tablas" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="tablas"><span class="header-section-number">2.3.2</span> Tablas</h3>
+<ul>
+<li><p><code>tableOutput()</code> y <code>renderTable()</code> se emplean para imprimir tablas en su totalidad. Resultado <strong>estático</strong>.</p></li>
+<li><p><code>dataTableOutput()</code> y <code>renderDataTable()</code> sirven para mostrar solo una parte del total de filas de la tabla, además de permitir cambiar qué filas mostrar. Resultado <strong>dinámico</strong>.</p></li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tableOutput</span>(<span class="st">"estatico"</span>),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dataTableOutput</span>(<span class="st">"dinamico"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>estatico <span class="ot">&lt;-</span> <span class="fu">renderTable</span>(<span class="fu">head</span>(mtcars))</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>dinamico <span class="ot">&lt;-</span> <span class="fu">renderDataTable</span>(mtcars, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">5</span>))</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="gráficos" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="gráficos"><span class="header-section-number">2.3.3</span> Gráficos</h3>
+<p>Para los gráficos fundamentales de <strong>R</strong> (plot(), ggplot(), etc), se emplea <code>plotOutput()</code> y <code>renderPlot()</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plotOutput</span>(<span class="st">"grafico"</span>, <span class="at">width =</span> <span class="st">"400px"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>grafico <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>(</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>), </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Resolucion del gráfico, en píxeles por pulgada</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">res =</span> <span class="dv">96</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="descargas" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="descargas"><span class="header-section-number">2.3.4</span> Descargas</h3>
+<p>Esto lo exploraremos en la tercera sesión.</p>
+</section>
+<section id="resumen" class="level3" data-number="2.3.5">
+<h3 data-number="2.3.5" class="anchored" data-anchor-id="resumen"><span class="header-section-number">2.3.5</span> Resumen</h3>
+<ul>
+<li><a href="https://shiny.rstudio.com/gallery/widget-gallery.html">Chuleta de Shiny widgets</a></li>
+</ul>
+</section>
+<section id="ejercicio" class="level3" data-number="2.3.6">
+<h3 data-number="2.3.6" class="anchored" data-anchor-id="ejercicio"><span class="header-section-number">2.3.6</span> Ejercicio</h3>
+<p>Resolvamos el ejercicio 4 de esta sección del capítulo.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"reactable"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./sesion_01.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Tu primera aplicación Shiny</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">R-Ladies Lima</div>   
+  </div>
+</footer>
+
+
+
+</body></html>

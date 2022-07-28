@@ -1,0 +1,210 @@
+# Interfaz básica de usuario
+
+Objetivos:
+
+- Explorar más tipos de controles de input.
+- Explorar más tipos de controles de output.
+
+## Introducción
+
+Recordemos que la UI (interfaz de usuario) de la 
+aplicación Shiny se encarga del frontend de nuestra app, y que la función servidor (server)
+define el backend de la apliación. 
+
+En este capítulo, nos enfocaremos en la interfaz de usuario.
+
+## Inputs
+
+### Estructura común
+
+- `funcionInput(inputId = "", ...)` 
+- El identificador conecta el frontend (ui)
+con el backend (server).
+- El identificador debe ser único en la app.
+- El identificador debe ser una **cadena de texto** (character) que solo puede contener
+letras, números y guiones bajos.
+- Ejemplo:  
+`sliderInput("min", label = "Límite (mínimo)", value = 50, min = 0, max = 100)` 
+
+[Más ejemplos](https://shiny.rstudio.com/gallery/widget-gallery.html)
+
+### Texto libre
+
+```{.r}
+ui <- fluidPage(
+  textInput("ejemplo1", "¿Cómo te llamas?"),
+  passwordInput("ejemplo2", "¿Cuál es tu contraseña?"),
+  textAreaInput("ejemplo3", "Cuéntame sobre ti ...", rows = 3)
+)
+```
+
+### Inputs numéricos
+
+Para adquirir valores numéricos, tenemos dos opciones: `numericInput()` y `sliderInput()`. 
+
+```{.r}
+ui <- fluidPage(
+  numericInput("ejemplo1", "Número uno", value = 0, min = 0, max = 100),
+  sliderInput("ejemplo2", "Número dos", value = 50, min = 0, max = 100),
+  sliderInput("ejemplo3", "Rango", value = c(10, 20), min = 0, max = 100)
+)
+```
+
+Incluso es posible hacer [animaciones](https://shiny.rstudio.com/articles/sliders.html) con tales sliders.
+
+### Fechas
+
+```{.r}
+ui <- fluidPage(
+  # Adquiere una fecha
+  dateInput("ejemplo1", "¿Cuándo naciste?"),
+  # Adquiere un rango de fechas
+  dateRangeInput("ejemplo2", "¿Cuándo son tus vacaciones?")
+)
+```
+
+### Lista de opciones
+
+- Tenemos varias alternativas: 
+    - `selectInput()`: Permite seleccionar más de una opción.
+    - `radioButtons()`: Solo una opción seleccionable.
+    - `checkboxGroupInput()`: Permite seleccionar más de una opción.
+    - `checkboxInput()`: Solo una opción seleccionable.
+
+```{.r}
+animales <- c("Perro", "Gato", "Ratón", "Odio a los animales")
+
+ui <- fluidPage(
+  selectInput("ejemplo1", "¿Cuál es tu estado favorito de EEUU?", state.name),
+  selectInput(
+    "ejemplo2", "¿Cuál es tu estado favorito de EEUU?", 
+    state.name, multiple = TRUE
+  ),
+  
+  radioButtons("ejemplo3", "¿Cuál es tu animal favorito?", animales),
+
+  checkboxGroupInput("ejemplo4", "¿Qué animales no odias?", animales),
+  checkboxInput("ejemplo5", "¿Se entiende?", value = TRUE),
+  checkboxInput("ejemplo6", "¿Muchos ejemplos ya?")
+)
+```
+
+### Cargar archivos
+
+- Esta opción es muy útil para la creación
+de **reportes parametrizados**, pero la
+exploraremos con mayor detalle en la sesión 3.
+
+```{.r}
+ui <- fluidPage(
+  fileInput("carga", NULL)
+)
+```
+
+### Botones de acción
+
+- El uso no trivial de los botones de acción, `actionButton()` y
+`actionLink()`, requerirá conocer
+las funciones `observeEvent()` or `eventReactive()`, asociadas a la **función servidor**.
+
+
+```{.r}
+ui <- fluidPage(
+  fluidRow(
+    actionButton("ejemplo1", "¡Presiona aquí!", class = "btn-success"),
+    actionLink("ejemplo2", "¿Aguita?", icon = icon("cocktail"))
+  ),
+  fluidRow(
+    actionButton(
+      "ejemplo3", 
+      class = c("btn-danger", "btn-block"),
+      label = "¡¡ERES NUESTRO VISITANTE 1.000.000!!"
+    )
+  )
+)
+```
+
+[Chuleta](https://bootstrapshuffle.com/classes)
+de opciones de **Bootstrap** para `class = ""`.
+
+## Outputs
+
+### Texto
+
+- `textOutput()`, junto con `renderText({})`, se emplean para impprimir texto estándar 
+(cadenas de caracteres).
+- `verbatimTextOutput()`, junto con `renderPrint({})`, se usa cuando se requiere imprimir el resultado (textual) del código dentro de `renderPrint`.
+
+- Las llaves `{}` se utilizan para incluir
+más de una línea de código dentro de, por ejemplo,
+`renderText({})`, sin necesidad de usar **comas** 
+como hemos estado haciendo para `fluidRow()`.
+
+```{.r}
+ui <- fluidPage(
+  textOutput("texto"),
+  verbatimTextOutput("codigo")
+)
+
+server <- function(input, output, session) {
+  output$texto <- renderText("Hola, buenas.")
+  output$codigo <- renderPrint({
+    "Hola, buenas."
+  })
+}
+```
+
+### Tablas
+
+- `tableOutput()` y `renderTable()` se emplean para imprimir tablas en su totalidad. 
+Resultado **estático**.
+
+- `dataTableOutput()` y `renderDataTable()` sirven para mostrar solo una parte del total de filas de la tabla, además de permitir cambiar qué filas mostrar.
+Resultado **dinámico**.
+
+```{.r}
+ui <- fluidPage(
+  tableOutput("estatico"),
+  dataTableOutput("dinamico")
+)
+server <- function(input, output, session) {
+  output$estatico <- renderTable(head(mtcars))
+  output$dinamico <- renderDataTable(mtcars, options = list(pageLength = 5))
+}
+```
+
+### Gráficos
+
+Para los gráficos fundamentales de **R** (plot(), ggplot(), etc), se emplea
+`plotOutput()` y `renderPlot()`.
+
+
+```{.r}
+ui <- fluidPage(
+  plotOutput("grafico", width = "400px")
+)
+server <- function(input, output, session) {
+  output$grafico <- renderPlot(
+    plot(1:5), 
+    # Resolucion del gráfico, en píxeles por pulgada
+    res = 96
+  )
+}
+```
+
+### Descargas
+
+Esto lo exploraremos en la tercera sesión.
+
+### Resumen
+
+- [Chuleta de Shiny widgets](https://shiny.rstudio.com/gallery/widget-gallery.html)
+
+
+### Ejercicio
+
+Resolvamos el ejercicio 4 de esta sección del capítulo.
+
+```{.r}
+install.packages("reactable")
+```

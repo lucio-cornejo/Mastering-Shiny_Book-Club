@@ -1,0 +1,100 @@
+# Sílabo {.unnumbered}
+
+## Descripción del taller
+
+Por medio de 5 sesiones prácticas, cada una de dos horas de duración,
+se explorará en nivel básico el paquete **Shiny** para crear
+aplicaciones web vía el lenguaje de programación **R**.
+
+## Prerrequisitos
+
+- Nivel básico de programación con **R**.
+
+## Sumilla
+
+Estructura básica de la interfaz de usuario creada con Shiny, reactividad básica y creación de dashboards.
+
+## Objetivos
+
+Por medio del paquete Shiny, seremos capaces de crear aplicaciones web que permitan al usuario **explorar de manera interactiva** los resultados de un proyecto,
+sea estadístico o de temática más libre.
+
+Asimismo, este taller servirá para presentar diversos conceptos de **desarrollo web**, con la finalidad de explorar cómo tales tecnologías pueden potenciar nuestros reportes o dashboards.
+
+## Metodología
+
+El taller se realizará de manera virtual, los lunes y miércoles de 7 a 9 pm.
+
+En cada sesión, se desarrollarán dos capítulos del libro
+[Mastering Shiny](https://mastering-shiny.org/), de libre acceso en línea.
+
+Al final de cada sesión, se asignará una tarea para los y las estudiantes del taller.
+
+En la última sesión, los asistentes que deseen presentarán un proyecto personal
+elaborado con Shiny.
+
+## Programa analítico
+
+### Sesión 0
+
+- Un equipo de R-Ladies guiará a las personas inscritas en el taller, 
+para que puedan instalar las dependencias requeridas para este club de lectura.
+
+### Sesión 1 (08/01)
+
+- Capítulo 1: _Your first Shiny app_
+    - Creación de los componentes básicos
+    de una aplicación Shiny.
+    - Expresiones reactivas.
+
+- Capítulo 2: _Basic UI_
+    - Componentes principales de la interfaz de usuario.
+    - Componentes básicos del servidor Shiny.
+
+### Sesión 2 (08/03)
+
+- Capítulo 3: _Basic reactivity_
+    - Programación reactiva.
+    - Control de la reactividad.
+
+- Capítulo 4: _Case study: ER injuries_
+    - Ejemplo práctico donde empleamos
+    las herramientas presentadas hasta ahora.
+
+### Sesión 3 (08/08)
+
+- Capítulo 6: _Layout, themes, HTML_
+    - Diseños de una o más páginas.
+    - Paquete **bslib**.
+
+- Capítulo 9: _Uploads and downloads_
+    - Carga y descarga de archivos en aplicaciones Shiny.
+    - Reportes parametrizados.
+
+### Sesión 4 (08/10)
+
+- Capítulo 10: _Dynamic UI_
+    - Actualización de inputs.
+    - Creación dinámica de contenido en la interfaz de usuario.
+
+- Tiempo libre para consultas y/o para revisión parcial
+de los proyectos finales por presentar.
+
+### Sesión 5 (08/15)
+
+- Creación de dashboards interactivos, vía los paquetes 
+**shiny**, **rmarkdown** y **flexdashboard**.
+
+- Integración de **R** y **JavaScript**, vía el paquete **Shiny**.
+
+### Exposición (08/17)
+
+- En esta reunión, los asistentes que deseen expondrán aplicaciones Shiny que han llegado a implementar gracias las herramientas expuestas en el taller.
+
+## Bibliografía
+
+[Libro principal](https://mastering-shiny.org/)
+
+[Libro auxiliar](https://unleash-shiny.rinterface.com/index.html)
+
+[Solucionario](https://mastering-shiny-solutions.netlify.app/)

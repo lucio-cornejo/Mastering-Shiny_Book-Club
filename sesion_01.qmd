@@ -1,0 +1,156 @@
+# Tu primera aplicación Shiny
+
+Objetivos:
+
+- Aprender la mínima estructura de una aplicación Shiny.
+- Crear una aplicacion Shiny básica.
+- Familiarizarnos con **programación reactiva**.
+
+## ¿Qué es Shiny?
+
+**Shiny** es una librería para crear aplicaciones web
+por medio de **R**, sin necesidad de saber HTML, CSS o JavaScript.
+
+Pese a ello, las aplicaciones **Shiny** admiten mucha personalización
+y llegan a aplicarse en contextos académicos (herramienta de enseñanza,
+presentación de modelos) y no académicos (dashboards interactivos).
+
+Ejemplos de aplicaciones Shiny:
+
+- <https://vivekkatial.shinyapps.io/uber_shiny/#about>
+- <https://kneijenhuijs.shinyapps.io/Datify/#section-summary>
+- <https://mdubel.shinyapps.io/shark-attack/>
+- <https://jennadallen.shinyapps.io/pet-records-app/>
+
+## Introducción
+
+- Componenetes principales de una aplicación Shiny:
+    - **UI**: Interfaz de usuario (cómo se **ve** la app)
+    - **server()**: Función servidor (cómo **funciona** la app)
+
+
+- Instalemos **Shiny** usando el siguiente comando en la terminal de R:
+
+```{.r}
+install.packages("shiny")
+``` 
+
+## Crear un directorio y archivo de la app
+
+- Forma básica de Shiny app: Documento **app.R** dentro de algún directorio.
+
+- Dentro de **app.R**, insertar el siguiente código:
+```{.r}
+# Cargar el paquete Shiny
+library(shiny)
+
+# Definir la interfaz de usuario
+ui <- fluidPage(
+  "Hola, mundo"
+)
+
+# Definir la interactividad de la app
+server <- function(input, output, session) {
+}
+
+# Construir y ejecutar la app creada
+shinyApp(ui, server)
+```
+
+## Ejecutar y detener la app
+
+- Para ejecutar la app, hacer click en el botón **Run App** de RStudio,
+o ejecutar `shiny::runApp()` dentro del directorio que contiene el archivo **app.R**.
+
+- Para detener la app, hacer click en el botón **Stop** de RStudio,
+o presionar `Ctrl+C` o `Esc` en la terminal de R.
+
+- A medida que modifiquemos la app, y guardemos los cambios en **app.R**,
+la app se ejecutará automáticamente.
+
+## Añadir controles a la interfaz de usuario
+
+```{.r}
+ui <- fluidPage(
+  selectInput("dataset", label = "Dataset", choices = ls("package:datasets")),
+  verbatimTextOutput("resumen"),
+  tableOutput("tabla")
+)
+```
+
+- `fluidPage()` es una **función de diseño** que inicializa todo el HTML,
+CSS y JavaScript que Shiny requiere.
+- `selectInput()` es un **control de input** que crea una lista de opciones
+con la cual el usuario puede interactuar.
+- `verbatimTextOutput()` y `tableOutput()` son **controles de output** 
+que fijan en qué sección de la interfaz de usuario se mostrará el 
+resultado/output de tales funciones.
+
+Para explorar las bases de datos que contiene R por default, podemos
+ejecutar el comando `data()`.
+
+## Añadir reactividad
+
+```{.r}
+server <- function(input, output, session) {
+  output$resumen <- renderPrint({
+    dataset <- get(input$dataset, "package:datasets")
+    summary(dataset)
+  })
+  
+  output$tabla <- renderTable({
+    dataset <- get(input$dataset, "package:datasets")
+    dataset
+  })
+}
+```
+
+- Sintaxis común en Shiny:
+    - `input$IDENTIFICADOR` 
+    - `output$IDENTIFICADOR` 
+    - `ejemploOutput` y `renderEjemplo`
+
+## Expresiones reactivas
+
+- Con el fin de evitar repetir código, como se hizo con
+`get(input$dataset, "package:datasets")`, emplearemos
+una **expresión reactiva**.
+
+- Las expresiones reactivas se crean definiendo
+su código dentro de la expresión `reactive({...})`.
+
+- La razón porque Shiny emplea **expresiones reactivas**,
+en vez de usar, por ejemplo, variables globales, es que
+las expresiones reactivas **rastrean automáticamente todas sus dependencias**. Es decir, si una expresión reactiva 
+**Y** depende de algún valor **X**, cualquier cambio en 
+**X** automáticamente actualiza el valor de la expresión **Y**.
+
+```{.r}
+server <- function(input, output, session) {
+  # Creamos una expresión reactiva
+  dataset <- reactive({
+    get(input$dataset, "package:datasets")
+  })
+
+  output$resumen <- renderPrint({
+    # Usamos la expresión reactiva como si fuese una función
+    summary(dataset())
+  })
+  
+  output$tabla <- renderTable({
+    dataset()
+  })
+}
+```
+
+## Resumen
+
+- [Chuleta de Shiny](https://shiny.rstudio.com/images/shiny-cheatsheet.pdf)
+
+## Ejercicios
+
+Hacer los ejercicios 2, 3 y 4.
+
+## Extra
+
+- [Extensiones](https://github.com/nanxstats/awesome-shiny-extensions) de Shiny.
