@@ -9,7 +9,8 @@ Objetivos:
 ## ¿Qué es Shiny?
 
 **Shiny** es una librería para crear aplicaciones web
-por medio de **R**, sin necesidad de saber HTML, CSS o JavaScript.
+por medio de **R** o [**Python**](https://shiny.rstudio.com/py/),
+sin necesidad de saber HTML, CSS o JavaScript.
 
 Pese a ello, las aplicaciones **Shiny** admiten mucha personalización
 y llegan a aplicarse en contextos académicos (herramienta de enseñanza,
@@ -27,7 +28,6 @@ Ejemplos de aplicaciones Shiny:
 - Componenetes principales de una aplicación Shiny:
     - **UI**: Interfaz de usuario (cómo se **ve** la app)
     - **server()**: Función servidor (cómo **funciona** la app)
-
 
 - Instalemos **Shiny** usando el siguiente comando en la terminal de R:
 
@@ -63,10 +63,7 @@ shinyApp(ui, server)
 o ejecutar `shiny::runApp()` dentro del directorio que contiene el archivo **app.R**.
 
 - Para detener la app, hacer click en el botón **Stop** de RStudio,
-o presionar `Ctrl+C` o `Esc` en la terminal de R.
-
-- A medida que modifiquemos la app, y guardemos los cambios en **app.R**,
-la app se ejecutará automáticamente.
+o presionar `Esc` o `Ctrl+C` en la terminal de R.
 
 ## Añadir controles a la interfaz de usuario
 
@@ -154,3 +151,6 @@ Hacer los ejercicios 2, 3 y 4.
 ## Extra
 
 - [Extensiones](https://github.com/nanxstats/awesome-shiny-extensions) de Shiny.
+
+- [shinyuieditor](https://youtu.be/gYPnLiudtGU?t=140). 
+[Instalación](https://rstudio.github.io/shinyuieditor/)

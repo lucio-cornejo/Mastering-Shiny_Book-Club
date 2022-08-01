@@ -138,7 +138,7 @@ de opciones de **Bootstrap** para `class = ""`.
 - Las llaves `{}` se utilizan para incluir
 más de una línea de código dentro de, por ejemplo,
 `renderText({})`, sin necesidad de usar **comas** 
-como hemos estado haciendo para `fluidRow()`.
+como hemos estado haciendo para `fluidPage()`.
 
 ```{.r}
 ui <- fluidPage(

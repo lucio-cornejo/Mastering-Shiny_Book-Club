@@ -18,7 +18,7 @@
     "href": "chapter_01.html#qué-es-shiny",
     "title": "1  Tu primera aplicación Shiny",
     "section": "1.1 ¿Qué es Shiny?",
-    "text": "1.1 ¿Qué es Shiny?\nShiny es una librería para crear aplicaciones web por medio de R, sin necesidad de saber HTML, CSS o JavaScript.\nPese a ello, las aplicaciones Shiny admiten mucha personalización y llegan a aplicarse en contextos académicos (herramienta de enseñanza, presentación de modelos) y no académicos (dashboards interactivos).\nEjemplos de aplicaciones Shiny:\n\nhttps://vivekkatial.shinyapps.io/uber_shiny/#about\nhttps://kneijenhuijs.shinyapps.io/Datify/#section-summary\nhttps://mdubel.shinyapps.io/shark-attack/\nhttps://jennadallen.shinyapps.io/pet-records-app/"
+    "text": "1.1 ¿Qué es Shiny?\nShiny es una librería para crear aplicaciones web por medio de R o Python, sin necesidad de saber HTML, CSS o JavaScript.\nPese a ello, las aplicaciones Shiny admiten mucha personalización y llegan a aplicarse en contextos académicos (herramienta de enseñanza, presentación de modelos) y no académicos (dashboards interactivos).\nEjemplos de aplicaciones Shiny:\n\nhttps://vivekkatial.shinyapps.io/uber_shiny/#about\nhttps://kneijenhuijs.shinyapps.io/Datify/#section-summary\nhttps://mdubel.shinyapps.io/shark-attack/\nhttps://jennadallen.shinyapps.io/pet-records-app/"
   },
   {
     "objectID": "chapter_01.html#introducción",
@@ -39,7 +39,7 @@
     "href": "chapter_01.html#ejecutar-y-detener-la-app",
     "title": "1  Tu primera aplicación Shiny",
     "section": "1.4 Ejecutar y detener la app",
-    "text": "1.4 Ejecutar y detener la app\n\nPara ejecutar la app, hacer click en el botón Run App de RStudio, o ejecutar shiny::runApp() dentro del directorio que contiene el archivo app.R.\nPara detener la app, hacer click en el botón Stop de RStudio, o presionar Ctrl+C o Esc en la terminal de R.\nA medida que modifiquemos la app, y guardemos los cambios en app.R, la app se ejecutará automáticamente."
+    "text": "1.4 Ejecutar y detener la app\n\nPara ejecutar la app, hacer click en el botón Run App de RStudio, o ejecutar shiny::runApp() dentro del directorio que contiene el archivo app.R.\nPara detener la app, hacer click en el botón Stop de RStudio, o presionar Esc o Ctrl+C en la terminal de R."
   },
   {
     "objectID": "chapter_01.html#añadir-controles-a-la-interfaz-de-usuario",
@@ -81,7 +81,7 @@
     "href": "chapter_01.html#extra",
     "title": "1  Tu primera aplicación Shiny",
     "section": "1.10 Extra",
-    "text": "1.10 Extra\n\nExtensiones de Shiny."
+    "text": "1.10 Extra\n\nExtensiones de Shiny.\nshinyuieditor. Instalación"
   },
   {
     "objectID": "chapter_02.html",
@@ -109,6 +109,6 @@
     "href": "chapter_02.html#outputs",
     "title": "2  Interfaz básica de usuario",
     "section": "2.3 Outputs",
-    "text": "2.3 Outputs\n\n2.3.1 Texto\n\ntextOutput(), junto con renderText({}), se emplean para impprimir texto estándar (cadenas de caracteres).\nverbatimTextOutput(), junto con renderPrint({}), se usa cuando se requiere imprimir el resultado (textual) del código dentro de renderPrint.\nLas llaves {} se utilizan para incluir más de una línea de código dentro de, por ejemplo, renderText({}), sin necesidad de usar comas como hemos estado haciendo para fluidRow().\n\nui <- fluidPage(\n  textOutput(\"texto\"),\n  verbatimTextOutput(\"codigo\")\n)\n\nserver <- function(input, output, session) {\n  output$texto <- renderText(\"Hola, buenas.\")\n  output$codigo <- renderPrint({\n    \"Hola, buenas.\"\n  })\n}\n\n\n2.3.2 Tablas\n\ntableOutput() y renderTable() se emplean para imprimir tablas en su totalidad. Resultado estático.\ndataTableOutput() y renderDataTable() sirven para mostrar solo una parte del total de filas de la tabla, además de permitir cambiar qué filas mostrar. Resultado dinámico.\n\nui <- fluidPage(\n  tableOutput(\"estatico\"),\n  dataTableOutput(\"dinamico\")\n)\nserver <- function(input, output, session) {\n  output$estatico <- renderTable(head(mtcars))\n  output$dinamico <- renderDataTable(mtcars, options = list(pageLength = 5))\n}\n\n\n2.3.3 Gráficos\nPara los gráficos fundamentales de R (plot(), ggplot(), etc), se emplea plotOutput() y renderPlot().\nui <- fluidPage(\n  plotOutput(\"grafico\", width = \"400px\")\n)\nserver <- function(input, output, session) {\n  output$grafico <- renderPlot(\n    plot(1:5), \n    # Resolucion del gráfico, en píxeles por pulgada\n    res = 96\n  )\n}\n\n\n2.3.4 Descargas\nEsto lo exploraremos en la tercera sesión.\n\n\n2.3.5 Resumen\n\nChuleta de Shiny widgets\n\n\n\n2.3.6 Ejercicio\nResolvamos el ejercicio 4 de esta sección del capítulo.\ninstall.packages(\"reactable\")"
+    "text": "2.3 Outputs\n\n2.3.1 Texto\n\ntextOutput(), junto con renderText({}), se emplean para impprimir texto estándar (cadenas de caracteres).\nverbatimTextOutput(), junto con renderPrint({}), se usa cuando se requiere imprimir el resultado (textual) del código dentro de renderPrint.\nLas llaves {} se utilizan para incluir más de una línea de código dentro de, por ejemplo, renderText({}), sin necesidad de usar comas como hemos estado haciendo para fluidPage().\n\nui <- fluidPage(\n  textOutput(\"texto\"),\n  verbatimTextOutput(\"codigo\")\n)\n\nserver <- function(input, output, session) {\n  output$texto <- renderText(\"Hola, buenas.\")\n  output$codigo <- renderPrint({\n    \"Hola, buenas.\"\n  })\n}\n\n\n2.3.2 Tablas\n\ntableOutput() y renderTable() se emplean para imprimir tablas en su totalidad. Resultado estático.\ndataTableOutput() y renderDataTable() sirven para mostrar solo una parte del total de filas de la tabla, además de permitir cambiar qué filas mostrar. Resultado dinámico.\n\nui <- fluidPage(\n  tableOutput(\"estatico\"),\n  dataTableOutput(\"dinamico\")\n)\nserver <- function(input, output, session) {\n  output$estatico <- renderTable(head(mtcars))\n  output$dinamico <- renderDataTable(mtcars, options = list(pageLength = 5))\n}\n\n\n2.3.3 Gráficos\nPara los gráficos fundamentales de R (plot(), ggplot(), etc), se emplea plotOutput() y renderPlot().\nui <- fluidPage(\n  plotOutput(\"grafico\", width = \"400px\")\n)\nserver <- function(input, output, session) {\n  output$grafico <- renderPlot(\n    plot(1:5), \n    # Resolucion del gráfico, en píxeles por pulgada\n    res = 96\n  )\n}\n\n\n2.3.4 Descargas\nEsto lo exploraremos en la tercera sesión.\n\n\n2.3.5 Resumen\n\nChuleta de Shiny widgets\n\n\n\n2.3.6 Ejercicio\nResolvamos el ejercicio 4 de esta sección del capítulo.\ninstall.packages(\"reactable\")"
   }
 ]
