@@ -150,6 +150,8 @@ Hacer los ejercicios 2, 3 y 4.
 
 ## Extra
 
+- [Galería](https://shiny.rstudio.com/gallery/) de Shiny.
+
 - [Extensiones](https://github.com/nanxstats/awesome-shiny-extensions) de Shiny.
 
 - [shinyuieditor](https://youtu.be/gYPnLiudtGU?t=140). 

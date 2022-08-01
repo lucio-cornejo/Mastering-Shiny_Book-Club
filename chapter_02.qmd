@@ -201,10 +201,6 @@ Esto lo exploraremos en la tercera sesión.
 - [Chuleta de Shiny widgets](https://shiny.rstudio.com/gallery/widget-gallery.html)
 
 
-### Ejercicio
+### Ejercicios
 
-Resolvamos el ejercicio 4 de esta sección del capítulo.
-
-```{.r}
-install.packages("reactable")
-```
+- Todos los ejercicios de esta [sección](https://mastering-shiny.org/basic-ui.html#exercises-1).
