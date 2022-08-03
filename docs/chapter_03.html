@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Mastering Shiny Book Club - 3&nbsp; Reactividad básica</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./chapter_02.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script>
+  document.addEventListener(
+    'DOMContentLoaded',
+    function () {
+      const mermaids = [...document.querySelectorAll("pre.mermaid")];
+      var filtro = 1;
+      mermaids.forEach(function (mermaid) {
+        mermaid.addEventListener('click', function (e) {
+          e.preventDefault();
+          filtro = (Math.floor(filtro + 1)) % 2;
+          document.body.style.filter = `invert(${filtro})`
+        })
+      })
+    }
+  )
+</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Reactividad básica</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Mastering Shiny Book Club</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/lucio-cornejo/Mastering-Shiny_Bookclub" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Sílabo</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Sesión 1</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter_01.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Tu primera aplicación Shiny</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter_02.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Interfaz básica de usuario</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Sesión 2</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter_03.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Reactividad básica</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"> <span class="header-section-number">3.1</span> Introducción</a></li>
+  <li><a href="#la-función-servidor-server" id="toc-la-función-servidor-server" class="nav-link" data-scroll-target="#la-función-servidor-server"> <span class="header-section-number">3.2</span> La función servidor (<code>server</code>)</a>
+  <ul class="collapse">
+  <li><a href="#input" id="toc-input" class="nav-link" data-scroll-target="#input"> <span class="header-section-number">3.2.1</span> <code>input</code></a></li>
+  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output"> <span class="header-section-number">3.2.2</span> <code>output</code></a></li>
+  <li><a href="#programación-reactiva" id="toc-programación-reactiva" class="nav-link" data-scroll-target="#programación-reactiva"> <span class="header-section-number">3.2.3</span> Programación reactiva</a></li>
+  <li><a href="#expresiones-reactivas-1" id="toc-expresiones-reactivas-1" class="nav-link" data-scroll-target="#expresiones-reactivas-1"> <span class="header-section-number">3.2.4</span> Expresiones reactivas</a></li>
+  </ul></li>
+  <li><a href="#controlando-el-tiempo-de-evaluación" id="toc-controlando-el-tiempo-de-evaluación" class="nav-link" data-scroll-target="#controlando-el-tiempo-de-evaluación"> <span class="header-section-number">3.3</span> Controlando el tiempo de evaluación</a>
+  <ul class="collapse">
+  <li><a href="#reactivetimer" id="toc-reactivetimer" class="nav-link" data-scroll-target="#reactivetimer"> <span class="header-section-number">3.3.1</span> <code>reactiveTimer()</code></a></li>
+  <li><a href="#on-click" id="toc-on-click" class="nav-link" data-scroll-target="#on-click"> <span class="header-section-number">3.3.2</span> <code>On click</code></a></li>
+  </ul></li>
+  <li><a href="#observeevent" id="toc-observeevent" class="nav-link" data-scroll-target="#observeevent"> <span class="header-section-number">3.4</span> <code>observeEvent()</code></a></li>
+  <li><a href="#extra" id="toc-extra" class="nav-link" data-scroll-target="#extra"> <span class="header-section-number">3.5</span> Extra</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Reactividad básica</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>Objetivos:</p>
+<ul>
+<li>Familiarizarnos con los parámetros <strong>input</strong> y <strong>output</strong> de la función servidor (<strong>server</strong>).</li>
+<li>Comprender qué es el <strong>gráfico reactivo</strong> y cómo optimizarlo.</li>
+</ul>
+<section id="introducción" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="introducción"><span class="header-section-number">3.1</span> Introducción</h2>
+<p>En Shiny, la lógica de la <strong>función servidor</strong> se define usando <strong>programación reactiva</strong>. El principio fundamenteal de este tipo de programación consiste en especificar un <strong>grafo de dependencias</strong>, de manera que, cuando algún <strong>input</strong> cambie, todos sus <strong>outputs</strong> asociados se actualicen automáticamente.</p>
+</section>
+<section id="la-función-servidor-server" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="la-función-servidor-server"><span class="header-section-number">3.2</span> La función servidor (<code>server</code>)</h2>
+<ul>
+<li>Cuando corremos una aplicación Shiny, Shiny ejecuta la función servidor.</li>
+<li>Al ejecutarse la función servidor, se aislan las variables dentro de tal función, y, se crea una <strong>sesión</strong> (session) única a la instancia donde se está ejecutando la aplicación.</li>
+<li>Dicha ejecución permite que la interacción de un usuario <strong>A</strong>, con una aplicación Shiny <strong>X</strong>, no afecte al estado de la aplicación <strong>X</strong> cuando está siendo utilizada por otro usuario <strong>B</strong>.</li>
+</ul>
+<section id="input" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="input"><span class="header-section-number">3.2.1</span> <code>input</code></h3>
+<ul>
+<li><p>El argumento <strong>input</strong> contiene la información que manda el navegador web, sobre la data de los inputs en la aplicación, en función de su identificador.</p></li>
+<li><p><code>input$IDENTIFICADOR</code> es el <strong>valor</strong> del input con identificador <code>IDENTIFICADOR</code>.</p></li>
+<li><p><strong>input</strong> es como una lista de R, pero no podemos modificar su contenido, dentro de la función servidor.</p></li>
+<li><p>Para leer a algún valor del argumento <strong>input</strong>, esta lectura debe realizarse dentro de un <strong>contexto reactivo</strong>, tales como <code>renderText()</code> y <code>reactive()</code>.</p></li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">numericInput</span>(<span class="st">"n"</span>, <span class="at">label =</span> <span class="st">"Cantidad de valores"</span>, <span class="at">value =</span> <span class="dv">100</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Incorrecto</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># input$n &lt;- 10  </span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Incorrecto x2</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"The value of input$n is "</span>, input<span class="sc">$</span>n)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="output" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="output"><span class="header-section-number">3.2.2</span> <code>output</code></h3>
+<ul>
+<li>Así como el parámetro <strong>input</strong>, <strong>ouput</strong> es un objeto parecido a una lista de R, a cuyos elementos se accede vía los identificadores de output.</li>
+<li>Siempre se usa el parámetro <strong>output</strong> junto a alguna función de tipo <strong>render</strong>.</li>
+</ul>
+<p>Ejemplo:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textOutput</span>(<span class="st">"saludo"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Incorrecto</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>saludo <span class="ot">&lt;-</span> <span class="st">"Hola, buenas."</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Incorrecto x2</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"El mensaje es "</span>, output<span class="sc">$</span>saludo)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Correcto</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>saludo <span class="ot">&lt;-</span> <span class="fu">renderText</span>(<span class="st">"Hola, buenas."</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>¿Qué hace una función de tipo <strong>render</strong>?</p>
+<ul>
+<li>Crea un <strong>contexto reactivo</strong> que automáticamente rastrea qué inputs emplea aquel output.</li>
+<li>Convierte el resultado de su código de R, a HTML apropiado para actualizar el contenido de la página.</li>
+</ul>
+</section>
+<section id="programación-reactiva" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="programación-reactiva"><span class="header-section-number">3.2.3</span> Programación reactiva</h3>
+<p>Ejemplo de la <strong>actualización automática</strong> que nos proporciona la programación reactiva de Shiny:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textInput</span>(<span class="st">"nombre"</span>, <span class="st">"¿Y tú cómo te llamas?"</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textOutput</span>(<span class="st">"saludo"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>saludo <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">"¡Hola "</span>, input<span class="sc">$</span>nombre, <span class="st">"!"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>La magia de Shiny consiste en que no necesitas avisar a un output</strong> <strong>cuándo debe actualizarse, ya que Shiny lo resuelve por ti.</strong></p>
+<p><strong>¿Pero cómo funciona el código en <code>server</code>?</strong></p>
+<ul>
+<li>El código incluido en la función servidor no se ejecuta al momento de correr la aplicación.</li>
+<li>Depende totalmente de Shiny, <strong>cuándo</strong> es que ese código va a ejecutarse, o si se ejecuta, incluso.</li>
+<li>Es como si, en la función servidor, nosotros proveemos <strong>recetas</strong> a Shiny, en vez de asignarle <strong>comandos</strong>.</li>
+</ul>
+<p>¿A qué nos referimos con <strong>recetas</strong> y <strong>comandos</strong>?</p>
+<section id="programación-imperativa-vs-programación-declarativa" class="level4" data-number="3.2.3.1">
+<h4 data-number="3.2.3.1" class="anchored" data-anchor-id="programación-imperativa-vs-programación-declarativa"><span class="header-section-number">3.2.3.1</span> Programación imperativa vs programación declarativa</h4>
+<ul>
+<li>Programación <strong>imperativa</strong>:
+<ul>
+<li>Defines un <strong>comando</strong> y este se ejecuta <strong>inmediatamente</strong>.</li>
+<li><strong>R</strong> es un lenguaje imperativo.</li>
+</ul></li>
+<li>Programación <strong>declarativa</strong>:
+<ul>
+<li>Describes qué hacer cuando ciertas condiciones se cumplan, pero tú no decides cuándo se ejecutan tales instrucciones.</li>
+<li><strong>Shiny</strong> emplea este estilo de programación.</li>
+</ul></li>
+</ul>
+<p>Ejemplo del libro:</p>
+<ul>
+<li>Código imperativo: <a href="https://xkcd.com/149/"><strong>“Hazme un sánguche.”</strong></a></li>
+<li>Código declarativo: **“Asegúrate que haya un sánguche en la refrigeradora cuando yo mire dentro de esta.”</li>
+</ul>
+</section>
+<section id="pereza" class="level4" data-number="3.2.3.2">
+<h4 data-number="3.2.3.2" class="anchored" data-anchor-id="pereza"><span class="header-section-number">3.2.3.2</span> Pereza</h4>
+<p>Las aplicaciones Shiny son extremadamente <strong>perezosas</strong>, en el sentido que Shiny no ejecutará el código de las secciones <strong>output</strong> que no sean parte de la aplicación.</p>
+<p>Ejemplo:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textInput</span>(<span class="st">"nombre"</span>, <span class="st">"¿Y tú cómo te llamas?"</span>),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textOutput</span>(<span class="st">"saludo"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>saluda <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">"¡Hola "</span>, input<span class="sc">$</span>nombre, <span class="st">"!"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="el-gráfico-reactivo" class="level4" data-number="3.2.3.3">
+<h4 data-number="3.2.3.3" class="anchored" data-anchor-id="el-gráfico-reactivo"><span class="header-section-number">3.2.3.3</span> El gráfico reactivo</h4>
+<p>La <em>pereza</em> de Shiny también se manifiesta en que el código en la función servidor no se ejecuta de arriba a abajo, como es la manera convencional en R, sino más bien <strong>cuando sea necesario</strong>.</p>
+<p>Para entender cuándo es necesario que Shiny <em>ejecute código</em>, se trabaja con el <strong>gráfico reactivo</strong>, una visualización que describe cómo los inputs y outputs están relacionados.</p>
+<div class="cell" data-fig-height="2">
+<div class="cell-output-display">
+<div>
+<p>
+</p><pre class="mermaid" data-tooltip-selector="#mermaid-tooltip-1">flowchart LR
+  A[nombre] ===&gt; B{Saludo}
+
+  linkStyle 0 stroke-width:5px, fill: green, stroke:blue;
+</pre>
+<div id="mermaid-tooltip-1" class="mermaidTooltip">
+
+</div>
+<p></p>
+</div>
+</div>
+</div>
+<ul>
+<li>El <strong>gráfico reactivo</strong> contiene un símbolo por cada input y output.</li>
+<li>Cada input se conecta a todo output que acceda al valor de tal input.</li>
+<li>El <strong>gráfico reactivo</strong> sirve para saber cómo funciona la app creada.</li>
+</ul>
+</section>
+<section id="expresiones-reactivas" class="level4" data-number="3.2.3.4">
+<h4 data-number="3.2.3.4" class="anchored" data-anchor-id="expresiones-reactivas"><span class="header-section-number">3.2.3.4</span> Expresiones reactivas</h4>
+<p>A las expresiones reactivas las denotaremos con un símbolo especial en el gráfico reactivo. Estas sirven para reducir la repetición de código dentro de la función servidor.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textInput</span>(<span class="st">"nombre"</span>, <span class="st">"¿Y tú cómo te llamas?"</span>),</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textOutput</span>(<span class="st">"saludo"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  cadena <span class="ot">&lt;-</span> <span class="fu">reactive</span>(<span class="fu">paste0</span>(<span class="st">"¡Hola "</span>, input<span class="sc">$</span>nombre, <span class="st">"!"</span>))</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>saludo <span class="ot">&lt;-</span> <span class="fu">renderText</span>(<span class="fu">cadena</span>())</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-fig-height="2">
+<div class="cell-output-display">
+<div>
+<p>
+</p><pre class="mermaid" data-tooltip-selector="#mermaid-tooltip-2">flowchart LR
+  A[nombre] ===&gt; B(cadena)
+  B(cadena) ===&gt; C{saludo}
+
+  linkStyle 0 stroke-width:5px, fill: green, stroke:blue;
+  linkStyle 1 stroke-width:5px, fill: green, stroke:blue;
+</pre>
+<div id="mermaid-tooltip-2" class="mermaidTooltip">
+
+</div>
+<p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="orden-de-ejecución" class="level4" data-number="3.2.3.5">
+<h4 data-number="3.2.3.5" class="anchored" data-anchor-id="orden-de-ejecución"><span class="header-section-number">3.2.3.5</span> Orden de ejecución</h4>
+<p>El siguiente ejemplo parece no debería funcionar, pero la <strong>pereza</strong> de Shiny permite que la aplicación funcione, ya que el <strong>gráfico reactivo</strong> de esta app no ha cambiado, por lo que el orden en que se ejecuta el código es el mismo.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textInput</span>(<span class="st">"nombre"</span>, <span class="st">"¿Y tú cómo te llamas?"</span>),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textOutput</span>(<span class="st">"saludo"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>saludo <span class="ot">&lt;-</span> <span class="fu">renderText</span>(<span class="fu">cadena</span>())</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  cadena <span class="ot">&lt;-</span> <span class="fu">reactive</span>(<span class="fu">paste0</span>(<span class="st">"¡Hola "</span>, input<span class="sc">$</span>nombre, <span class="st">"!"</span>))</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="ejercicios" class="level4" data-number="3.2.3.6">
+<h4 data-number="3.2.3.6" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">3.2.3.6</span> Ejercicios</h4>
+<ul>
+<li>En clase, solo hacer el ejercicio 1.</li>
+<li>Los ejercicios 2 y 3 son <strong>tarea</strong>.</li>
+</ul>
+</section>
+</section>
+<section id="expresiones-reactivas-1" class="level3" data-number="3.2.4">
+<h3 data-number="3.2.4" class="anchored" data-anchor-id="expresiones-reactivas-1"><span class="header-section-number">3.2.4</span> Expresiones reactivas</h3>
+<ul>
+<li>Estas son útiles porque proporcionan a Shiny más información, para que se ejecute menos veces el mismo código (de R), una vez que las inputs cambian, mejorando así la eficiencia de la aplicación Shiny.</li>
+<li>También sirven para simplificar el <strong>gráfico de reactividad</strong>.</li>
+</ul>
+<p>Recordemos que las expresiones reactivas dependen de inputs y saben automáticamente cuando actualizarse. Asimismo, podemos usar el valor de expresiones reactivas dentro de un output.</p>
+<section id="la-motivación" class="level4" data-number="3.2.4.1">
+<h4 data-number="3.2.4.1" class="anchored" data-anchor-id="la-motivación"><span class="header-section-number">3.2.4.1</span> La motivación</h4>
+<p>Realizaremos una simulación donde emplearemos la función <code>t.test()</code> para determinar si la media de dos grupos de datos son iguales.</p>
+<p>Pero, supondremos que ambos grupos de datos han sido sorteados de distribuciones normales (gaussianas) con misma desviación estándar.</p>
+<p>En caso que el p-valor hallado vía el <code>t.test()</code> resulte menor que 0.05, entonces afirmaremos que las medias de las distribuciones son diferentes.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>freqpoly <span class="ot">&lt;-</span> <span class="cf">function</span>(x1, x2, <span class="at">binwidth =</span> <span class="fl">0.1</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)) {</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">c</span>(x1, x2),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">g =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"x1"</span>, <span class="fu">length</span>(x1)), <span class="fu">rep</span>(<span class="st">"x2"</span>, <span class="fu">length</span>(x2)))</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(x, <span class="at">colour =</span> g)) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_freqpoly</span>(<span class="at">binwidth =</span> binwidth, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> xlim)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>t_test <span class="ot">&lt;-</span> <span class="cf">function</span>(x1, x2) {</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x1, x2)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sprintf</span>(</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"p valor: %0.3f</span><span class="sc">\n</span><span class="st">[%0.2f, %0.2f]"</span>,</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    test<span class="sc">$</span>p.value, test<span class="sc">$</span>conf.int[<span class="dv">1</span>], test<span class="sc">$</span>conf.int[<span class="dv">2</span>]</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">200</span>, <span class="at">mean =</span> <span class="fl">0.1</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">freqpoly</span>(x1, x2)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">t_test</span>(x1, x2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="la-aplicación" class="level4" data-number="3.2.4.2">
+<h4 data-number="3.2.4.2" class="anchored" data-anchor-id="la-aplicación"><span class="header-section-number">3.2.4.2</span> La aplicación</h4>
+<p>En vez de ejecutar las simulaciones cambiando parámetros en el código, y ejecutar de nuevo el código relevante, podemos acelerar este proceso por medio de una aplicación Shiny.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fluidRow</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">4</span>, </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Distribución 1"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">numericInput</span>(<span class="st">"n1"</span>, <span class="at">label =</span> <span class="st">"n"</span>, <span class="at">value =</span> <span class="dv">1000</span>, <span class="at">min =</span> <span class="dv">1</span>),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">numericInput</span>(<span class="st">"mean1"</span>, <span class="at">label =</span> <span class="st">"µ"</span>, <span class="at">value =</span> <span class="dv">0</span>, <span class="at">step =</span> <span class="fl">0.1</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">4</span>, </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Distribución 2"</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">numericInput</span>(<span class="st">"n2"</span>, <span class="at">label =</span> <span class="st">"n"</span>, <span class="at">value =</span> <span class="dv">1000</span>, <span class="at">min =</span> <span class="dv">1</span>),</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">numericInput</span>(<span class="st">"mean2"</span>, <span class="at">label =</span> <span class="st">"µ"</span>, <span class="at">value =</span> <span class="dv">0</span>, <span class="at">step =</span> <span class="fl">0.1</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">4</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Polígono de frecuencias"</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">numericInput</span>(<span class="st">"binwidth"</span>, <span class="at">label =</span> <span class="st">"Bin width"</span>, <span class="at">value =</span> <span class="fl">0.1</span>, <span class="at">step =</span> <span class="fl">0.1</span>),</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sliderInput</span>(<span class="st">"range"</span>, <span class="at">label =</span> <span class="st">"range"</span>, <span class="at">value =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">min =</span> <span class="sc">-</span><span class="dv">5</span>, <span class="at">max =</span> <span class="dv">5</span>)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fluidRow</span>(</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">9</span>, <span class="fu">plotOutput</span>(<span class="st">"hist"</span>)),</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">3</span>, <span class="fu">verbatimTextOutput</span>(<span class="st">"ttest"</span>))</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(input<span class="sc">$</span>n1, input<span class="sc">$</span>mean1, <span class="dv">1</span>)</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(input<span class="sc">$</span>n2, input<span class="sc">$</span>mean2, <span class="dv">1</span>)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">freqpoly</span>(x1, x2, <span class="at">binwidth =</span> input<span class="sc">$</span>binwidth, <span class="at">xlim =</span> input<span class="sc">$</span>range)</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">res =</span> <span class="dv">96</span>)</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>ttest <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>    x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(input<span class="sc">$</span>n1, input<span class="sc">$</span>mean1, <span class="dv">1</span>)</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>    x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(input<span class="sc">$</span>n2, input<span class="sc">$</span>mean2, <span class="dv">1</span>)</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">t_test</span>(x1, x2)</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="el-gráfico-reactivo-1" class="level4" data-number="3.2.4.3">
+<h4 data-number="3.2.4.3" class="anchored" data-anchor-id="el-gráfico-reactivo-1"><span class="header-section-number">3.2.4.3</span> El gráfico reactivo</h4>
+<p>Shiny sabe que debe actualiza un output solo cuando los inputs a los que <strong>hace referencia</strong> cambian de valor.</p>
+<p>Sin embargo, Shiny no ejecuta solo parte del código dentro de contexto reactivo, es decir, o ejecuta todo ese bloque de código, o no ejecuta nada.</p>
+<p>Ejemplo:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(input<span class="sc">$</span>n1, input<span class="sc">$</span>mean1, <span class="dv">1</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(input<span class="sc">$</span>n2, input<span class="sc">$</span>mean2, <span class="dv">1</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t_test</span>(x1, x2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://mastering-shiny.org/basic-reactivity.html#the-reactive-graph-1">Ver</a> su gráfico reactivo (parecido).</p>
+<p>Fallas:</p>
+<ul>
+<li>La aplicación es ineficiente, hace más trabajo de lo necesario; por ejemplo, al alterar <strong>bindwidth</strong>.</li>
+<li>Su gráfico reactivo es difícil de entender.</li>
+<li>El error principal es que el gráfico y <code>t.test</code> están evaluando data distinta, debido a su naturaleza aleatoria. Debe tratarse de la misma data en ambos contextos reactivos.</li>
+</ul>
+<p>(Cambiar <strong>Bin width</strong> o <strong>range</strong> manualmente)</p>
+</section>
+<section id="simplificando-el-gráfico" class="level4" data-number="3.2.4.4">
+<h4 data-number="3.2.4.4" class="anchored" data-anchor-id="simplificando-el-gráfico"><span class="header-section-number">3.2.4.4</span> Simplificando el gráfico</h4>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  x1 <span class="ot">&lt;-</span> <span class="fu">reactive</span>(<span class="fu">rnorm</span>(input<span class="sc">$</span>n1, input<span class="sc">$</span>mean1, <span class="dv">1</span>))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  x2 <span class="ot">&lt;-</span> <span class="fu">reactive</span>(<span class="fu">rnorm</span>(input<span class="sc">$</span>n2, input<span class="sc">$</span>mean2, <span class="dv">1</span>))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">freqpoly</span>(<span class="fu">x1</span>(), <span class="fu">x2</span>(), <span class="at">binwidth =</span> input<span class="sc">$</span>binwidth, <span class="at">xlim =</span> input<span class="sc">$</span>range)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">res =</span> <span class="dv">96</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>ttest <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">t_test</span>(<span class="fu">x1</span>(), <span class="fu">x2</span>())</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>(Cambiar <strong>Bin width</strong> o <strong>range</strong> manualmente)</p>
+<p><a href="https://mastering-shiny.org/basic-reactivity.html#simplifying-the-graph">Ver</a> el nuevo gráfico reactivo (parecido).</p>
+</section>
+<section id="por-qué-necesitamos-expresiones-reactivas" class="level4" data-number="3.2.4.5">
+<h4 data-number="3.2.4.5" class="anchored" data-anchor-id="por-qué-necesitamos-expresiones-reactivas"><span class="header-section-number">3.2.4.5</span> ¿Por qué necesitamos expresiones reactivas?</h4>
+<p>Se podría intentar reemplazar el uso de expresiones reactivas, en favor de variables o funciones <strong>usuales</strong> como las empleamos en R. Sin embargo, ambos casos o fallarán o serán ineficientes.</p>
+<p><strong>Uso de variables</strong></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(input<span class="sc">$</span>n1, input<span class="sc">$</span>mean1, <span class="dv">1</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(input<span class="sc">$</span>n2, input<span class="sc">$</span>mean2, <span class="dv">1</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">freqpoly</span>(x1, x2, <span class="at">binwidth =</span> input<span class="sc">$</span>binwidth, <span class="at">xlim =</span> input<span class="sc">$</span>range)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">res =</span> <span class="dv">96</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>ttest <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">t_test</span>(x1, x2)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Errores:</p>
+<ul>
+<li>Intentar acceder a valores de input, fuera de un contexto reactivo.</li>
+<li><code>x1 &lt;-  ...</code> y <code>x2 &lt;-  ...</code> solo se ejecutaría una vez, cuando empieza la sesión.</li>
+</ul>
+<p><strong>Uso de funciones</strong></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) { </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  x1 <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">rnorm</span>(input<span class="sc">$</span>n1, input<span class="sc">$</span>mean1, <span class="dv">1</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  x2 <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">rnorm</span>(input<span class="sc">$</span>n2, input<span class="sc">$</span>mean2, <span class="dv">1</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">freqpoly</span>(<span class="fu">x1</span>(), <span class="fu">x2</span>(), <span class="at">binwidth =</span> input<span class="sc">$</span>binwidth, <span class="at">xlim =</span> input<span class="sc">$</span>range)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">res =</span> <span class="dv">96</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>ttest <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">t_test</span>(<span class="fu">x1</span>(), <span class="fu">x2</span>())</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Con este método, la app va a funcionar, pero cada input que cambie hará que se ejecute todo el código de la función servidor, una vez más. En realidad, es el mismo problema que tuvimos en la sección <strong>El gráfico reactivo</strong>.</p>
+<p><strong>Recuerden que las expresiones reactivas automáticamente guardan</strong> <strong>su valor, y solo se actualizan cuando sus inputs cambian de valor.</strong></p>
+</section>
+</section>
+</section>
+<section id="controlando-el-tiempo-de-evaluación" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="controlando-el-tiempo-de-evaluación"><span class="header-section-number">3.3</span> Controlando el tiempo de evaluación</h2>
+<p>Todavía no exploraremos las herramientas de esta sección, ya que serán presentadas como parte del capítulo 15, durante la sesión 4.</p>
+<section id="reactivetimer" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="reactivetimer"><span class="header-section-number">3.3.1</span> <code>reactiveTimer()</code></h3>
+<p>Ver app_04 de capítulo 3 (simulación automática).</p>
+</section>
+<section id="on-click" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="on-click"><span class="header-section-number">3.3.2</span> <code>On click</code></h3>
+<p>Ver app_05 de capítulo 3 (simulación pausada).</p>
+</section>
+</section>
+<section id="observeevent" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="observeevent"><span class="header-section-number">3.4</span> <code>observeEvent()</code></h2>
+<p>La función <code>observeEvent()</code> cuenta con dos argumentos: - El primero, es el input que servirá de dependencia. - El segundo, es el código que se ejecutará cuando el input señalado cambie de valor.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textInput</span>(<span class="st">"nombre"</span>, <span class="st">"¿Cuál es tu nombre?"</span>),</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textOutput</span>(<span class="st">"saludo"</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  cadena <span class="ot">&lt;-</span> <span class="fu">reactive</span>(<span class="fu">paste0</span>(<span class="st">"Hola "</span>, input<span class="sc">$</span>nombre))</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>saludo <span class="ot">&lt;-</span> <span class="fu">renderText</span>(<span class="fu">cadena</span>())</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">observeEvent</span>(input<span class="sc">$</span>nombre, {</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">"Saludo realizado"</span>)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Esta función nos servirá al momento de integrar R con JavaScript.</p>
+<p>Ver ejemplo en carpeta <strong>session_example</strong>.</p>
+<p><strong>Este capítulo concluye la visión general de Shiny</strong>.</p>
+</section>
+<section id="extra" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="extra"><span class="header-section-number">3.5</span> Extra</h2>
+<ul>
+<li><p><a href="https://rstudio-pubs-static.s3.amazonaws.com/192350_d3385f81117e4506a090da03ac8d3361.html#solution">Guía</a> , por parte del creador de Shiny, sobre cómo programar de manera <strong>eficiente</strong> en Shiny.</p></li>
+<li><p><a href="https://data-flair.training/blogs/t-tests-in-r/">Función</a> <code>t.test()</code> de <strong>R</strong>.</p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./chapter_02.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Interfaz básica de usuario</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">R-Ladies Lima</div>   
+  </div>
+</footer>
+
+
+
+</body></html>

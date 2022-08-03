@@ -77,6 +77,9 @@ para que puedan instalar las dependencias requeridas para este club de lectura.
     - Actualización de inputs.
     - Creación dinámica de contenido en la interfaz de usuario.
 
+- Capítulo 15: _Reactive building blocks_
+    - Manipulación de los elementos reactivos en la función servidor.
+    
 - Tiempo libre para consultas y/o para revisión parcial
 de los proyectos finales por presentar.
 

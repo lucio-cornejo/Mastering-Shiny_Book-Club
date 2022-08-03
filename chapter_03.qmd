@@ -1,0 +1,505 @@
+# Reactividad básica
+
+Objetivos:
+
+- Familiarizarnos con los parámetros **input** 
+y **output** de la función servidor (**server**).
+- Comprender qué es el **gráfico reactivo** y cómo optimizarlo.
+
+## Introducción
+
+En Shiny, la lógica de la **función servidor** se define usando
+**programación reactiva**. El principio fundamenteal de este tipo
+de programación consiste en especificar un **grafo de dependencias**, 
+de manera que, cuando algún **input** cambie, todos sus **outputs**
+asociados se actualicen automáticamente.
+
+## La función servidor (`server`)
+
+- Cuando corremos una aplicación Shiny, Shiny ejecuta la función servidor.
+- Al ejecutarse la función servidor, se aislan las variables dentro de tal
+función, y, se crea una **sesión** (session) única a la instancia donde se
+está ejecutando la aplicación. 
+- Dicha ejecución permite que la interacción de un usuario **A**, con una
+aplicación Shiny **X**, no afecte al estado de la aplicación **X** cuando
+está siendo utilizada por otro usuario **B**.
+
+### `input`
+
+- El argumento **input** contiene la información que manda el
+navegador web, sobre la data de los inputs en la aplicación,
+en función de su identificador.
+- `input$IDENTIFICADOR` es el **valor** del input con identificador `IDENTIFICADOR`.
+- **input** es como una lista de R, pero no podemos modificar 
+su contenido, dentro de la función servidor.
+
+- Para leer a algún valor del argumento **input**, esta lectura
+debe realizarse dentro de un **contexto reactivo**, tales como
+`renderText()` y `reactive()`.
+
+```{.r}
+library(shiny)
+
+ui <- fluidPage(
+  numericInput("n", label = "Cantidad de valores", value = 100)
+)
+
+server <- function(input, output, session) {
+  # Incorrecto
+  # input$n <- 10  
+
+  # Incorrecto x2
+  message("The value of input$n is ", input$n)
+
+}
+
+shinyApp(ui, server)
+```
+
+### `output`
+
+- Así como el parámetro **input**, **ouput** es un objeto
+parecido a una lista de R, a cuyos elementos se accede
+vía los identificadores de output.
+- Siempre se usa el parámetro **output** junto a alguna
+función de tipo **render**.
+
+Ejemplo:
+
+```{.r}
+ui <- fluidPage(
+  textOutput("saludo")
+)
+
+server <- function(input, output, session) {
+  # Incorrecto
+  output$saludo <- "Hola, buenas."
+  
+  # Incorrecto x2
+  message("El mensaje es ", output$saludo)
+  
+  # Correcto
+  output$saludo <- renderText("Hola, buenas.")
+}
+```
+
+¿Qué hace una función de tipo **render**?
+
+- Crea un **contexto reactivo** que automáticamente
+rastrea qué inputs emplea aquel output.
+- Convierte el resultado de su código de R, a HTML
+apropiado para actualizar el contenido de la página.
+
+### Programación reactiva
+
+Ejemplo de la **actualización automática** que nos
+proporciona la programación reactiva de Shiny:
+
+```{.r}
+ui <- fluidPage(
+  textInput("nombre", "¿Y tú cómo te llamas?"),
+  textOutput("saludo")
+)
+
+server <- function(input, output, session) {
+  output$saludo <- renderText({
+    paste0("¡Hola ", input$nombre, "!")
+  })
+}
+```
+
+**La magia de Shiny consiste en que no necesitas avisar a un output**
+**cuándo debe actualizarse, ya que Shiny lo resuelve por ti.**
+
+**¿Pero cómo funciona el código en `server`?**
+
+- El código incluido en la función servidor no se ejecuta al momento de
+correr la aplicación.
+- Depende totalmente de Shiny, **cuándo** es que ese código va a ejecutarse,
+o si se ejecuta, incluso.
+- Es como si, en la función servidor, nosotros proveemos **recetas** a Shiny,
+en vez de asignarle **comandos**.
+
+¿A qué nos referimos con **recetas** y **comandos**?
+
+#### Programación imperativa vs programación declarativa
+
+- Programación **imperativa**:
+    - Defines un **comando** y este se ejecuta **inmediatamente**.
+    - **R** es un lenguaje imperativo.
+- Programación **declarativa**:
+    - Describes qué hacer cuando ciertas condiciones se cumplan, pero
+    tú no decides cuándo se ejecutan tales instrucciones.
+    - **Shiny** emplea este estilo de programación.
+
+Ejemplo del libro:
+
+- Código imperativo: [**"Hazme un sánguche."**](https://xkcd.com/149/)
+- Código declarativo: 
+**"Asegúrate que haya un sánguche en la refrigeradora cuando yo mire dentro de esta."
+
+#### Pereza
+
+Las aplicaciones Shiny son extremadamente **perezosas**, en el sentido que
+Shiny no ejecutará el código de las secciones **output** que no sean 
+parte de la aplicación.
+
+Ejemplo:
+
+```{.r}
+ui <- fluidPage(
+  textInput("nombre", "¿Y tú cómo te llamas?"),
+  textOutput("saludo")
+)
+
+server <- function(input, output, session) {
+  output$saluda <- renderText({
+    paste0("¡Hola ", input$nombre, "!")
+  })
+}
+```
+
+#### El gráfico reactivo
+
+La *pereza* de Shiny también se manifiesta en que el código en la 
+función servidor no se ejecuta de arriba a abajo, como es la manera convencional
+en R, sino más bien **cuando sea necesario**.
+
+Para entender cuándo es necesario que Shiny *ejecute código*, se trabaja con
+el **gráfico reactivo**, una visualización que describe cómo los inputs y
+outputs están relacionados.
+
+```{mermaid}
+%%| fig-height: 2
+
+flowchart LR
+  A[nombre] ===> B{Saludo}
+
+  linkStyle 0 stroke-width:5px, fill: green, stroke:blue;
+```
+
+- El **gráfico reactivo** contiene un símbolo por cada input y output.
+- Cada input se conecta a todo output que acceda al valor de tal input.
+- El **gráfico reactivo** sirve para saber cómo funciona la app creada.
+
+#### Expresiones reactivas
+
+A las expresiones reactivas las denotaremos con un símbolo especial 
+en el gráfico reactivo. Estas sirven para reducir la repetición de 
+código dentro de la función servidor.
+
+```{.r}
+ui <- fluidPage(
+  textInput("nombre", "¿Y tú cómo te llamas?"),
+  textOutput("saludo")
+)
+
+server <- function(input, output, session) {
+  cadena <- reactive(paste0("¡Hola ", input$nombre, "!"))
+  output$saludo <- renderText(cadena())
+}
+```
+
+```{mermaid}
+%%| fig-height: 2
+
+flowchart LR
+  A[nombre] ===> B(cadena)
+  B(cadena) ===> C{saludo}
+
+  linkStyle 0 stroke-width:5px, fill: green, stroke:blue;
+  linkStyle 1 stroke-width:5px, fill: green, stroke:blue;
+```
+
+#### Orden de ejecución
+
+El siguiente ejemplo parece no debería funcionar, pero la 
+**pereza** de Shiny permite que la aplicación funcione,
+ya que el **gráfico reactivo** de esta app no ha cambiado,
+por lo que el orden en que se ejecuta el código es el mismo.
+
+```{.r}
+ui <- fluidPage(
+  textInput("nombre", "¿Y tú cómo te llamas?"),
+  textOutput("saludo")
+)
+
+server <- function(input, output, session) {
+  output$saludo <- renderText(cadena())
+  cadena <- reactive(paste0("¡Hola ", input$nombre, "!"))
+}
+```
+
+#### Ejercicios
+
+- En clase, solo hacer el ejercicio 1.
+- Los ejercicios 2 y 3 son **tarea**.
+
+### Expresiones reactivas
+
+- Estas son útiles porque proporcionan
+a Shiny más información, para que se ejecute menos veces 
+el mismo código (de R), una vez que las inputs cambian,
+mejorando así la eficiencia de la aplicación Shiny.
+- También sirven para simplificar el **gráfico de reactividad**.
+
+Recordemos que las expresiones reactivas dependen de inputs y saben
+automáticamente cuando actualizarse.
+Asimismo, podemos usar el valor
+de expresiones reactivas dentro de un output.
+
+#### La motivación
+
+Realizaremos una simulación donde emplearemos la función `t.test()` para determinar si la media de dos grupos de datos son iguales. 
+
+Pero, supondremos que ambos grupos de datos han sido sorteados
+de distribuciones normales (gaussianas) con misma desviación estándar. 
+
+En caso que el p-valor hallado vía el `t.test()` resulte menor
+que 0.05, entonces afirmaremos que las medias de las distribuciones
+son diferentes.
+
+```{.r}
+library(ggplot2)
+
+freqpoly <- function(x1, x2, binwidth = 0.1, xlim = c(-3, 3)) {
+  df <- data.frame(
+    x = c(x1, x2),
+    g = c(rep("x1", length(x1)), rep("x2", length(x2)))
+  )
+
+  ggplot(df, aes(x, colour = g)) +
+    geom_freqpoly(binwidth = binwidth, size = 1) +
+    coord_cartesian(xlim = xlim)
+}
+
+t_test <- function(x1, x2) {
+  test <- t.test(x1, x2)
+  
+  sprintf(
+    "p valor: %0.3f\n[%0.2f, %0.2f]",
+    test$p.value, test$conf.int[1], test$conf.int[2]
+  )
+}
+```
+
+```{.r}
+x1 <- rnorm(100, mean = 0, sd = 1)
+x2 <- rnorm(200, mean = 0.1, sd = 1)
+
+freqpoly(x1, x2)
+cat(t_test(x1, x2))
+```
+
+#### La aplicación
+
+En vez de ejecutar las simulaciones cambiando parámetros en el código,
+y ejecutar de nuevo el código relevante, podemos acelerar este proceso
+por medio de una aplicación Shiny.
+
+```{.r}
+ui <- fluidPage(
+  fluidRow(
+    column(4, 
+      "Distribución 1",
+      numericInput("n1", label = "n", value = 1000, min = 1),
+      numericInput("mean1", label = "µ", value = 0, step = 0.1)
+    ),
+    column(4, 
+      "Distribución 2",
+      numericInput("n2", label = "n", value = 1000, min = 1),
+      numericInput("mean2", label = "µ", value = 0, step = 0.1)
+    ),
+    column(4,
+      "Polígono de frecuencias",
+      numericInput("binwidth", label = "Bin width", value = 0.1, step = 0.1),
+      sliderInput("range", label = "range", value = c(-3, 3), min = -5, max = 5)
+    )
+  ),
+  fluidRow(
+    column(9, plotOutput("hist")),
+    column(3, verbatimTextOutput("ttest"))
+  )
+)
+
+server <- function(input, output, session) {
+  output$hist <- renderPlot({
+    x1 <- rnorm(input$n1, input$mean1, 1)
+    x2 <- rnorm(input$n2, input$mean2, 1)
+    
+    freqpoly(x1, x2, binwidth = input$binwidth, xlim = input$range)
+  }, res = 96)
+
+  output$ttest <- renderText({
+    x1 <- rnorm(input$n1, input$mean1, 1)
+    x2 <- rnorm(input$n2, input$mean2, 1)
+    
+    t_test(x1, x2)
+  })
+}
+```
+
+#### El gráfico reactivo
+
+Shiny sabe que debe actualiza un output solo cuando los 
+inputs a los que **hace referencia** cambian de valor.
+
+Sin embargo, Shiny no ejecuta solo parte del código dentro
+de contexto reactivo, es decir, o ejecuta todo ese bloque
+de código, o no ejecuta nada.
+
+Ejemplo:
+
+```{.r}
+x1 <- rnorm(input$n1, input$mean1, 1)
+x2 <- rnorm(input$n2, input$mean2, 1)
+
+t_test(x1, x2)
+```
+
+[Ver](https://mastering-shiny.org/basic-reactivity.html#the-reactive-graph-1)
+su gráfico reactivo (parecido).
+
+Fallas:
+
+- La aplicación es ineficiente, hace más trabajo de lo necesario; por ejemplo, al alterar **bindwidth**.
+- Su gráfico reactivo es difícil de entender.
+- El error principal es que el gráfico y `t.test` 
+están evaluando data distinta, debido a su naturaleza
+aleatoria. Debe tratarse de la misma data en ambos
+contextos reactivos.
+
+(Cambiar **Bin width** o **range** manualmente)
+
+#### Simplificando el gráfico
+
+```{.r}
+server <- function(input, output, session) {
+  x1 <- reactive(rnorm(input$n1, input$mean1, 1))
+  x2 <- reactive(rnorm(input$n2, input$mean2, 1))
+
+  output$hist <- renderPlot({
+    freqpoly(x1(), x2(), binwidth = input$binwidth, xlim = input$range)
+  }, res = 96)
+
+  output$ttest <- renderText({
+    t_test(x1(), x2())
+  })
+}
+```
+
+(Cambiar **Bin width** o **range** manualmente)
+
+[Ver](https://mastering-shiny.org/basic-reactivity.html#simplifying-the-graph)
+el nuevo gráfico reactivo (parecido).
+
+#### ¿Por qué necesitamos expresiones reactivas?
+
+Se podría intentar reemplazar el uso de expresiones reactivas, en favor de
+variables o funciones **usuales** como las empleamos en R.
+Sin embargo, ambos casos o fallarán o serán ineficientes.
+
+**Uso de variables** 
+
+```{.r}
+server <- function(input, output, session) {
+  x1 <- rnorm(input$n1, input$mean1, 1)
+  x2 <- rnorm(input$n2, input$mean2, 1)
+  output$hist <- renderPlot({
+    freqpoly(x1, x2, binwidth = input$binwidth, xlim = input$range)
+  }, res = 96)
+
+  output$ttest <- renderText({
+    t_test(x1, x2)
+  })
+}
+```
+
+Errores:
+
+- Intentar acceder a valores de input, fuera de un contexto reactivo.
+- `x1 <-  ...` y `x2 <-  ...` solo se ejecutaría una vez, cuando
+empieza la sesión.
+
+**Uso de funciones** 
+
+```{.r}
+server <- function(input, output, session) { 
+  x1 <- function() rnorm(input$n1, input$mean1, 1)
+  x2 <- function() rnorm(input$n2, input$mean2, 1)
+
+  output$hist <- renderPlot({
+    freqpoly(x1(), x2(), binwidth = input$binwidth, xlim = input$range)
+  }, res = 96)
+
+  output$ttest <- renderText({
+    t_test(x1(), x2())
+  })
+}
+```
+
+Con este método, la app va a funcionar, pero cada input que cambie
+hará que se ejecute todo el código de la función servidor, una vez más.
+En realidad, es el mismo problema que tuvimos en la sección 
+**El gráfico reactivo**.
+
+**Recuerden que las expresiones reactivas automáticamente guardan** 
+**su valor, y solo se actualizan cuando sus inputs cambian de valor.** 
+
+## Controlando el tiempo de evaluación
+
+Todavía no exploraremos las herramientas de esta sección, 
+ya que serán presentadas como parte del capítulo 15, 
+durante la sesión 4.
+
+### `reactiveTimer()` 
+
+Ver app_04 de capítulo 3 (simulación automática).
+
+### `On click` 
+
+Ver app_05 de capítulo 3 (simulación pausada).
+
+## `observeEvent()` 
+
+La función `observeEvent()` cuenta con dos argumentos:
+    - El primero, es el input que servirá de dependencia.
+    - El segundo, es el código que se ejecutará cuando
+    el input señalado cambie de valor.
+
+```{.r}
+library(shiny)
+
+ui <- fluidPage(
+  textInput("nombre", "¿Cuál es tu nombre?"),
+  textOutput("saludo")
+)
+
+server <- function(input, output, session) {
+  cadena <- reactive(paste0("Hola ", input$nombre))
+  
+  output$saludo <- renderText(cadena())
+  observeEvent(input$nombre, {
+    message("Saludo realizado")
+  })
+}
+
+shinyApp(ui, server)
+```
+
+Esta función nos servirá al momento de integrar R con JavaScript.
+
+Ver ejemplo en carpeta **session_example**.
+
+
+
+**Este capítulo concluye la visión general de Shiny**.
+
+## Extra
+
+- [Guía](https://rstudio-pubs-static.s3.amazonaws.com/192350_d3385f81117e4506a090da03ac8d3361.html#solution) 
+, por parte del creador de Shiny, sobre cómo programar 
+de manera **eficiente** en Shiny.
+
+- [Función](https://data-flair.training/blogs/t-tests-in-r/)
+`t.test()` de **R**.

@@ -27,10 +27,9 @@ book:
       chapters:
         - chapter_01.qmd
         - chapter_02.qmd
-    # - part: "Sesión 2"
-    #   chapters:
-    #     - chapter_03.qmd
-    #     - chapter_04.qmd
+    - part: "Sesión 2"
+      chapters:
+        - chapter_03.qmd
 
 bibliography: references.bib
 
@@ -42,6 +41,7 @@ format:
       - lux
       - slate
       - theme.scss
+    include-in-header: scripts.html
     code-copy: true
     code-link: true
   pdf:

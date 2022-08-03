@@ -131,7 +131,7 @@ de opciones de **Bootstrap** para `class = ""`.
 
 ### Texto
 
-- `textOutput()`, junto con `renderText({})`, se emplean para impprimir texto estándar 
+- `textOutput()`, junto con `renderText({})`, se emplean para imprimir texto estándar 
 (cadenas de caracteres).
 - `verbatimTextOutput()`, junto con `renderPrint({})`, se usa cuando se requiere imprimir el resultado (textual) del código dentro de `renderPrint`.
 

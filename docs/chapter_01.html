@@ -118,6 +118,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script>
+  document.addEventListener(
+    'DOMContentLoaded',
+    function () {
+      const mermaids = [...document.querySelectorAll("pre.mermaid")];
+      var filtro = 1;
+      mermaids.forEach(function (mermaid) {
+        mermaid.addEventListener('click', function (e) {
+          e.preventDefault();
+          filtro = (Math.floor(filtro + 1)) % 2;
+          document.body.style.filter = `invert(${filtro})`
+        })
+      })
+    }
+  )
+</script>
 
 
 </head>
@@ -175,6 +191,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chapter_02.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Interfaz básica de usuario</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Sesión 2</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter_03.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Reactividad básica</span></a>
   </div>
 </li>
       </ul>
