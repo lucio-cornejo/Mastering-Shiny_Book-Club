@@ -144,7 +144,7 @@
     "href": "chapter_03.html#observeevent",
     "title": "3  Reactividad básica",
     "section": "3.4 observeEvent()",
-    "text": "3.4 observeEvent()\nLa función observeEvent() cuenta con dos argumentos: - El primero, es el input que servirá de dependencia. - El segundo, es el código que se ejecutará cuando el input señalado cambie de valor.\nlibrary(shiny)\n\nui <- fluidPage(\n  textInput(\"nombre\", \"¿Cuál es tu nombre?\"),\n  textOutput(\"saludo\")\n)\n\nserver <- function(input, output, session) {\n  cadena <- reactive(paste0(\"Hola \", input$nombre))\n  \n  output$saludo <- renderText(cadena())\n  observeEvent(input$nombre, {\n    message(\"Saludo realizado\")\n  })\n}\n\nshinyApp(ui, server)\nEsta función nos servirá al momento de integrar R con JavaScript.\nVer ejemplo en carpeta session_example.\nEste capítulo concluye la visión general de Shiny."
+    "text": "3.4 observeEvent()\nLa función observeEvent() cuenta con dos argumentos:\n- El primero, es el input que servirá de dependencia.\n- El segundo, es el código que se ejecutará cuando\nel input señalado cambie de valor.\nlibrary(shiny)\n\nui <- fluidPage(\n  textInput(\"nombre\", \"¿Cuál es tu nombre?\"),\n  textOutput(\"saludo\")\n)\n\nserver <- function(input, output, session) {\n  cadena <- reactive(paste0(\"Hola \", input$nombre))\n  \n  output$saludo <- renderText(cadena())\n  observeEvent(input$nombre, {\n    message(\"Saludo realizado\")\n  })\n}\n\nshinyApp(ui, server)\nEsta función nos servirá al momento de integrar R con JavaScript.\nVer ejemplo en carpeta session_example.\nEste capítulo concluye la visión general de Shiny."
   },
   {
     "objectID": "chapter_03.html#extra",
@@ -152,5 +152,12 @@
     "title": "3  Reactividad básica",
     "section": "3.5 Extra",
     "text": "3.5 Extra\n\nGuía , por parte del creador de Shiny, sobre cómo programar de manera eficiente en Shiny.\nFunción t.test() de R."
+  },
+  {
+    "objectID": "chapter_03.html#tarea",
+    "href": "chapter_03.html#tarea",
+    "title": "3  Reactividad básica",
+    "section": "3.6 Tarea",
+    "text": "3.6 Tarea\nCompletar el capítulo 4 del libro Mastering Shiny."
   }
 ]
