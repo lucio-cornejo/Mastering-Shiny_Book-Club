@@ -117,7 +117,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
-<script>
+<!-- <script>
   document.addEventListener(
     'DOMContentLoaded',
     function () {
@@ -132,7 +132,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       })
     }
   )
-</script>
+</script> -->
 <script src="site_libs/quarto-diagram/mermaid.min.js"></script>
 <script src="site_libs/quarto-diagram/mermaid-init.js"></script>
 <link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
@@ -229,7 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#programación-reactiva" id="toc-programación-reactiva" class="nav-link" data-scroll-target="#programación-reactiva"> <span class="header-section-number">3.2.3</span> Programación reactiva</a></li>
   <li><a href="#expresiones-reactivas-1" id="toc-expresiones-reactivas-1" class="nav-link" data-scroll-target="#expresiones-reactivas-1"> <span class="header-section-number">3.2.4</span> Expresiones reactivas</a></li>
   </ul></li>
-  <li><a href="#controlando-el-tiempo-de-evaluación" id="toc-controlando-el-tiempo-de-evaluación" class="nav-link" data-scroll-target="#controlando-el-tiempo-de-evaluación"> <span class="header-section-number">3.3</span> Controlando el tiempo de evaluación</a>
+  <li><a href="#control-del-tiempo-de-evaluación" id="toc-control-del-tiempo-de-evaluación" class="nav-link" data-scroll-target="#control-del-tiempo-de-evaluación"> <span class="header-section-number">3.3</span> Control del tiempo de evaluación</a>
   <ul class="collapse">
   <li><a href="#reactivetimer" id="toc-reactivetimer" class="nav-link" data-scroll-target="#reactivetimer"> <span class="header-section-number">3.3.1</span> <code>reactiveTimer()</code></a></li>
   <li><a href="#on-click" id="toc-on-click" class="nav-link" data-scroll-target="#on-click"> <span class="header-section-number">3.3.2</span> <code>On click</code></a></li>
@@ -387,12 +387,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4 data-number="3.2.3.3" class="anchored" data-anchor-id="el-gráfico-reactivo"><span class="header-section-number">3.2.3.3</span> El gráfico reactivo</h4>
 <p>La <em>pereza</em> de Shiny también se manifiesta en que el código en la función servidor no se ejecuta de arriba a abajo, como es la manera convencional en R, sino más bien <strong>cuando sea necesario</strong>.</p>
 <p>Para entender cuándo es necesario que Shiny <em>ejecute código</em>, se trabaja con el <strong>gráfico reactivo</strong>, una visualización que describe cómo los inputs y outputs están relacionados.</p>
-<div class="cell" data-fig-height="2">
+<div class="cell">
 <div class="cell-output-display">
 <div>
 <p>
 </p><pre class="mermaid" data-tooltip-selector="#mermaid-tooltip-1">flowchart LR
-  A[nombre] ===&gt; B{Saludo}
+  A[nombre] ===&gt; B&gt;Saludo]
 
   linkStyle 0 stroke-width:5px, fill: green, stroke:blue;
 </pre>
@@ -421,13 +421,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  cadena <span class="ot">&lt;-</span> <span class="fu">reactive</span>(<span class="fu">paste0</span>(<span class="st">"¡Hola "</span>, input<span class="sc">$</span>nombre, <span class="st">"!"</span>))</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>saludo <span class="ot">&lt;-</span> <span class="fu">renderText</span>(<span class="fu">cadena</span>())</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell" data-fig-height="2">
+<div class="cell">
 <div class="cell-output-display">
 <div>
 <p>
 </p><pre class="mermaid" data-tooltip-selector="#mermaid-tooltip-2">flowchart LR
-  A[nombre] ===&gt; B(cadena)
-  B(cadena) ===&gt; C{saludo}
+  A[nombre] ===&gt; B((cadena))
+  B((cadena)) ===&gt; C&gt;saludo]
 
   linkStyle 0 stroke-width:5px, fill: green, stroke:blue;
   linkStyle 1 stroke-width:5px, fill: green, stroke:blue;
@@ -552,7 +552,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(input<span class="sc">$</span>n2, input<span class="sc">$</span>mean2, <span class="dv">1</span>)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t_test</span>(x1, x2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><a href="https://mastering-shiny.org/basic-reactivity.html#the-reactive-graph-1">Ver</a> su gráfico reactivo (parecido).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<p>
+</p><pre class="mermaid" data-tooltip-selector="#mermaid-tooltip-3">flowchart LR
+  A[n1] --&gt; B&gt;ttest]
+  C[mean1] --&gt; B&gt;ttest]
+  D[n2] --&gt; B&gt;ttest]
+  E[mean2] --&gt; B&gt;ttest]
+  
+  A[n1] --&gt; G&gt;ttest]
+  C[mean1] --&gt; G&gt;ttest]
+  D[n2] --&gt; G&gt;ttest]
+  E[mean2] --&gt; G&gt;ttest]
+  F[binwidth] --&gt; G&gt;hist]
+  H[range] --&gt; G&gt;hist]
+
+  linkStyle 4 stroke:red;
+  linkStyle 5 stroke:red;
+  linkStyle 6 stroke:red;
+  linkStyle 7 stroke:red;
+  linkStyle 8 stroke:red;
+  linkStyle 9 stroke:red;
+
+  linkStyle default stroke-width:2px, fill:none, stroke:blue;
+</pre>
+<div id="mermaid-tooltip-3" class="mermaidTooltip">
+
+</div>
+<p></p>
+</div>
+</div>
+</div>
 <p>Fallas:</p>
 <ul>
 <li>La aplicación es ineficiente, hace más trabajo de lo necesario; por ejemplo, al alterar <strong>bindwidth</strong>.</li>
@@ -576,7 +608,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  })</span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>(Cambiar <strong>Bin width</strong> o <strong>range</strong> manualmente)</p>
-<p><a href="https://mastering-shiny.org/basic-reactivity.html#simplifying-the-graph">Ver</a> el nuevo gráfico reactivo (parecido).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<p>
+</p><pre class="mermaid" data-tooltip-selector="#mermaid-tooltip-4">flowchart LR
+  A[n1] --&gt; X((x1))
+  B[mean1] --&gt; X((x1))
+
+  C[n2] --&gt; Y((x2))
+  D[mean2] --&gt; Y((x2))
+  
+  E[binwidth] --&gt; W&gt;hist]
+  F[range] --&gt; W&gt;hist]
+  
+  X((x1)) --&gt; V&gt;ttest]
+  X((x1)) --&gt; W&gt;hist]
+
+  Y((x2)) --&gt; V&gt;ttest]
+  Y((x2)) --&gt; W&gt;hist]
+
+
+  linkStyle default stroke-width:2px, fill:none, stroke:blue;
+</pre>
+<div id="mermaid-tooltip-4" class="mermaidTooltip">
+
+</div>
+<p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="por-qué-necesitamos-expresiones-reactivas" class="level4" data-number="3.2.4.5">
 <h4 data-number="3.2.4.5" class="anchored" data-anchor-id="por-qué-necesitamos-expresiones-reactivas"><span class="header-section-number">3.2.4.5</span> ¿Por qué necesitamos expresiones reactivas?</h4>
@@ -616,55 +677,61 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 </section>
 </section>
-<section id="controlando-el-tiempo-de-evaluación" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="controlando-el-tiempo-de-evaluación"><span class="header-section-number">3.3</span> Controlando el tiempo de evaluación</h2>
+<section id="control-del-tiempo-de-evaluación" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="control-del-tiempo-de-evaluación"><span class="header-section-number">3.3</span> Control del tiempo de evaluación</h2>
 <p>Todavía no exploraremos las herramientas de esta sección, ya que serán presentadas como parte del capítulo 15, durante la sesión 4.</p>
 <section id="reactivetimer" class="level3" data-number="3.3.1">
 <h3 data-number="3.3.1" class="anchored" data-anchor-id="reactivetimer"><span class="header-section-number">3.3.1</span> <code>reactiveTimer()</code></h3>
-<p>Ver app_04 de capítulo 3 (simulación automática).</p>
+<p><a href="https://github.com/lucio-cornejo/Mastering-Shiny_Book-Club/blob/main/ejemplos/cap%C3%ADtulo_03/app_04/app.R">Código</a> del ejemplo del libro (simulación automática).</p>
 </section>
 <section id="on-click" class="level3" data-number="3.3.2">
 <h3 data-number="3.3.2" class="anchored" data-anchor-id="on-click"><span class="header-section-number">3.3.2</span> <code>On click</code></h3>
-<p>Ver app_05 de capítulo 3 (simulación pausada).</p>
+<p><a href="https://github.com/lucio-cornejo/Mastering-Shiny_Book-Club/blob/main/ejemplos/cap%C3%ADtulo_03/app_05/app.R">Código</a> del ejemplo del libro (simulación pausada).</p>
 </section>
 </section>
 <section id="observeevent" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="observeevent"><span class="header-section-number">3.4</span> <code>observeEvent()</code></h2>
-<p>La función <code>observeEvent()</code> cuenta con dos argumentos:</p>
-<pre><code>- El primero, es el input que servirá de dependencia.
-- El segundo, es el código que se ejecutará cuando
-el input señalado cambie de valor.</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textInput</span>(<span class="st">"nombre"</span>, <span class="st">"¿Cuál es tu nombre?"</span>),</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textOutput</span>(<span class="st">"saludo"</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  cadena <span class="ot">&lt;-</span> <span class="fu">reactive</span>(<span class="fu">paste0</span>(<span class="st">"Hola "</span>, input<span class="sc">$</span>nombre))</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>saludo <span class="ot">&lt;-</span> <span class="fu">renderText</span>(<span class="fu">cadena</span>())</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">observeEvent</span>(input<span class="sc">$</span>nombre, {</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">"Saludo realizado"</span>)</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Esta función nos servirá al momento de integrar R con JavaScript.</p>
-<p>Ver ejemplo en carpeta <strong>session_example</strong>.</p>
+<p>No es necesario que, al correr una app Shiny, cambiar el valor de algún input actualice el contenido de la página.</p>
+<p>Si requerimos que cierto código (no asociado a algún output) se ejecute cuando cierto input en particular cambie de valor, podemos usar la función <code>observeEvent()</code> … esta cuenta con dos argumentos:</p>
+<ul>
+<li>El primero, es el input que servirá de dependencia.</li>
+<li>El segundo, es el código que se ejecutará cuando el input señalado cambie de valor.</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textInput</span>(<span class="st">"nombre"</span>, <span class="st">"¿Cuál es tu nombre?"</span>),</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textOutput</span>(<span class="st">"saludo"</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  cadena <span class="ot">&lt;-</span> <span class="fu">reactive</span>(<span class="fu">paste0</span>(<span class="st">"Hola "</span>, input<span class="sc">$</span>nombre))</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>saludo <span class="ot">&lt;-</span> <span class="fu">renderText</span>(<span class="fu">cadena</span>())</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">observeEvent</span>(input<span class="sc">$</span>nombre, {</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">"Saludo realizado"</span>)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Similarmente, si requerimos que cierto código (no asociado a algún output) se ejecute cuando uno o más inputs en particular cambie(n) de valor, podemos usar la función <code>observe()</code>.</p>
+<p>Las funciones <code>observe()</code> y <code>observeEvent()</code> nos servirán al momento de integrar R con JavaScript.</p>
+<p>Pueden ver un ejemplo de aquella interacción, vía el código en esta <a href="https://github.com/lucio-cornejo/Mastering-Shiny_Book-Club/tree/main/session_example">carpeta</a>.</p>
 <p><strong>Este capítulo concluye la visión general de Shiny</strong>.</p>
 </section>
 <section id="extra" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="extra"><span class="header-section-number">3.5</span> Extra</h2>
 <ul>
-<li><p><a href="https://rstudio-pubs-static.s3.amazonaws.com/192350_d3385f81117e4506a090da03ac8d3361.html#solution">Guía</a> , por parte del creador de Shiny, sobre cómo programar de manera <strong>eficiente</strong> en Shiny.</p></li>
+<li><p><a href="https://rstudio-pubs-static.s3.amazonaws.com/192350_d3385f81117e4506a090da03ac8d3361.html#solution">Guía</a>, por parte del creador de Shiny, sobre cómo programar de manera <strong>eficiente</strong> en Shiny.</p></li>
 <li><p><a href="https://data-flair.training/blogs/t-tests-in-r/">Función</a> <code>t.test()</code> de <strong>R</strong>.</p></li>
 </ul>
 </section>
 <section id="tarea" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="tarea"><span class="header-section-number">3.6</span> Tarea</h2>
-<p>Completar el <a href="https://mastering-shiny.org/basic-case-study.html">capítulo</a> 4 del libro <strong>Mastering Shiny</strong>.</p>
+<ul>
+<li>Realizar los ejercicios 2 y 3 de esta <a href="https://mastering-shiny.org/basic-reactivity.html#exercises-3">sección</a>.</li>
+<li>Completar el <a href="https://mastering-shiny.org/basic-case-study.html">capítulo</a> 4 del libro <strong>Mastering Shiny</strong>.</li>
+</ul>
 
 
 </section>

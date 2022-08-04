@@ -170,10 +170,8 @@ el **gráfico reactivo**, una visualización que describe cómo los inputs y
 outputs están relacionados.
 
 ```{mermaid}
-%%| fig-height: 2
-
 flowchart LR
-  A[nombre] ===> B{Saludo}
+  A[nombre] ===> B>Saludo]
 
   linkStyle 0 stroke-width:5px, fill: green, stroke:blue;
 ```
@@ -201,11 +199,9 @@ server <- function(input, output, session) {
 ```
 
 ```{mermaid}
-%%| fig-height: 2
-
 flowchart LR
-  A[nombre] ===> B(cadena)
-  B(cadena) ===> C{saludo}
+  A[nombre] ===> B((cadena))
+  B((cadena)) ===> C>saludo]
 
   linkStyle 0 stroke-width:5px, fill: green, stroke:blue;
   linkStyle 1 stroke-width:5px, fill: green, stroke:blue;
@@ -357,8 +353,29 @@ x2 <- rnorm(input$n2, input$mean2, 1)
 t_test(x1, x2)
 ```
 
-[Ver](https://mastering-shiny.org/basic-reactivity.html#the-reactive-graph-1)
-su gráfico reactivo (parecido).
+```{mermaid}
+flowchart LR
+  A[n1] --> B>ttest]
+  C[mean1] --> B>ttest]
+  D[n2] --> B>ttest]
+  E[mean2] --> B>ttest]
+  
+  A[n1] --> G>ttest]
+  C[mean1] --> G>ttest]
+  D[n2] --> G>ttest]
+  E[mean2] --> G>ttest]
+  F[binwidth] --> G>hist]
+  H[range] --> G>hist]
+
+  linkStyle 4 stroke:red;
+  linkStyle 5 stroke:red;
+  linkStyle 6 stroke:red;
+  linkStyle 7 stroke:red;
+  linkStyle 8 stroke:red;
+  linkStyle 9 stroke:red;
+
+  linkStyle default stroke-width:2px, fill:none, stroke:blue;
+```
 
 Fallas:
 
@@ -390,8 +407,26 @@ server <- function(input, output, session) {
 
 (Cambiar **Bin width** o **range** manualmente)
 
-[Ver](https://mastering-shiny.org/basic-reactivity.html#simplifying-the-graph)
-el nuevo gráfico reactivo (parecido).
+```{mermaid}
+flowchart LR
+  A[n1] --> X((x1))
+  B[mean1] --> X((x1))
+
+  C[n2] --> Y((x2))
+  D[mean2] --> Y((x2))
+  
+  E[binwidth] --> W>hist]
+  F[range] --> W>hist]
+  
+  X((x1)) --> V>ttest]
+  X((x1)) --> W>hist]
+
+  Y((x2)) --> V>ttest]
+  Y((x2)) --> W>hist]
+
+
+  linkStyle default stroke-width:2px, fill:none, stroke:blue;
+```
 
 #### ¿Por qué necesitamos expresiones reactivas?
 
@@ -446,7 +481,7 @@ En realidad, es el mismo problema que tuvimos en la sección
 **Recuerden que las expresiones reactivas automáticamente guardan** 
 **su valor, y solo se actualizan cuando sus inputs cambian de valor.** 
 
-## Controlando el tiempo de evaluación
+## Control del tiempo de evaluación
 
 Todavía no exploraremos las herramientas de esta sección, 
 ya que serán presentadas como parte del capítulo 15, 
@@ -454,19 +489,27 @@ durante la sesión 4.
 
 ### `reactiveTimer()` 
 
-Ver app_04 de capítulo 3 (simulación automática).
+[Código](https://github.com/lucio-cornejo/Mastering-Shiny_Book-Club/blob/main/ejemplos/cap%C3%ADtulo_03/app_04/app.R)
+del ejemplo del libro (simulación automática).
 
 ### `On click` 
 
-Ver app_05 de capítulo 3 (simulación pausada).
+[Código](https://github.com/lucio-cornejo/Mastering-Shiny_Book-Club/blob/main/ejemplos/cap%C3%ADtulo_03/app_05/app.R)
+del ejemplo del libro (simulación pausada).
 
 ## `observeEvent()` 
 
-La función `observeEvent()` cuenta con dos argumentos:
+No es necesario que, al correr una app Shiny, cambiar el valor
+de algún input actualice el contenido de la página.
 
-    - El primero, es el input que servirá de dependencia.
-    - El segundo, es el código que se ejecutará cuando
-    el input señalado cambie de valor.
+Si requerimos que cierto código (no asociado a algún output)
+se ejecute cuando cierto input en particular cambie de valor,
+podemos usar la función `observeEvent()` ... 
+esta cuenta con dos argumentos:
+
+- El primero, es el input que servirá de dependencia.
+- El segundo, es el código que se ejecutará cuando
+el input señalado cambie de valor.
 
 ```{.r}
 library(shiny)
@@ -488,18 +531,22 @@ server <- function(input, output, session) {
 shinyApp(ui, server)
 ```
 
-Esta función nos servirá al momento de integrar R con JavaScript.
+Similarmente, si requerimos que cierto código (no asociado a algún output)
+se ejecute cuando uno o más inputs en particular cambie(n) de valor,
+podemos usar la función `observe()`.
 
-Ver ejemplo en carpeta **session_example**.
+Las funciones `observe()` y `observeEvent()` nos servirán al momento
+de integrar R con JavaScript.
 
-
+Pueden ver un ejemplo de aquella interacción, vía el código en esta
+[carpeta](https://github.com/lucio-cornejo/Mastering-Shiny_Book-Club/tree/main/session_example).
 
 **Este capítulo concluye la visión general de Shiny**.
 
 ## Extra
 
-- [Guía](https://rstudio-pubs-static.s3.amazonaws.com/192350_d3385f81117e4506a090da03ac8d3361.html#solution) 
-, por parte del creador de Shiny, sobre cómo programar 
+- [Guía](https://rstudio-pubs-static.s3.amazonaws.com/192350_d3385f81117e4506a090da03ac8d3361.html#solution),
+por parte del creador de Shiny, sobre cómo programar 
 de manera **eficiente** en Shiny.
 
 - [Función](https://data-flair.training/blogs/t-tests-in-r/)
@@ -507,5 +554,7 @@ de manera **eficiente** en Shiny.
 
 ## Tarea
 
-Completar el [capítulo](https://mastering-shiny.org/basic-case-study.html) 4
+- Realizar los ejercicios 2 y 3 de esta 
+[sección](https://mastering-shiny.org/basic-reactivity.html#exercises-3).
+- Completar el [capítulo](https://mastering-shiny.org/basic-case-study.html) 4
 del libro **Mastering Shiny**.

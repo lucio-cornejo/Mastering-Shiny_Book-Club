@@ -21,3 +21,9 @@ p > code, li > code {
   padding: 0.3em 0.4em !important;
   background-color: aliceblue !important;
 }
+
+// Invert colors in mermaid diagrams, 
+// so that the tip of the arrows is visible
+pre.mermaid {
+  filter: invert(1);
+}

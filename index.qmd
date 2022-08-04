@@ -58,8 +58,10 @@ para que puedan instalar las dependencias requeridas para este club de lectura.
     - Control de la reactividad.
 
 - Capítulo 4: _Case study: ER injuries_
-    - Ejemplo práctico donde empleamos
+    - Ejemplo práctico donde se emplean
     las herramientas presentadas hasta ahora.
+    - La tarea de esta sesión es crear la
+    aplicación de este capítulo.
 
 ### Sesión 3 (08/08)
 
