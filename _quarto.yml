@@ -30,6 +30,10 @@ book:
     - part: "Sesión 2"
       chapters:
         - chapter_03.qmd
+    - part: "Sesión 3"
+      chapters:
+        - chapter_06.qmd
+        - chapter_09.qmd
 
 bibliography: references.bib
 

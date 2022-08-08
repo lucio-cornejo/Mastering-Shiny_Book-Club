@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Mastering Shiny Book Club - 4&nbsp; Diseño, temas y HTML</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./chapter_09.html" rel="next">
+<link href="./chapter_03.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script><!-- <script>
+  document.addEventListener(
+    'DOMContentLoaded',
+    function () {
+      const mermaids = [...document.querySelectorAll("pre.mermaid")];
+      var filtro = 1;
+      mermaids.forEach(function (mermaid) {
+        mermaid.addEventListener('click', function (e) {
+          e.preventDefault();
+          filtro = (Math.floor(filtro + 1)) % 2;
+          document.body.style.filter = `invert(${filtro})`
+        })
+      })
+    }
+  )
+</script> -->
+</head>
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">
+<span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diseño, temas y HTML</span>
+</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Mastering Shiny Book Club</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/lucio-cornejo/Mastering-Shiny_Bookclub" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Sílabo</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Sesión 1</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter_01.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Tu primera aplicación Shiny</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter_02.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Interfaz básica de usuario</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Sesión 2</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter_03.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Reactividad básica</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Sesión 3</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter_06.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diseño, temas y HTML</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter_09.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Cargas y descargas</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc"><h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+<li>
+<a href="#introducci%C3%B3n" id="toc-introducción" class="nav-link active" data-scroll-target="#introducci%C3%B3n"> <span class="header-section-number">4.1</span> Introducción</a>
+  <ul class="collapse">
+<li><a href="#dise%C3%B1os-de-una-p%C3%A1gina" id="toc-diseños-de-una-página" class="nav-link" data-scroll-target="#dise%C3%B1os-de-una-p%C3%A1gina"> <span class="header-section-number">4.1.1</span> Diseños de una página</a></li>
+  <li><a href="#dise%C3%B1os-de-m%C3%BAltiples-p%C3%A1ginas" id="toc-diseños-de-múltiples-páginas" class="nav-link" data-scroll-target="#dise%C3%B1os-de-m%C3%BAltiples-p%C3%A1ginas"> <span class="header-section-number">4.1.2</span> Diseños de múltiples páginas</a></li>
+  <li><a href="#bootstrap" id="toc-bootstrap" class="nav-link" data-scroll-target="#bootstrap"> <span class="header-section-number">4.1.3</span> Bootstrap</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#temas" id="toc-temas" class="nav-link" data-scroll-target="#temas"> <span class="header-section-number">4.2</span> Temas</a>
+  <ul class="collapse">
+<li><a href="#manos-a-la-obra" id="toc-manos-a-la-obra" class="nav-link" data-scroll-target="#manos-a-la-obra"> <span class="header-section-number">4.2.1</span> Manos a la obra</a></li>
+  <li><a href="#temas-de-shiny" id="toc-temas-de-shiny" class="nav-link" data-scroll-target="#temas-de-shiny"> <span class="header-section-number">4.2.2</span> Temas de Shiny</a></li>
+  <li><a href="#temas-para-gr%C3%A1ficos" id="toc-temas-para-gráficos" class="nav-link" data-scroll-target="#temas-para-gr%C3%A1ficos"> <span class="header-section-number">4.2.3</span> Temas para gráficos</a></li>
+  <li><a href="#detr%C3%A1s-de-la-m%C3%A1scara" id="toc-detrás-de-la-máscara" class="nav-link" data-scroll-target="#detr%C3%A1s-de-la-m%C3%A1scara"> <span class="header-section-number">4.2.4</span> Detrás de la máscara</a></li>
+  </ul>
+</li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"> <span class="header-section-number">4.3</span> Resumen</a></li>
+  <li><a href="#tarea" id="toc-tarea" class="nav-link" data-scroll-target="#tarea"> <span class="header-section-number">4.4</span> Tarea</a></li>
+  <li><a href="#extra" id="toc-extra" class="nav-link" data-scroll-target="#extra"> <span class="header-section-number">4.5</span> Extra</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title d-none d-lg-block">
+<span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diseño, temas y HTML</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header><section id="introducción" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="introducción">
+<span class="header-section-number">4.1</span> Introducción</h2>
+<p>Al final de esta sección, habremos logrado lo siguiente:</p>
+<ul>
+<li>Aprender sobre cómo organizar los inputs y outputs de una app Shiny.</li>
+<li>Mejorar la apariencia de una aplicación Shiny, por medio de Bootstrap.</li>
+<li>Familiarizarnos con HTML y CSS, para poder personalizar a detalle nuestras aplicaciones web.</li>
+</ul>
+<section id="diseños-de-una-página" class="level3" data-number="4.1.1"><h3 data-number="4.1.1" class="anchored" data-anchor-id="diseños-de-una-página">
+<span class="header-section-number">4.1.1</span> Diseños de una página</h3>
+<p>Para el diseño de las aplicaciones Shiny, la <strong>jerarquía</strong> de las funciones empleadas para definir la interfaz de usuario coincide con la <strong>jerarquía</strong> de los elementos que aquel código produce para la página web.</p>
+<p>Ejemplo:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu">fluidPage</span><span class="op">(</span>
+  <span class="fu">titlePanel</span><span class="op">(</span><span class="st">"Título"</span><span class="op">)</span>),
+  <span class="fu">sidebarLayout</span><span class="op">(</span>
+    <span class="fu">sidebarPanel</span><span class="op">(</span>
+      <span class="fu">sliderInput</span><span class="op">(</span><span class="st">"obs"</span>, <span class="st">"Observaciones:"</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">1000</span>, value <span class="op">=</span> <span class="fl">500</span><span class="op">)</span>
+    <span class="op">)</span>,
+    <span class="fu">mainPanel</span><span class="op">(</span>
+      <span class="fu">plotOutput</span><span class="op">(</span><span class="st">"histograma"</span><span class="op">)</span>
+    <span class="op">)</span>
+  <span class="op">)</span>
+<span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notemos la jerarquía del siguiente código, y del resultado HTML que produce cuando lo evaluamos en la consola de R.<br>
+(añadir título)</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu">fluidPage</span><span class="op">(</span>
+  <span class="fu">titlePanel</span><span class="op">(</span><span class="op">)</span>,
+  <span class="fu">sidebarLayout</span><span class="op">(</span>
+    <span class="fu">sidebarPanel</span><span class="op">(</span><span class="op">)</span>,
+    <span class="fu">mainPanel</span><span class="op">(</span><span class="op">)</span>
+  <span class="op">)</span>
+<span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="funciones-de-página" class="level4" data-number="4.1.1.1"><h4 data-number="4.1.1.1" class="anchored" data-anchor-id="funciones-de-página">
+<span class="header-section-number">4.1.1.1</span> Funciones de página</h4>
+<p>La función de diseño más importante para Shiny es <code><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage()</a></code>. Aquella función sirve también para inicializar el HTML, CSS y JavaScript que requiere nuestra aplicación Shiny.</p>
+<p>Comparemos el <strong>código</strong> HTML de las siguientes aplicaciones elementales:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/">shiny</a></span><span class="op">)</span>
+
+<span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span>
+<span class="op">)</span>
+
+<span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span>
+<span class="op">}</span>
+
+<span class="co"># Caso 1: Sin fluidPage()</span>
+<span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">server</span><span class="op">)</span>
+
+<span class="co"># Caso 2: Con fluidPage()</span>
+<span class="co"># shinyApp(ui, server)</span>
+
+<span class="co"># Presione Ctrl+U tras visualizar la app en un navegador web.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Otras maneras de inicializar la interfaz de usuario:</p>
+<ul>
+<li>
+<code><a href="https://rdrr.io/pkg/shiny/man/fixedPage.html">fixedPage()</a></code>
+<ul>
+<li>Parecido a <code><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage()</a></code>, pero fija un máximo de ancho para la página, ya sea 940 pixeles (px), 724px o 1170px, dependiendo del tamaño de la pantalla.</li>
+<li>Requiere el uso de <code><a href="https://rdrr.io/pkg/shiny/man/fixedPage.html">fixedRow()</a></code> en vez de <code><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidRow()</a></code>.</li>
+</ul>
+</li>
+<li>
+<code><a href="https://rdrr.io/pkg/shiny/man/fillPage.html">fillPage()</a></code>
+<ul>
+<li>Sirve para limitarnos a emplear la altura completa del navegador donde se visualiza la app.</li>
+<li>Requiere el uso de <code><a href="https://rdrr.io/pkg/shiny/man/fillRow.html">fillRow()</a></code> en vez de <code><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidRow()</a></code>.</li>
+</ul>
+</li>
+</ul></section><section id="página-con-barra-lateral" class="level4" data-number="4.1.1.2"><h4 data-number="4.1.1.2" class="anchored" data-anchor-id="página-con-barra-lateral">
+<span class="header-section-number">4.1.1.2</span> Página con barra lateral</h4>
+<p>El uso de una <strong>barra lateral</strong> nos permite organizar de manera separada y más ordenada los <strong>inputs</strong> y <strong>outputs</strong> de la aplicación Shiny.</p>
+<p>Estructura básica:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/titlePanel.html">titlePanel</a></span><span class="op">(</span>
+    <span class="co"># Título o descripción de la app</span>pp
+  <span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarLayout</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarPanel</a></span><span class="op">(</span>
+      <span class="co"># inputs</span>
+    <span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">mainPanel</a></span><span class="op">(</span>
+      <span class="co"># outputs</span>
+    <span class="op">)</span>
+  <span class="op">)</span>
+<span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="./media/barra-lateral-basica.png" class="img-fluid figure-img" width="331"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ejemplo: Demo del <strong>teorema del límite central</strong></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/">shiny</a></span><span class="op">)</span>
+
+<span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/titlePanel.html">titlePanel</a></span><span class="op">(</span><span class="st">"Teorema del Límite Central"</span><span class="op">)</span>),
+  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarLayout</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarPanel</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/numericInput.html">numericInput</a></span><span class="op">(</span><span class="st">"m"</span>, <span class="st">"Tamaño de las muestras:"</span>",<span class="fl">2</span>2, min<span class="op">=</span>=<span class="fl">1</span>1, max<span class="op">=</span>=<span class="fl">100</span><span class="op">)</span>)
+    <span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">mainPanel</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/plotOutput.html">plotOutput</a></span><span class="op">(</span><span class="st">"hist"</span><span class="op">)</span>
+    <span class="op">)</span>
+  <span class="op">)</span>
+<span class="op">)</span>
+<span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">output</span><span class="op">$</span><span class="va">hist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPlot.html">renderPlot</a></span><span class="op">(</span><span class="op">{</span>
+    <span class="va">medias</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span><span class="op">(</span><span class="fl">1e4</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">m</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">medias</span>, breaks <span class="op">=</span> <span class="fl">20</span>, main <span class="op">=</span> <span class="st">"Histograma de las medias"</span><span class="op">)</span>
+  <span class="op">}</span>, res <span class="op">=</span> <span class="fl">96</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section><section id="múltiples-filas" class="level4" data-number="4.1.1.3"><h4 data-number="4.1.1.3" class="anchored" data-anchor-id="múltiples-filas">
+<span class="header-section-number">4.1.1.3</span> Múltiples filas</h4>
+<p>Shiny nos permite estructurar el contenido de la interfaz de usuario, en forma de filas y columnas.</p>
+<p>Ejemplo:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidRow</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html">column</a></span><span class="op">(</span><span class="fl">4</span>, 
+      <span class="co"># style = "background-color: yellow;",</span>
+      <span class="st">"Columna 1"</span>
+    <span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html">column</a></span><span class="op">(</span><span class="fl">8</span>, 
+      <span class="co"># style = "background-color: red;",</span>
+      <span class="st">"Columna 2"</span>
+    <span class="op">)</span>
+  <span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidRow</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html">column</a></span><span class="op">(</span><span class="fl">6</span>, 
+      <span class="co"># style = "background-color: blue;",</span>
+      <span class="st">"Columna 3"</span>
+    <span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html">column</a></span><span class="op">(</span><span class="fl">6</span>, 
+      <span class="co"># style = "background-color: green;",</span>
+      <span class="st">"Columna 4"</span>
+    <span class="op">)</span>
+  <span class="op">)</span>
+<span class="op">)</span>
+
+<span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span><span class="op">}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Cada fila está compuesta por 12 columnas.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="./media/basic-shiny-grid.png" class="img-fluid figure-img" width="328"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="ejercicios" class="level4" data-number="4.1.1.4"><h4 data-number="4.1.1.4" class="anchored" data-anchor-id="ejercicios">
+<span class="header-section-number">4.1.1.4</span> Ejercicios</h4>
+<p>Esta sección queda de tarea para quienes asisten a este taller.</p>
+</section></section><section id="diseños-de-múltiples-páginas" class="level3" data-number="4.1.2"><h3 data-number="4.1.2" class="anchored" data-anchor-id="diseños-de-múltiples-páginas">
+<span class="header-section-number">4.1.2</span> Diseños de múltiples páginas</h3>
+<p>A medida que creamos aplicaciones Shiny más complejas, resulta más complicado, o incluso ineficiente, mostrar todo su contenido dentro de una misma página.</p>
+<p>Ante esa problemática, la función <code><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html">tabPanel()</a></code> nos permitirá crear la ilusión de múltiples páginas, para organizar mejor el contenido que se muestra de nuestra aplicación Shiny.</p>
+<section id="tabsets" class="level4" data-number="4.1.2.1"><h4 data-number="4.1.2.1" class="anchored" data-anchor-id="tabsets">
+<span class="header-section-number">4.1.2.1</span> Tabsets</h4>
+<p>La función <code><a href="https://rdrr.io/pkg/shiny/man/tabsetPanel.html">tabsetPanel()</a></code> crea un contenedor para cualquier número de <code><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html">tabPanel()</a></code>. Los <code><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html">tabPanel()</a></code> funcionan como contenedores a parte de lo que queremos mostrar, de manera exclusiva, en la interfaz de usuario.</p>
+<p>Ejemplo:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabsetPanel.html">tabsetPanel</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html">tabPanel</a></span><span class="op">(</span><span class="st">"Subir datos"</span>, 
+      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fileInput.html">fileInput</a></span><span class="op">(</span><span class="st">"archivo"</span>, <span class="st">"Datos"</span>, buttonLabel <span class="op">=</span> <span class="st">"Cargar..."</span><span class="op">)</span>,
+      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textInput.html">textInput</a></span><span class="op">(</span><span class="st">"delim"</span>, <span class="st">"Delimiador (deje vacío para adivinar)"</span>",<span class="st">""</span><span class="op">)</span>),
+      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/numericInput.html">numericInput</a></span><span class="op">(</span><span class="st">"skip"</span>, <span class="st">"Filas que saltear"</span>, <span class="fl">0</span>, min <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,
+      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/numericInput.html">numericInput</a></span><span class="op">(</span><span class="st">"rows"</span>, <span class="st">"Filas que mostrar"</span>, <span class="fl">10</span>, min <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+    <span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html">tabPanel</a></span><span class="op">(</span><span class="st">"Fijar parámetros"</span><span class="op">)</span>),
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html">tabPanel</a></span><span class="op">(</span><span class="st">"Visualizar resultados"</span><span class="op">)</span>
+  <span class="op">)</span>
+<span class="op">)</span>
+
+<span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span><span class="op">}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section><section id="navegación-vía-listas-o-barras" class="level4" data-number="4.1.2.2"><h4 data-number="4.1.2.2" class="anchored" data-anchor-id="navegación-vía-listas-o-barras">
+<span class="header-section-number">4.1.2.2</span> Navegación vía listas o barras</h4>
+<p>Para no limitarnos a crear tabs de manera horizontal, pues sino estas podrían sobrepasar fácilmente el ancho de la pantalla, contamos con un par de alternativas:</p>
+<ul>
+<li>Barra de navegación: <code><a href="https://rdrr.io/pkg/shiny/man/navbarPage.html">navbarPage()</a></code> junto con <code><a href="https://rdrr.io/pkg/shiny/man/navbarPage.html">navbarMenu()</a></code>.</li>
+<li>Lista de navegación: <code><a href="https://rdrr.io/pkg/shiny/man/navlistPanel.html">navlistPanel()</a></code>.</li>
+</ul>
+<p>Ejemplo de <code><a href="https://rdrr.io/pkg/shiny/man/navlistPanel.html">navlistPanel()</a></code>:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/navlistPanel.html">navlistPanel</a></span><span class="op">(</span>
+    id <span class="op">=</span> <span class="st">"tabset"</span>,
+    <span class="st">"Encabezado 1"</span>,
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html">tabPanel</a></span><span class="op">(</span><span class="st">"panel 1"</span>, <span class="st">"Contenido del panel 1"</span><span class="op">)</span>,
+    <span class="st">"Encabezado 2"</span>,
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html">tabPanel</a></span><span class="op">(</span><span class="st">"panel 2"</span>, <span class="st">"Contenido del panel 2"</span><span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html">tabPanel</a></span><span class="op">(</span><span class="st">"panel 3"</span>, <span class="st">"Contenido del panel 3"</span><span class="op">)</span>
+  <span class="op">)</span>
+<span class="op">)</span>
+
+<span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span><span class="op">}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ejemplo de <code><a href="https://rdrr.io/pkg/shiny/man/navbarPage.html">navbarPage()</a></code>:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/navbarPage.html">navbarPage</a></span><span class="op">(</span>
+  <span class="st">"Título"</span>",   
+  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html">tabPanel</a></span><span class="op">(</span><span class="st">"panel 1"</span>, <span class="st">"1"</span><span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html">tabPanel</a></span><span class="op">(</span><span class="st">"panel 2"</span>, <span class="st">"2"</span><span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html">tabPanel</a></span><span class="op">(</span><span class="st">"panel 3"</span>, <span class="st">"3"</span><span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/navbarPage.html">navbarMenu</a></span><span class="op">(</span><span class="st">"subpaneles"</span>, 
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html">tabPanel</a></span><span class="op">(</span><span class="st">"panel 4a"</span>, <span class="st">"4.a"</span><span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html">tabPanel</a></span><span class="op">(</span><span class="st">"panel 4b"</span>, <span class="st">"4.b"</span><span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html">tabPanel</a></span><span class="op">(</span><span class="st">"panel 4c"</span>, <span class="st">"4.c"</span><span class="op">)</span>
+  <span class="op">)</span>
+<span class="op">)</span>
+
+<span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span><span class="op">}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section></section><section id="bootstrap" class="level3" data-number="4.1.3"><h3 data-number="4.1.3" class="anchored" data-anchor-id="bootstrap">
+<span class="header-section-number">4.1.3</span> Bootstrap</h3>
+<p>Bootstrap es un framework/<em>librearía</em> de CSS, que nos provee de plantillas para el diseño e interactividad de los elementos en nuestra página web.</p>
+<p>Shiny nos permite emplear Bootstrap de la siguientes maneras:</p>
+<ul>
+<li>Personalizar el diseño de la interfaz de usuario, vía <code><a href="https://rstudio.github.io/bslib/reference/bs_theme.html">bslib::bs_theme()</a></code>.</li>
+<li>Emplear el argumento/parámetro <code>class</code> para asignar diseños predeterminados por Bootstrap, a elementos de la interfaz de usuario; tal como hicimos en la primera sesión, para estilizar botones, guiándonos de esta <a href="https://bootstrapshuffle.com/classes">chuleta</a> de Bootstrap.</li>
+<li>Reconfigurar el estilo de los componentes que Shiny nos proporciona para la interfaz de usuario, como en este <a href="https://rstudio.github.io/bslib/articles/utility-classes.html">ejemplo</a>.</li>
+</ul>
+<p>También es posible emplear Shiny con frameworks de CSS distintos de Bootstrap, tales como <a href="https://appsilon.github.io/shiny.semantic/"><strong>shiny.semantic</strong></a>, <a href="https://github.com/RinteRface/shinyMobile"><strong>shinyMobile</strong></a> (diseñado específicamente para aplicaciones móviles), <a href="https://ericrayanderson.github.io/shinymaterial/"><strong>shinymaterial</strong></a> y <a href="https://rstudio.github.io/shinydashboard/"><strong>shinydashboard</strong></a>.</p>
+<p><a href="https://github.com/nanxstats/awesome-shiny-extensions">Acá</a> puede encontrar más opciones.</p>
+</section></section><section id="temas" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="temas">
+<span class="header-section-number">4.2</span> Temas</h2>
+<p>Para que no suceda que todas las aplicaciones Shiny tienen el mismo diseño, ya que por defauly funciona de manera aceptable, el paquete <strong>bslib</strong> nos permite personalizar fácilmente el diseño de nuestra app.</p>
+<section id="manos-a-la-obra" class="level3" data-number="4.2.1"><h3 data-number="4.2.1" class="anchored" data-anchor-id="manos-a-la-obra">
+<span class="header-section-number">4.2.1</span> Manos a la obra</h3>
+<p>El tema/modelo/plantilla de nuestra app se inicializa así:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span>
+  theme <span class="op">=</span> <span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/bs_theme.html">bs_theme</a></span><span class="op">(</span><span class="op">)</span>
+<span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section><section id="temas-de-shiny" class="level3" data-number="4.2.2"><h3 data-number="4.2.2" class="anchored" data-anchor-id="temas-de-shiny">
+<span class="header-section-number">4.2.2</span> Temas de Shiny</h3>
+<p>Podemos aplicar una plantilla de Bootstrap para toda la aplicación Shiny, vía el argumento <code>bootswatch</code> de <code><a href="https://rstudio.github.io/bslib/reference/bs_theme.html">bslib::bs_theme()</a></code>.</p>
+<p>Ejemplo:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span>
+  theme <span class="op">=</span> <span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/bs_theme.html">bs_theme</a></span><span class="op">(</span>bootswatch <span class="op">=</span> <span class="st">"darkly"</span><span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarLayout</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarPanel</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textInput.html">textInput</a></span><span class="op">(</span><span class="st">"txt"</span>, <span class="st">"Escribe algo:"</span>, <span class="st">"..."</span><span class="op">)</span>,
+      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sliderInput.html">sliderInput</a></span><span class="op">(</span><span class="st">"deslizador"</span>, <span class="st">"Rango:"</span>, <span class="fl">1</span>, <span class="fl">100</span>, <span class="fl">30</span><span class="op">)</span>
+    <span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">mainPanel</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html">h1</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Tema: darkly"</span><span class="op">)</span><span class="op">)</span>,
+      <span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html">h2</a></span><span class="op">(</span><span class="st">"Encabezado 2"</span><span class="op">)</span>,
+      <span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html">p</a></span><span class="op">(</span><span class="st">"lorem ipsum"</span><span class="op">)</span>
+    <span class="op">)</span>
+  <span class="op">)</span>
+<span class="op">)</span>
+
+<span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span><span class="op">}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Pruebe cambiar el valor de <code>bootswatch</code> por <code>"united"</code>, para visualizar los cambios al diseño.</p>
+<p>La lista completa de los posibles valores para <code>bootswatch</code> puede obtenerse con el siguiente código:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/bslib/">bslib</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rstudio.github.io/bslib/reference/bootswatch_themes.html">bootswatch_themes</a></span><span class="op">(</span>version <span class="op">=</span> <span class="fu"><a href="https://rstudio.github.io/bslib/reference/versions.html">version_default</a></span><span class="op">(</span><span class="op">)</span>, full_path <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Sino, <a href="https://rstudio.github.io/shinythemes/">aquí</a> puede visualizar algunas de esos plantillas.</p>
+<p>Puedes crear una <strong>plantilla propia</strong>, de la siguiente manera:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span>
+  theme <span class="op">=</span> <span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/bs_theme.html">bs_theme</a></span><span class="op">(</span>
+    bg <span class="op">=</span> <span class="st">"#0b3d91"</span>, 
+    fg <span class="op">=</span> <span class="st">"white"</span>, 
+    base_font <span class="op">=</span> <span class="st">"Source Sans Pro"</span>
+  <span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarLayout</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarPanel</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textInput.html">textInput</a></span><span class="op">(</span><span class="st">"txt"</span>, <span class="st">"Escribe algo:"</span>, <span class="st">"..."</span><span class="op">)</span>,
+      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sliderInput.html">sliderInput</a></span><span class="op">(</span><span class="st">"deslizador"</span>, <span class="st">"Rango:"</span>, <span class="fl">1</span>, <span class="fl">100</span>, <span class="fl">30</span><span class="op">)</span>
+    <span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">mainPanel</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html">h1</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Tema: darkly"</span><span class="op">)</span><span class="op">)</span>,
+      <span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html">h2</a></span><span class="op">(</span><span class="st">"Encabezado 2"</span><span class="op">)</span>,
+      <span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html">p</a></span><span class="op">(</span><span class="st">"lorem ipsum"</span><span class="op">)</span>
+    <span class="op">)</span>
+  <span class="op">)</span>
+<span class="op">)</span>
+
+<span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span><span class="op">}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Asimismo, Shiny te permite alterar de manera interactiva la plantilla usada para la aplicación, y guardar los cambios necesario a la plantilla, para poder actualizarla:</p>
+<p>Ejemplo:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">theme</span> <span class="op">&lt;-</span> <span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/bs_theme.html">bs_theme</a></span><span class="op">(</span>
+  bg <span class="op">=</span> <span class="st">"#0b3d91"</span>, 
+  fg <span class="op">=</span> <span class="st">"white"</span>, 
+  base_font <span class="op">=</span> <span class="st">"Source Sans Pro"</span>
+<span class="op">)</span>
+
+<span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span>
+  <span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/bs_theme_preview.html">bs_theme_preview</a></span><span class="op">(</span><span class="va">theme</span><span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarLayout</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarPanel</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textInput.html">textInput</a></span><span class="op">(</span><span class="st">"txt"</span>, <span class="st">"Escribe algo:"</span>, <span class="st">"..."</span><span class="op">)</span>,
+      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sliderInput.html">sliderInput</a></span><span class="op">(</span><span class="st">"deslizador"</span>, <span class="st">"Rango:"</span>, <span class="fl">1</span>, <span class="fl">100</span>, <span class="fl">30</span><span class="op">)</span>
+    <span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">mainPanel</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html">h1</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Tema: darkly"</span><span class="op">)</span><span class="op">)</span>,
+      <span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html">h2</a></span><span class="op">(</span><span class="st">"Encabezado 2"</span><span class="op">)</span>,
+      <span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html">p</a></span><span class="op">(</span><span class="st">"lorem ipsum"</span><span class="op">)</span>
+    <span class="op">)</span>
+  <span class="op">)</span>
+<span class="op">)</span>
+
+<span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span><span class="op">}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section><section id="temas-para-gráficos" class="level3" data-number="4.2.3"><h3 data-number="4.2.3" class="anchored" data-anchor-id="temas-para-gráficos">
+<span class="header-section-number">4.2.3</span> Temas para gráficos</h3>
+<p>Como los diseños definidos en <code><a href="https://rstudio.github.io/bslib/reference/bs_theme.html">bslib::bs_theme()</a></code> no afectan a los gráficos mostrados en la aplicación Shiny, se puede emplear el paquete <a href="https://rstudio.github.io/thematic/">thematic</a> nos permite actualizar de manera automática los gráficos en la app, heredando el diseño definido en <code><a href="https://rstudio.github.io/bslib/reference/bs_theme.html">bslib::bs_theme()</a></code>.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/">shiny</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/thematic/">thematic</a></span><span class="op">)</span>
+
+<span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span>
+  theme <span class="op">=</span> <span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/bs_theme.html">bs_theme</a></span><span class="op">(</span>bootswatch <span class="op">=</span> <span class="st">"darkly"</span><span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/titlePanel.html">titlePanel</a></span><span class="op">(</span><span class="st">"Gráfico con tema/plantilla"</span><span class="op">)</span>),
+  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/plotOutput.html">plotOutput</a></span><span class="op">(</span><span class="st">"plot"</span><span class="op">)</span>,
+<span class="op">)</span>
+
+<span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span>
+  <span class="co"># thematic::thematic_shiny()</span>
+  <span class="va">output</span><span class="op">$</span><span class="va">plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPlot.html">renderPlot</a></span><span class="op">(</span><span class="op">{</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">wt</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="op">}</span>, res <span class="op">=</span> <span class="fl">96</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section><section id="detrás-de-la-máscara" class="level3" data-number="4.2.4"><h3 data-number="4.2.4" class="anchored" data-anchor-id="detrás-de-la-máscara">
+<span class="header-section-number">4.2.4</span> Detrás de la máscara</h3>
+<p>Esta parte no la exploraremos todavía, ya que se tratará con mayor profundidad en la sesión 5, donde aprenderemos cómo Shiny nos permite una <code>comunicación bilateral</code> entre <strong>R</strong> y <strong>JavaScript</strong>.</p>
+<p>Veamos rápidamente esta <a href="https://mastering-shiny.org/action-layout.html#under-the-hood">sección</a> del libro.</p>
+</section></section><section id="resumen" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="resumen">
+<span class="header-section-number">4.3</span> Resumen</h2>
+<p>En este capítulo aprendimos a estructur de manera más organizada el contenido de la interfaz de usuario de una aplicación Shiny. Asimismo, ahora sabemos que las funciones (de Shiny) de tipo <strong>input</strong> y <strong>output</strong> simplemente generan código HTML, el cual podemos estilizar por medio de <strong>Bootstrap</strong>.</p>
+</section><section id="tarea" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="tarea">
+<span class="header-section-number">4.4</span> Tarea</h2>
+<ul>
+<li>Resolver los ejercicios en esta <a href="https://mastering-shiny.org/action-layout.html#exercises-5">sección</a> del libro.</li>
+<li>Realizar de manera <em>creativa</em> el ejericio en esta <a href="https://mastering-shiny.org/action-layout.html#exercises-6">sección</a>.</li>
+</ul></section><section id="extra" class="level2" data-number="4.5"><h2 data-number="4.5" class="anchored" data-anchor-id="extra">
+<span class="header-section-number">4.5</span> Extra</h2>
+<ul>
+<li>
+<a href="https://stackoverflow.com/questions/25340847/control-the-height-in-fluidrow-in-r-shiny">Una</a> manera deestructurar la interfaz de usuario en forma de <strong>malla</strong>.</li>
+</ul>
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./chapter_03.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Reactividad básica</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./chapter_09.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Cargas y descargas</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">R-Ladies Lima</div>   
+  </div>
+</footer>
+
+
+</body></html>

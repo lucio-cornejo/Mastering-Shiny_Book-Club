@@ -1,0 +1,191 @@
+# Cargas y descargas
+
+En este capítulo, exploraremos cómo Shiny nos permite
+realizar un análisis predeterminado de datos que cargamos
+a una aplicación Shiny; además de descargar data procesada
+o el resultado de un **reporte parametrizado**.
+
+## Carga
+
+### Interfaz de usuario
+
+```{.r}
+ui <- fluidPage(
+  fileInput(id = "carga", label = "Cargar un archivo")
+)
+```
+
+### Función de servidor
+
+Ejemplo de dataset: 
+`write.csv(iris,"ruta_para_archivo/nombre.csv, row.names = FALSE)`
+
+¿Qué valor asume `fileInput()` tras cargar un archivo?
+
+```{.r}
+ui <- fluidPage(
+  fileInput("upload", NULL, Label = "Upload...", multiple = TRUE),
+  tableOutput("files")
+)
+server <- function(input, output, session) {
+  output$files <- renderTable(input$upload)
+}
+```
+
+- **name**: Nombre del archivo cargado.
+- **size**: Tamaño, en bytes, del archivo.
+- **type**: Especificación formal del tipo archivo cargado.
+- **datapath**: La data cargada se guarda en un folder temporal,
+con un nombre temporal. **datapath** es la ruta de tal data cargada
+al servidor.
+
+### Cargar datos
+
+- `input$upload` vale `NULL` cuando se carga la página.
+Por ello, usaremos `req(input$upload)` para que su código relevante
+se ejecute cuando el archivo haya sido cargado.
+
+- El argumento `accept` es un intento de limitar qué tipo de archivos
+pueden añadirse para ser cargados. Obtendremos la extensión del archivo
+vía `tools::file_ext()`.
+
+Ejemplo:
+
+```{.r}
+ui <- fluidPage(
+  fileInput("upload", NULL, accept = c(".csv", ".tsv")),
+  numericInput("n", "Rows", value = 5, min = 1, step = 1),
+  tableOutput("head")
+)
+
+server <- function(input, output, session) {
+  data <- reactive({
+    req(input$upload)
+    
+    ext <- tools::file_ext(input$upload$name)
+    switch(ext,
+      csv = vroom::vroom(input$upload$datapath, delim = ","),
+      tsv = vroom::vroom(input$upload$datapath, delim = "\t"),
+      validate("Invalid file; Please upload a .csv or .tsv file")
+    )
+  })
+  
+  output$head <- renderTable({
+    head(data(), input$n)
+  })
+}
+```
+
+## Descarga
+
+### Interfaz de usuario
+
+```{.r}
+ui <- fluidPage(
+  downloadButton("download1"),
+  downloadLink("download2")
+)
+
+server <- function(input, output, session) {}
+```
+
+`downloadButton()` está asociado no una función de tipo `render`,
+sino a `downloadHandler()`, de la siguiente manera:
+
+```{.r}
+ui <- fluidPage(
+  downloadButton("download")
+)
+
+server <- function(input, output, session) {
+  output$download <- downloadHandler(
+    filename = function() {
+      paste0(input$dataset, ".csv")
+    },
+    content = function(file) {
+      write.csv(data(), file)
+    }
+  )
+}
+```
+
+- **filename**: Función sin argumentos que define el nombre del archivo por descargar.
+- **content**: Función con único argumento **file**, la ruta donde se guardará el archivo.
+
+### Descargar data
+
+```{.r}
+ui <- fluidPage(
+  selectInput("dataset", "Pick a dataset", ls("package:datasets")),
+  tableOutput("preview"),
+  # downloadButton("download", "Download .tsv")
+  downloadButton("download", "Download .csv")
+)
+
+server <- function(input, output, session) {
+  data <- reactive({
+    out <- get(input$dataset, "package:datasets")
+    if (!is.data.frame(out)) {
+      validate(paste0("'", input$dataset, "' is not a data frame"))
+    }
+    out
+  })
+  
+  output$preview <- renderTable({
+    head(data())
+  })
+    
+  output$download <- downloadHandler(
+    filename = function() {
+      # paste0(input$dataset, ".tsv")
+      paste0(input$dataset, ".csv")
+    },
+    content = function(file) {
+      # vroom::vroom_write(data(), file)
+      write.csv(data(), file)
+    }
+  )
+}
+```
+
+### Descargar reportes
+
+Primero, hay que definir qué es un reporte parametrizado,
+creado con R Markdown.
+
+```{.r}
+ui <- fluidPage(
+  sliderInput("n", "Number of points", 1, 100, 50),
+  downloadButton("report", "Generate report")
+)
+
+server <- function(input, output, session) {
+  output$report <- downloadHandler(
+    filename = "report.html",
+    content = function(file) {
+      params <- list(n = input$n)
+      
+      id <- showNotification(
+        "Rendering report...", 
+        duration = NULL, 
+        closeButton = FALSE
+      )
+      on.exit(removeNotification(id), add = TRUE)
+
+      rmarkdown::render("report.Rmd", 
+        output_file = file,
+        params = params,
+        envir = new.env(parent = globalenv())
+      )
+    }
+  )
+}
+```
+
+La ruta del reporte parametrizado *debe* estar contenida dentro
+de la ruta de la aplicación Shiny que está siendo ejecutada.
+
+## Tarea
+
+Hacer los ejercicios 2 y 3 de esta 
+[sección](https://mastering-shiny.org/action-transfer.html#exercises-7).

@@ -1,0 +1,470 @@
+# Diseño, temas y HTML
+
+## Introducción
+
+Al final de esta sección, habremos logrado lo siguiente:
+
+- Aprender sobre cómo organizar los inputs y outputs de una app Shiny.
+- Mejorar la apariencia de una aplicación Shiny, por medio de Bootstrap.
+- Familiarizarnos con HTML y CSS, para poder personalizar a detalle 
+nuestras aplicaciones web.
+
+### Diseños de una página
+
+Para el diseño de las aplicaciones Shiny, la **jerarquía** de las funciones
+empleadas para definir la interfaz de usuario coincide con la **jerarquía**
+de los elementos que aquel código produce para la página web.
+
+Ejemplo:
+
+```{.r}
+fluidPage(
+  titlePanel("Título"),
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("obs", "Observaciones:", min = 0, max = 1000, value = 500)
+    ),
+    mainPanel(
+      plotOutput("histograma")
+    )
+  )
+)
+```
+
+Notemos la jerarquía del siguiente código, y del resultado HTML
+que produce cuando lo evaluamos en la consola de R.  
+(añadir título)
+
+```{.r}
+fluidPage(
+  titlePanel(),
+  sidebarLayout(
+    sidebarPanel(),
+    mainPanel()
+  )
+)
+```
+
+#### Funciones de página
+
+La función de diseño más importante para Shiny es `fluidPage()`.
+Aquella función sirve también para inicializar el HTML, CSS y JavaScript
+que requiere nuestra aplicación Shiny.
+
+Comparemos el **código** HTML de las siguientes aplicaciones elementales:
+
+```{.r}
+library(shiny)
+
+ui <- fluidPage(
+)
+
+server <- function(input, output) {
+}
+
+# Caso 1: Sin fluidPage()
+shinyApp(NULL, server)
+
+# Caso 2: Con fluidPage()
+# shinyApp(ui, server)
+
+# Presione Ctrl+U tras visualizar la app en un navegador web.
+```
+
+Otras maneras de inicializar la interfaz de usuario:
+
+- `fixedPage()`
+    - Parecido a `fluidPage()`, pero fija un máximo de ancho
+  para la página, ya sea 940 pixeles (px), 724px o 1170px, dependiendo
+  del tamaño de la pantalla. 
+    - Requiere el uso de `fixedRow()` en vez de `fluidRow()`. 
+- `fillPage()`
+    - Sirve para limitarnos a emplear la altura completa
+del navegador donde se visualiza la app.
+    - Requiere el uso de `fillRow()` en vez de `fluidRow()`. 
+
+#### Página con barra lateral
+
+El uso de una **barra lateral** nos permite organizar de manera separada
+y más ordenada los **inputs** y **outputs** de la aplicación Shiny.
+
+Estructura básica:
+
+```{.r}
+fluidPage(
+  titlePanel(
+    # Título o descripción de la app
+  ),
+  sidebarLayout(
+    sidebarPanel(
+      # inputs
+    ),
+    mainPanel(
+      # outputs
+    )
+  )
+)
+```
+
+```{r}
+#| echo: false
+#| fig-align: "center"
+
+knitr::include_graphics("./media/barra-lateral-basica.png")
+```
+
+Ejemplo: Demo del **teorema del límite central**
+
+```{.r}
+library(shiny)
+
+ui <- fluidPage(
+  titlePanel("Teorema del Límite Central"),
+  sidebarLayout(
+    sidebarPanel(
+      numericInput("m", "Tamaño de las muestras:", 2, min = 1, max = 100)
+    ),
+    mainPanel(
+      plotOutput("hist")
+    )
+  )
+)
+server <- function(input, output, session) {
+  output$hist <- renderPlot({
+    medias <- replicate(1e4, mean(runif(input$m)))
+    hist(medias, breaks = 20, main = "Histograma de las medias")
+  }, res = 96)
+}
+
+shinyApp(ui, server)
+```
+
+#### Múltiples filas
+
+Shiny nos permite estructurar el contenido de la interfaz de usuario,
+en forma de filas y columnas.
+
+Ejemplo:
+
+```{.r}
+ui <- fluidPage(
+  fluidRow(
+    column(4, 
+      # style = "background-color: yellow;",
+      "Columna 1"
+    ),
+    column(8, 
+      # style = "background-color: red;",
+      "Columna 2"
+    )
+  ),
+  fluidRow(
+    column(6, 
+      # style = "background-color: blue;",
+      "Columna 3"
+    ),
+    column(6, 
+      # style = "background-color: green;",
+      "Columna 4"
+    )
+  )
+)
+
+server <- function(input, output, session) {}
+```
+
+Cada fila está compuesta por 12 columnas.
+
+```{r}
+#| echo: false
+#| fig-align: "center"
+
+knitr::include_graphics("./media/basic-shiny-grid.png")
+```
+
+#### Ejercicios
+
+Esta sección queda de tarea para quienes asisten a este taller.
+
+### Diseños de múltiples páginas
+
+A medida que creamos aplicaciones Shiny más complejas, resulta
+más complicado, o incluso ineficiente, mostrar todo su contenido
+dentro de una misma página. 
+
+Ante esa problemática, la función `tabPanel()` nos permitirá
+crear la ilusión de múltiples páginas, para organizar mejor
+el contenido que se muestra de nuestra aplicación Shiny.
+
+#### Tabsets
+
+La función `tabsetPanel()` crea un contenedor para cualquier
+número de `tabPanel()`. Los `tabPanel()` funcionan como
+contenedores a parte de lo que queremos mostrar, de manera
+exclusiva, en la interfaz de usuario.
+
+Ejemplo:
+
+```{.r}
+ui <- fluidPage(
+  tabsetPanel(
+    tabPanel("Subir datos", 
+      fileInput("archivo", "Datos", buttonLabel = "Cargar..."),
+      textInput("delim", "Delimiador (deje vacío para adivinar)", ""),
+      numericInput("skip", "Filas que saltear", 0, min = 0),
+      numericInput("rows", "Filas que mostrar", 10, min = 1)
+    ),
+    tabPanel("Fijar parámetros"),
+    tabPanel("Visualizar resultados")
+  )
+)
+
+server <- function(input, output, session) {}
+```
+
+#### Navegación vía listas o barras
+
+Para no limitarnos a crear tabs de manera horizontal,
+pues sino estas podrían sobrepasar fácilmente el ancho de la pantalla,
+contamos con un par de alternativas:
+
+- Barra de navegación: `navbarPage()` junto con `navbarMenu()`.
+- Lista de navegación: `navlistPanel()`.
+
+Ejemplo de `navlistPanel()`:
+
+```{.r}
+ui <- fluidPage(
+  navlistPanel(
+    id = "tabset",
+    "Encabezado 1",
+    tabPanel("panel 1", "Contenido del panel 1"),
+    "Encabezado 2",
+    tabPanel("panel 2", "Contenido del panel 2"),
+    tabPanel("panel 3", "Contenido del panel 3")
+  )
+)
+
+server <- function(input, output, session) {}
+```
+
+Ejemplo de `navbarPage()`:
+
+```{.r}
+ui <- navbarPage(
+  "Título",   
+  tabPanel("panel 1", "1"),
+  tabPanel("panel 2", "2"),
+  tabPanel("panel 3", "3"),
+  navbarMenu("subpaneles", 
+    tabPanel("panel 4a", "4.a"),
+    tabPanel("panel 4b", "4.b"),
+    tabPanel("panel 4c", "4.c")
+  )
+)
+
+server <- function(input, output, session) {}
+``` 
+
+### Bootstrap
+
+Bootstrap es un framework/*librearía* de CSS, que nos provee
+de plantillas para el diseño e interactividad de los elementos
+en nuestra página web.
+
+Shiny nos permite emplear Bootstrap de la siguientes maneras:
+
+- Personalizar el diseño de la interfaz de usuario, 
+vía `bslib::bs_theme()`.
+- Emplear el argumento/parámetro `class` para asignar diseños
+predeterminados por Bootstrap, a elementos de la interfaz de usuario;
+tal como hicimos en la primera sesión, para estilizar botones,
+guiándonos de esta [chuleta](https://bootstrapshuffle.com/classes)
+de Bootstrap.
+- Reconfigurar el estilo de los componentes que Shiny nos proporciona
+para la interfaz de usuario, como en este 
+[ejemplo](https://rstudio.github.io/bslib/articles/utility-classes.html).
+
+También es posible emplear Shiny con frameworks de CSS distintos de Bootstrap,
+tales como [**shiny.semantic**](https://appsilon.github.io/shiny.semantic/), 
+[**shinyMobile**](https://github.com/RinteRface/shinyMobile) 
+(diseñado específicamente para aplicaciones móviles), 
+[**shinymaterial**](https://ericrayanderson.github.io/shinymaterial/) y
+[**shinydashboard**](https://rstudio.github.io/shinydashboard/).
+
+[Acá](https://github.com/nanxstats/awesome-shiny-extensions) 
+puede encontrar  más opciones.
+
+## Temas
+
+Para que no suceda que todas las aplicaciones Shiny tienen el mismo
+diseño, ya que por defauly funciona de manera aceptable, el paquete
+**bslib** nos permite personalizar fácilmente el diseño de nuestra app.
+
+### Manos a la obra
+
+El tema/modelo/plantilla de nuestra app se inicializa así:
+
+```{.r}
+ui <- fluidPage(
+  theme = bslib::bs_theme()
+)
+```
+
+### Temas de Shiny
+
+Podemos aplicar una plantilla de Bootstrap para toda la aplicación Shiny, 
+vía el argumento `bootswatch` de `bslib::bs_theme()`.  
+
+Ejemplo:
+
+```{.r}
+ui <- fluidPage(
+  theme = bslib::bs_theme(bootswatch = "darkly"),
+  sidebarLayout(
+    sidebarPanel(
+      textInput("txt", "Escribe algo:", "..."),
+      sliderInput("deslizador", "Rango:", 1, 100, 30)
+    ),
+    mainPanel(
+      h1(paste0("Tema: darkly")),
+      h2("Encabezado 2"),
+      p("lorem ipsum")
+    )
+  )
+)
+
+server <- function(input, output, session) {}
+```
+
+Pruebe cambiar el valor de `bootswatch` por `"united"`, 
+para visualizar los cambios al diseño.
+
+La lista completa de los posibles valores para `bootswatch` 
+puede obtenerse con el siguiente código:
+
+```{.r}
+library(bslib)
+bootswatch_themes(version = version_default(), full_path = FALSE)
+```
+
+Sino, [aquí](https://rstudio.github.io/shinythemes/) puede visualizar
+algunas de esos plantillas.
+
+Puedes crear una **plantilla propia**, de la siguiente manera:
+
+```{.r}
+ui <- fluidPage(
+  theme = bslib::bs_theme(
+    bg = "#0b3d91", 
+    fg = "white", 
+    base_font = "Source Sans Pro"
+  ),
+  sidebarLayout(
+    sidebarPanel(
+      textInput("txt", "Escribe algo:", "..."),
+      sliderInput("deslizador", "Rango:", 1, 100, 30)
+    ),
+    mainPanel(
+      h1(paste0("Tema: darkly")),
+      h2("Encabezado 2"),
+      p("lorem ipsum")
+    )
+  )
+)
+
+server <- function(input, output, session) {}
+```
+
+Asimismo, Shiny te permite alterar de manera interactiva
+la plantilla usada para la aplicación, y guardar los
+cambios necesario a la plantilla, para poder actualizarla:
+
+Ejemplo:
+
+```{.r}
+theme <- bslib::bs_theme(
+  bg = "#0b3d91", 
+  fg = "white", 
+  base_font = "Source Sans Pro"
+)
+
+ui <- fluidPage(
+  bslib::bs_theme_preview(theme),
+  sidebarLayout(
+    sidebarPanel(
+      textInput("txt", "Escribe algo:", "..."),
+      sliderInput("deslizador", "Rango:", 1, 100, 30)
+    ),
+    mainPanel(
+      h1(paste0("Tema: darkly")),
+      h2("Encabezado 2"),
+      p("lorem ipsum")
+    )
+  )
+)
+
+server <- function(input, output, session) {}
+```
+
+### Temas para gráficos
+
+Como los diseños definidos en `bslib::bs_theme()` no afectan
+a los gráficos mostrados en la aplicación Shiny, se puede emplear
+el paquete [thematic](https://rstudio.github.io/thematic/)
+nos permite actualizar de manera automática los gráficos en
+la app, heredando el diseño definido en `bslib::bs_theme()`.
+
+```{.r}
+library(shiny)
+library(ggplot2)
+require(thematic)
+
+ui <- fluidPage(
+  theme = bslib::bs_theme(bootswatch = "darkly"),
+  titlePanel("Gráfico con tema/plantilla"),
+  plotOutput("plot"),
+)
+
+server <- function(input, output, session) {
+  # thematic::thematic_shiny()
+  output$plot <- renderPlot({
+    ggplot(mtcars, aes(wt, mpg)) +
+      geom_point() +
+      geom_smooth()
+  }, res = 96)
+}
+
+shinyApp(ui, server)
+```
+
+### Detrás de la máscara
+
+Esta parte no la exploraremos todavía, ya que se 
+tratará con mayor profundidad en la sesión 5, 
+donde aprenderemos cómo Shiny nos permite
+una `comunicación bilateral` entre 
+**R** y **JavaScript**.
+
+Veamos rápidamente esta
+[sección](https://mastering-shiny.org/action-layout.html#under-the-hood)
+del libro.
+
+## Resumen
+
+En este capítulo aprendimos a estructur de manera más organizada
+el contenido de la interfaz de usuario de una aplicación Shiny.
+Asimismo, ahora sabemos que las funciones (de Shiny) de tipo
+**input** y **output** simplemente generan código HTML,
+el cual podemos estilizar por medio de **Bootstrap**.
+
+## Tarea
+
+- Resolver los ejercicios en esta [sección](https://mastering-shiny.org/action-layout.html#exercises-5) del libro.
+- Realizar de manera *creativa* el ejericio en esta 
+[sección](https://mastering-shiny.org/action-layout.html#exercises-6).
+
+## Extra
+
+- [Una](https://stackoverflow.com/questions/25340847/control-the-height-in-fluidrow-in-r-shiny) 
+manera deestructurar la interfaz de usuario en forma de **malla**.
