@@ -1,0 +1,61 @@
+---
+title: "Reporte parametrizado"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+params: 
+  anio: 
+    label: "Año"
+    value: 1931
+    input: slider
+    min: 1920
+    max: 1939
+    step: 1
+  archivo:
+    label: "Data para analizar"
+    value: temperaturas.csv
+    input: file
+# rmarkdown::render("D:/Mastering-Shiny_Book-Club/flujo_de_trabajo/paso-3_reporte_parametrizado/reporte.Rmd", params = "ask")
+---
+
+```{r cargar-data, include = FALSE}
+# Base de datos usada para crear el data frame "temperaturas":
+# nottem (Average Monthly Temperatures at Nottingham, 1920-1939)
+temperaturas <- read.csv(params$archivo)  
+```
+
+```{r, escoger-anio}
+# Fijar un año
+# Años posibles: 1920 a 1939
+anio <- params$anio   
+```
+
+## Año `r anio`  
+
+### Temperaturas mensuales promedio en Nottingham
+
+```{r, diagrama-de-barras}
+temperatura_anual <- temperaturas[temperaturas$anio == anio,]
+temperatura_anual <- unlist(temperatura_anual)[-1]
+
+barplot(
+  height = temperatura_anual, col ="skyblue",
+  xlab = "", ylab = "Temperatura promedio",
+  main = paste0("Año ", anio),
+  names = colnames(temperatura_anual)[-1], las = 2
+)
+```
+
+### Conclusiones
+
+```{r, mes-max-min-temperatura}
+mes_max_temperatura <- colnames(temperaturas)[1+which.max(temperatura_anual)]
+mes_min_temperatura <- colnames(temperaturas)[1+which.min(temperatura_anual)]
+```
+
+- En `r mes_max_temperatura`, se registró la temperatura promedio mensual máxima
+del año `r anio`.
+
+- En `r mes_min_temperatura`, se registró la temperatura promedio mensual mínima
+del año `r anio`.

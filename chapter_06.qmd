@@ -37,7 +37,7 @@ que produce cuando lo evaluamos en la consola de R.
 
 ```{.r}
 fluidPage(
-  titlePanel(),
+  titlePanel(""),
   sidebarLayout(
     sidebarPanel(),
     mainPanel()
@@ -252,7 +252,7 @@ Ejemplo de `navbarPage()`:
 
 ```{.r}
 ui <- navbarPage(
-  "Título",   
+  "Título",
   tabPanel("panel 1", "1"),
   tabPanel("panel 2", "2"),
   tabPanel("panel 3", "3"),
@@ -423,7 +423,7 @@ require(thematic)
 ui <- fluidPage(
   theme = bslib::bs_theme(bootswatch = "darkly"),
   titlePanel("Gráfico con tema/plantilla"),
-  plotOutput("plot"),
+  plotOutput("plot")
 )
 
 server <- function(input, output, session) {
