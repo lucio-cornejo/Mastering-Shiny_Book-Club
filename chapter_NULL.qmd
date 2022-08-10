@@ -10,7 +10,7 @@ además de cómo crear **reportes parametrizados**
 usando **R Markdown**.
 
 El material para esta sesión lo puede encontrar vía este
-[link]()
+[link](https://github.com/lucio-cornejo/Mastering-Shiny_Book-Club/tree/main/flujo_de_trabajo).
 
 ## Tarea
 

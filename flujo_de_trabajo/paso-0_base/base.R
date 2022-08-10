@@ -1,5 +1,5 @@
 # Fijar ruta
-setwd(r"(D:\Mastering-Shiny_Book-Club\flujo_de_trabajo\paso_0)")
+setwd("D:/Mastering-Shiny_Book-Club/flujo_de_trabajo/paso-0_base")
 
 # Base de datos usada para crear el data frame "temperaturas":
 # nottem (Average Monthly Temperatures at Nottingham, 1920-1939)
