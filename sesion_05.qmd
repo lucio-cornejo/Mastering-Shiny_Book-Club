@@ -1,0 +1,16 @@
+
+
+
+## Extra
+
+- [Página](https://googlesheets4.tidyverse.org/) de la librería
+**googlesheets4**.
+- [Ejemplos](https://shiny.rstudio.com/articles/persistent-data-storage.html) sobre 
+guardar data de manera remota para una aplicación Shiny.
+- [Ejemplo](https://debruine.github.io/shinyintro/data.html) sobre guardar
+data remotamente, usando **Google Sheets** y **Shiny**.
+- [Documentación](https://cran.r-project.org/web/packages/flexdashboard/flexdashboard.pdf) 
+del paquete **flexdashboard**.
+- [Solución](https://stackoverflow.com/questions/59655905/r-shiny-downloadhandler-does-not-work-inside-flexdashboard)
+a problema del **botón de descarga** de Shiny, cuando se usa
+con flexdashboard.

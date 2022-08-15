@@ -16,7 +16,7 @@ ui <- fluidPage(
     tabPanel("Panel 2",
       sidebarLayout(
         sidebarPanel(
-          numericInput("m", "Muestras de tamaño:", value = 2, min = 11, max = 100)
+          numericInput("n", "Muestras de tamaño:", value = 2, min = 11, max = 100)
         ),
         mainPanel(
           plotOutput("histo")

@@ -36,7 +36,10 @@ book:
         - chapter_09.qmd
     - part: "Sesión 4"
       chapters:
-        - chapter_NULL.qmd
+        - sesion_04.qmd
+    - part: "Sesión 5"
+      chapters:
+        - sesion_05.qmd
 
 bibliography: references.bib
 

@@ -1,0 +1,73 @@
+---
+title: "Reporte parametrizado"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+params:
+  anio:
+    input: slider
+    label: "Año"
+    value: 1931
+    min: 1920
+    max: 1939
+    step: 1
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE, message = FALSE
+)
+```
+
+```{r}
+# Link asociado a la data por leer
+url <- "https://docs.google.com/spreadsheets/d/1F1Uupju6kkJhwALZWMypdlT5b1VWsh3ZHadVQiFdsZ8"
+
+# Base de datos usada para crear el data frame "temperaturas":
+# nottem (Average Monthly Temperatures at Nottingham, 1920-1939)
+temperaturas <- googlesheets4::read_sheet(url)
+```
+
+```{r}
+# Fijar un año
+# Años posibles (inicialmente): 1920 a 1939
+anio <- params$anio
+```
+
+## Año `r anio`
+
+```{r}
+# Diagrama de barras
+temperatura_anual <- temperaturas[temperaturas$anio == anio,]
+temperatura_anual <- unlist(temperatura_anual)[-1]
+
+barplot(
+  height = temperatura_anual, col ="skyblue",
+  xlab = "", ylab = "Temperatura promedio",
+  main = paste0("Año ", anio),
+  names = names(temperatura_anual), las = 2
+)
+```
+
+## Conclusiones
+
+```{r}
+# Meses de mínima y máxima temperatura
+mes_max_temperatura <- colnames(temperaturas)[1+which.max(temperatura_anual)]
+mes_min_temperatura <- colnames(temperaturas)[1+which.min(temperatura_anual)]
+```
+
+- El mes de máxima temperatura fue `r mes_max_temperatura`.
+
+- El mes de mínima temperatura fue `r mes_min_temperatura`.
+
+```{r, eval = FALSE}
+anio_fijado <- 1923
+
+rmarkdown::render(
+  input = "D:/Mastering-Shiny_Book-Club/ultima_sesion/paso_1/reporte.Rmd",
+  params = list(anio = anio_fijado),
+  output_file = paste0("reporte_", anio_fijado)
+)
+```

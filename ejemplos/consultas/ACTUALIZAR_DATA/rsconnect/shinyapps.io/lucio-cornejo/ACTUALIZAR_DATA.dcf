@@ -1,0 +1,13 @@
+name: ACTUALIZAR_DATA
+title: ACTUALIZAR_DATA
+username:
+account: lucio-cornejo
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 6785484
+bundleId: 6202190
+url: https://lucio-cornejo.shinyapps.io/ACTUALIZAR_DATA/
+when: 1660551555.37645
+lastSyncTime: 1660551555.37645
+asMultiple: FALSE
+asStatic: FALSE

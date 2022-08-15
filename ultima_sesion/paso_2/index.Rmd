@@ -1,0 +1,228 @@
+---
+title: "Reporte parametrizado"
+runtime: shiny
+output: 
+  flexdashboard::flex_dashboard:
+    theme: default
+      # version: 3
+      # bootswatch: default  # minty
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r, include = FALSE}
+library(shiny)
+library(flexdashboard)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+```
+
+```{r}
+url <- "https://docs.google.com/spreadsheets/d/1F1Uupju6kkJhwALZWMypdlT5b1VWsh3ZHadVQiFdsZ8"
+
+# # Guardar las credenciales en una carpeta .secrets
+# googlesheets4::gs4_auth(
+#   cache = ".secrets",
+#   email = "luciocornejo11@gmail.com"
+# )
+
+library(shiny)
+library(googlesheets4)
+
+temperaturas <- googlesheets4::read_sheet(url)
+```
+
+# Inputs {.sidebar}
+
+```{r}
+div(
+  br(), br(),
+  sliderInput("anio", label = "Año", min = 1920, max = 1939, value = 1930),
+  br(), br(),
+  fileInput("carga", NULL, buttonLabel = "Cargar archivo .csv", accept = ".csv"),
+  br(), br(),
+  downloadButton("reporte", "Generar reporte")
+)
+```
+
+```{r}
+data <- eventReactive(input$carga, {
+  req(input$carga)
+
+  # Extensión del archivo cargado
+  ext <- tools::file_ext(input$carga$name)
+
+  if (ext == "csv") {
+    # Cargar data subida por el usuario
+    datos_cargados <- read.csv(input$carga$datapath)
+    
+    # Data actualizada
+    data_actualizada <- rbind(
+      googlesheets4::read_sheet(url),
+      datos_cargados
+    )
+
+    # Solo no eliminar las últimas filas con año no duplicado
+    data_actualizada <- data_actualizada[!rev(duplicated(rev(data_actualizada$anio))),]
+
+    # Actualizar año máximo en el deslizador
+    updateSliderInput(
+      inputId = "anio", 
+      max = max(data_actualizada$anio)
+    )
+
+    # Actualizar data en Google Sheets
+    googlesheets4::sheet_write(
+      data_actualizada,
+      ss = url,
+      sheet = "temperaturas" 
+    )
+
+    # Devolver la data actualizada
+    data_actualizada
+  } else {
+    validate("Solo aceptamos archivos de tipo .csv")
+  }
+})
+
+temp_anual <- eventReactive(input$anio, {
+  anio <- input$anio
+  temperatura_anual <- data()[data()$anio == anio,]
+  temperatura_anual <- unlist(temperatura_anual)[-1]
+  temperatura_anual
+})
+
+output$barras <- renderPlot({
+  barplot(
+    height = temp_anual(), col = "skyblue", 
+    xlab = "", ylab = "Temperatura promedio",
+    main = paste0("Año ", input$anio),
+    names = names(temp_anual()), las = 2
+  )
+})
+
+
+max_min_temp <- reactiveValues()
+
+observeEvent(input$anio, {
+  mes_max_temperatura <- colnames(data())[1+which.max(temp_anual())]
+  mes_min_temperatura <- colnames(data())[1+which.min(temp_anual())]
+  
+  max_min_temp$max <- mes_max_temperatura
+  max_min_temp$min <- mes_min_temperatura
+})
+
+# output$min_max <- renderPrint({
+#   mes_max_temperatura <- colnames(data())[1+which.max(temp_anual())]
+#   mes_min_temperatura <- colnames(data())[1+which.min(temp_anual())]
+#   print(mes_max_temperatura)
+#   print(mes_min_temperatura)
+# })
+```
+
+# Gráficos {data-orientation=rows}
+
+## {data-height=700}
+
+### Promedio mensual de temperaturas
+
+```{r}
+plotOutput("barras")
+```
+
+## {data-height=300}
+
+### {data-width=333}
+
+```{r}
+renderValueBox({
+  req(input$carga)
+
+  valueBox(
+    value = tools::toTitleCase(max_min_temp$max),
+    caption = "Mes de máxima temperatura promedio",
+    color = "rgb(255, 0, 0)"
+  )
+})
+```
+
+### {data-width=333}
+
+```{r}
+renderGauge({
+  req(input$carga)
+
+  temp_anual <- data()[data()$anio == input$anio,]
+  max_temp <- as.numeric(temp_anual[1, max_min_temp$max])
+  min_temp <- as.numeric(temp_anual[1, max_min_temp$min])
+
+  proporcion <- round(100 * (min_temp / max_temp), 2)
+
+  gauge(
+    proporcion,
+    label = "\n100% * (temp_min / temp_max)",
+    min = 0, max = 100, symbol = "%",
+    gaugeSectors(
+      danger = c(90,100),
+      warning = c(70,89),
+      success  = c(0,69) 
+    )
+  )
+})
+```
+
+### {data-width=333}
+
+```{r}
+renderValueBox({
+  req(input$carga)
+
+  valueBox(
+    value = tools::toTitleCase(max_min_temp$min),
+    caption = "Mes de mínima temperatura promedio",
+    color = "skyblue"
+  )
+})
+```
+
+# Reporte {data-icon=fa-frog}
+
+## 
+
+### Data actualizada
+
+```{r}
+renderDataTable({
+  req(input$carga)
+  data()
+})
+```
+
+```{r}
+# Generar reporte
+output$reporte <- downloadHandler(
+  filename = function () {
+    paste0(
+      "reporte_", input$anio, ".html"
+    )
+  },
+  content = function(file) {
+    id <- showNotification(
+      "Creando el reporte ...", 
+      duration = NULL, 
+      closeButton = FALSE
+    )
+
+    on.exit(removeNotification(id), add = TRUE)
+
+    rmarkdown::render("reporte.Rmd", 
+      output_file = file,
+      params = list(anio = input$anio),
+      envir = new.env(parent = globalenv())
+    )
+  }
+)
+```
+
+```{r}
+# bslib::bs_themer()
+```

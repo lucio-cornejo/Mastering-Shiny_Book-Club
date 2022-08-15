@@ -1,0 +1,14 @@
+name: paso_0
+title: paso_0
+username:
+account: lucio-cornejo
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 6787765
+bundleId: 6203547
+url: https://lucio-cornejo.shinyapps.io/paso_0/
+when: 1660585646.11818
+lastSyncTime: 1660585646.11818
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: nueva_data.csv|temperaturas.csv
