@@ -1,3 +1,16 @@
+# Shiny + R Markdown
+
+## Introducción
+
+En esta última sesión (práctica) del taller,
+exploraremos una manera diferente de emplear 
+Shiny. Es decir, no vía archivos de tipo .R
+donde separamos claramente la 
+**interfaz de usuario**, de la
+**función servidor**; sino, principalmente,
+de único documento y de tipo .Rmd .
+
+## Motivación
 
 
 
