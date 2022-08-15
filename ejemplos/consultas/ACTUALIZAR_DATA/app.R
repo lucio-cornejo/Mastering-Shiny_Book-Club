@@ -1,19 +1,33 @@
-library(shiny)
+# Ejecutar antes de publicar la aplicación
+# googlesheets4::gs4_auth(
+#   email = "luciocornejo11@gmail.com", 
+#   cache = ".secrets"
+# )
 
-# Data inicial
-# write.csv(iris, "./iris.csv", row.names = FALSE)
+# En RStudio, cambiar de directorio antes de correr la app
+
+library(shiny)
+library(googlesheets4)
+
+googlesheets4::gs4_auth(
+  cache = ".secrets", 
+  email = "luciocornejo11@gmail.com"
+)
+
+# Link de la base de datos
+url <- "https://docs.google.com/spreadsheets/d/18ahz7Js6V3gwcO1R4T-8jLCVxQoSQs2uAiARnfhfgSM/"
 
 ui <- fluidPage(
   tableOutput("iris"),
   actionButton("actualizar", label = "Insertar una fila de ejemplo al dataset")
 )
 
-server <- function(input, output, session) {
+server <- function(input, output) {
   output$iris <- renderTable({
     if (input$actualizar > 0) {
       # Leer dataset actual
-      datos <- read.csv("./iris.csv")
-      
+      datos <- googlesheets4::read_sheet(url)
+
       # Crear fila por añadir al dataset
       temp <- data.frame(
         Sepal.Length = 0,
@@ -22,13 +36,10 @@ server <- function(input, output, session) {
         Petal.Width = 0,
         Species = "setosa"
       )
-      datos <- rbind(temp, datos)
-      
       # Guardar nuevo dataset
-      write.csv(datos, "./iris.csv", row.names = FALSE)
-      
+      googlesheets4::sheet_append(url, temp)
       # Mostrar nuevo dataset
-      head(datos)
+      tail(googlesheets4::read_sheet(url))
     }
   })
 }
