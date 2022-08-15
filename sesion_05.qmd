@@ -4,13 +4,16 @@
 
 En esta última sesión (práctica) del taller,
 exploraremos una manera diferente de emplear 
-Shiny. Es decir, no vía archivos de tipo .R
+Shiny. En particular, no vía archivos de tipo .R
 donde separamos claramente la 
 **interfaz de usuario**, de la
 **función servidor**; sino, principalmente,
-de único documento y de tipo .Rmd .
+de un único documento, y de tipo .Rmd .
 
 ## Motivación
+
+*¿Qué beneficios ganamos al emplear Shiny*
+*y R Markdown de manera conjunta?* 
 
 
 
