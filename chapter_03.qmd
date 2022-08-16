@@ -558,3 +558,7 @@ de manera **eficiente** en Shiny.
 [sección](https://mastering-shiny.org/basic-reactivity.html#exercises-3).
 - Completar el [capítulo](https://mastering-shiny.org/basic-case-study.html) 4
 del libro **Mastering Shiny**.
+
+## Video de la sesión
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vRUdRnX8m-c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
