@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Lucio Cornejo">
-<meta name="dcterms.date" content="2022-08-01">
 
-<title>Mastering Shiny Book Club</title>
+<title>Mastering Shiny Book Club - 8&nbsp; Recomendaciones para su proyecto final</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -27,7 +25,7 @@ ul.task-list{list-style: none;}
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./chapter_01.html" rel="next">
+<link href="./sesion_05.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -60,22 +58,20 @@ ul.task-list{list-style: none;}
 <script>
   window.addEventListener('DOMContentLoaded', function() {
     // Get containers in sidebar
-    let sidebarContainers =
-      Array.prototype.slice.call(
-        document.querySelectorAll('div.sidebar-item-container')
-      )
+    let sidebarContainers = Array.from(
+      document.querySelectorAll('div.sidebar-item-container')
+    );
     
     // Filter the actual containers
     sidebarContainers = sidebarContainers.filter(
       (container) => container.nextElementSibling != null
-    )
+    );
     
     // Close sidebar containers, except the last one
     // sidebarContainers.pop();
     sidebarContainers.forEach( (container) => {
       container.nextElementSibling.classList.remove('show');
-    })
-
+    });
   });
 </script>
 
@@ -88,7 +84,7 @@ ul.task-list{list-style: none;}
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Mastering Shiny Book Club</h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Recomendaciones para su proyecto final</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -116,7 +112,7 @@ ul.task-list{list-style: none;}
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">Sílabo</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Sílabo</a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -206,7 +202,7 @@ ul.task-list{list-style: none;}
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./materiales.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Recomendaciones para su proyecto final</span></a>
+  <a href="./materiales.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Recomendaciones para su proyecto final</span></a>
   </div>
 </li>
     </ul>
@@ -214,182 +210,38 @@ ul.task-list{list-style: none;}
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">Tabla de contenidos</h2>
-   
-  <ul>
-  <li><a href="#sílabo" id="toc-sílabo" class="nav-link active" data-scroll-target="#sílabo">Sílabo</a>
-  <ul class="collapse">
-  <li><a href="#descripción-del-taller" id="toc-descripción-del-taller" class="nav-link" data-scroll-target="#descripción-del-taller">Descripción del taller</a></li>
-  <li><a href="#prerrequisitos" id="toc-prerrequisitos" class="nav-link" data-scroll-target="#prerrequisitos">Prerrequisitos</a></li>
-  <li><a href="#sumilla" id="toc-sumilla" class="nav-link" data-scroll-target="#sumilla">Sumilla</a></li>
-  <li><a href="#objetivos" id="toc-objetivos" class="nav-link" data-scroll-target="#objetivos">Objetivos</a></li>
-  <li><a href="#metodología" id="toc-metodología" class="nav-link" data-scroll-target="#metodología">Metodología</a></li>
-  <li><a href="#programa-analítico" id="toc-programa-analítico" class="nav-link" data-scroll-target="#programa-analítico">Programa analítico</a>
-  <ul class="collapse">
-  <li><a href="#sesión-0" id="toc-sesión-0" class="nav-link" data-scroll-target="#sesión-0">Sesión 0</a></li>
-  <li><a href="#sesión-1-0801" id="toc-sesión-1-0801" class="nav-link" data-scroll-target="#sesión-1-0801">Sesión 1 (08/01)</a></li>
-  <li><a href="#sesión-2-0803" id="toc-sesión-2-0803" class="nav-link" data-scroll-target="#sesión-2-0803">Sesión 2 (08/03)</a></li>
-  <li><a href="#sesión-3-0808" id="toc-sesión-3-0808" class="nav-link" data-scroll-target="#sesión-3-0808">Sesión 3 (08/08)</a></li>
-  <li><a href="#sesión-4-0810" id="toc-sesión-4-0810" class="nav-link" data-scroll-target="#sesión-4-0810">Sesión 4 (08/10)</a></li>
-  <li><a href="#sesión-5-0815" id="toc-sesión-5-0815" class="nav-link" data-scroll-target="#sesión-5-0815">Sesión 5 (08/15)</a></li>
-  <li><a href="#exposición-0817" id="toc-exposición-0817" class="nav-link" data-scroll-target="#exposición-0817">Exposición (08/17)</a></li>
-  </ul></li>
-  <li><a href="#bibliografía" id="toc-bibliografía" class="nav-link" data-scroll-target="#bibliografía">Bibliografía</a></li>
-  </ul></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Mastering Shiny Book Club</h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Recomendaciones para su proyecto final</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Lucio Cornejo </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">August 1, 2022</p>
-    </div>
-  </div>
     
   </div>
   
 
 </header>
 
-<section id="sílabo" class="level1 unnumbered">
-<h1 class="unnumbered">Sílabo</h1>
-<section id="descripción-del-taller" class="level2">
-<h2 class="anchored" data-anchor-id="descripción-del-taller">Descripción del taller</h2>
-<p>Por medio de 5 sesiones prácticas, cada una de dos horas de duración, se explorará en nivel básico el paquete <strong>Shiny</strong> para crear aplicaciones web vía el lenguaje de programación <strong>R</strong>.</p>
-</section>
-<section id="prerrequisitos" class="level2">
-<h2 class="anchored" data-anchor-id="prerrequisitos">Prerrequisitos</h2>
+<p>Les comparto algunas herramientas que pueden servirles para el proyecto de aplicación Shiny que creen para este taller:</p>
 <ul>
-<li>Nivel básico de programación con <strong>R</strong>.</li>
+<li><p><a href="https://rstudio.github.io/flexdashboard/articles/examples.html">Modelos</a> de <a href="https://jennadallen.shinyapps.io/pet-records-app/">aplicaciones</a> <strong>Shiny</strong> que podrían usar de referencia para su proyecto.</p></li>
+<li><p><a href="https://twitter.com/NicholasStrayer/status/1552715767224930306">Paquetes</a> para crear los dashboards de manera más rápida, más interactiva y empleando menos código. Pueden ver demos en los comentarios del tweet.</p></li>
+<li><p><a href="https://github.com/rfordatascience/tidytuesday#datasets">Datasets</a> que podrían explorar para su proyecto, y, si lo desean, presentar sus hallazgos vía un dashboard interactivo, como se hizo en la sesión 5.</p></li>
+<li><p><a href="https://youtu.be/GHBwprI_Py4">Demo</a> de cómo modificar fácilmente y de manera interactiva el diseño de nuestra aplicación <strong>Shiny</strong>.</p></li>
+<li><p><a href="https://towardsdatascience.com/how-to-publish-a-shiny-app-example-with-shinyapps-io-ec6c6604d8">Tutorial</a> sobre cómo publicar en internet su aplicación Shiny.</p></li>
+<li><p><a href="http://r4ds.io/join">Comunidad</a> donde explorar paquetes de <strong>R</strong>, vía clubes de lectura. Ahí podrán encontrar una sección donde pueden hacer consultas sobre Shiny. Además, pueden unirse a su club de lectura de <strong>Shiny</strong>, donde usan el mismo <a href="https://mastering-shiny.org/">libro</a> que empleamos como guía en este taller.</p></li>
 </ul>
-</section>
-<section id="sumilla" class="level2">
-<h2 class="anchored" data-anchor-id="sumilla">Sumilla</h2>
-<p>Estructura básica de la interfaz de usuario creada con Shiny, reactividad básica y creación de dashboards.</p>
-</section>
-<section id="objetivos" class="level2">
-<h2 class="anchored" data-anchor-id="objetivos">Objetivos</h2>
-<p>Por medio del paquete Shiny, seremos capaces de crear aplicaciones web que permitan al usuario <strong>explorar de manera interactiva</strong> los resultados de un proyecto, sea estadístico o de temática más libre.</p>
-<p>Asimismo, este taller servirá para presentar diversos conceptos de <strong>desarrollo web</strong>, con la finalidad de explorar cómo tales tecnologías pueden potenciar nuestros reportes o dashboards.</p>
-</section>
-<section id="metodología" class="level2">
-<h2 class="anchored" data-anchor-id="metodología">Metodología</h2>
-<p>El taller se realizará de manera virtual, los lunes y miércoles de 7 a 9 pm.</p>
-<p>En cada sesión, se desarrollarán dos capítulos del libro <a href="https://mastering-shiny.org/">Mastering Shiny</a>, de libre acceso en línea.</p>
-<p>Al final de cada sesión, se asignará una tarea para los y las estudiantes del taller.</p>
-<p>En la última sesión, los asistentes que deseen presentarán un proyecto personal elaborado con Shiny.</p>
-</section>
-<section id="programa-analítico" class="level2">
-<h2 class="anchored" data-anchor-id="programa-analítico">Programa analítico</h2>
-<section id="sesión-0" class="level3">
-<h3 class="anchored" data-anchor-id="sesión-0">Sesión 0</h3>
-<ul>
-<li>Un equipo de R-Ladies guiará a las personas inscritas en el taller, para que puedan instalar las dependencias requeridas para este club de lectura.</li>
-</ul>
-</section>
-<section id="sesión-1-0801" class="level3">
-<h3 class="anchored" data-anchor-id="sesión-1-0801">Sesión 1 (08/01)</h3>
-<ul>
-<li>Capítulo 1: <em>Your first Shiny app</em>
-<ul>
-<li>Creación de los componentes básicos de una aplicación Shiny.</li>
-<li>Expresiones reactivas.</li>
-</ul></li>
-<li>Capítulo 2: <em>Basic UI</em>
-<ul>
-<li>Componentes principales de la interfaz de usuario.</li>
-<li>Componentes básicos del servidor Shiny.</li>
-</ul></li>
-</ul>
-</section>
-<section id="sesión-2-0803" class="level3">
-<h3 class="anchored" data-anchor-id="sesión-2-0803">Sesión 2 (08/03)</h3>
-<ul>
-<li>Capítulo 3: <em>Basic reactivity</em>
-<ul>
-<li>Programación reactiva.</li>
-<li>Control de la reactividad.</li>
-</ul></li>
-<li>Capítulo 4: <em>Case study: ER injuries</em>
-<ul>
-<li>Ejemplo práctico donde se emplean las herramientas presentadas hasta ahora.</li>
-<li>La tarea de esta sesión es crear la aplicación de este capítulo.</li>
-</ul></li>
-</ul>
-</section>
-<section id="sesión-3-0808" class="level3">
-<h3 class="anchored" data-anchor-id="sesión-3-0808">Sesión 3 (08/08)</h3>
-<ul>
-<li>Capítulo 6: <em>Layout, themes, HTML</em>
-<ul>
-<li>Diseños de una o más páginas.</li>
-<li>Paquete <strong>bslib</strong>.</li>
-</ul></li>
-<li>Capítulo 9: <em>Uploads and downloads</em>
-<ul>
-<li>Carga y descarga de archivos en aplicaciones Shiny.</li>
-<li>Reportes parametrizados.</li>
-</ul></li>
-</ul>
-</section>
-<section id="sesión-4-0810" class="level3">
-<h3 class="anchored" data-anchor-id="sesión-4-0810">Sesión 4 (08/10)</h3>
-<ul>
-<li>Capítulo 10: <em>Dynamic UI</em>
-<ul>
-<li>Actualización de inputs.</li>
-<li>Creación dinámica de contenido en la interfaz de usuario.</li>
-</ul></li>
-<li>Capítulo 15: <em>Reactive building blocks</em>
-<ul>
-<li>Manipulación de los elementos reactivos en la función servidor.</li>
-</ul></li>
-<li>Tiempo libre para consultas y/o para revisión parcial de los proyectos finales por presentar.</li>
-</ul>
-</section>
-<section id="sesión-5-0815" class="level3">
-<h3 class="anchored" data-anchor-id="sesión-5-0815">Sesión 5 (08/15)</h3>
-<ul>
-<li><p>Creación de dashboards interactivos, vía los paquetes <strong>shiny</strong>, <strong>rmarkdown</strong> y <strong>flexdashboard</strong>.</p></li>
-<li><p>Integración de <strong>R</strong> y <strong>JavaScript</strong>, vía el paquete <strong>Shiny</strong>.</p></li>
-</ul>
-</section>
-<section id="exposición-0817" class="level3">
-<h3 class="anchored" data-anchor-id="exposición-0817">Exposición (08/17)</h3>
-<ul>
-<li>En esta reunión, los asistentes que deseen expondrán aplicaciones Shiny que han llegado a implementar gracias las herramientas expuestas en el taller.</li>
-</ul>
-</section>
-</section>
-<section id="bibliografía" class="level2">
-<h2 class="anchored" data-anchor-id="bibliografía">Bibliografía</h2>
-<p><a href="https://mastering-shiny.org/">Libro principal</a></p>
-<p><a href="https://unleash-shiny.rinterface.com/index.html">Libro auxiliar</a></p>
-<p><a href="https://mastering-shiny-solutions.netlify.app/">Solucionario</a></p>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -491,11 +343,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./sesion_05.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Shiny + R Markdown</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chapter_01.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Tu primera aplicación Shiny</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

@@ -55,9 +55,26 @@ ul.task-list{list-style: none;}
     "search-submit-button-title": "Submit"
   }
 }</script>
+
 <script>
-  // Do sth in every page of this book
-</script> 
+  window.addEventListener('DOMContentLoaded', function() {
+    // Get containers in sidebar
+    let sidebarContainers = Array.from(
+      document.querySelectorAll('div.sidebar-item-container')
+    );
+    
+    // Filter the actual containers
+    sidebarContainers = sidebarContainers.filter(
+      (container) => container.nextElementSibling != null
+    );
+    
+    // Close sidebar containers, except the last one
+    // sidebarContainers.pop();
+    sidebarContainers.forEach( (container) => {
+      container.nextElementSibling.classList.remove('show');
+    });
+  });
+</script>
 
 
 </head>
@@ -184,6 +201,11 @@ ul.task-list{list-style: none;}
 </li>
       </ul>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./materiales.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Recomendaciones para su proyecto final</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>

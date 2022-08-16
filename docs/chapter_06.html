@@ -113,7 +113,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script><script>
-  // Do sth in every page of this book
+  window.addEventListener('DOMContentLoaded', function() {
+    // Get containers in sidebar
+    let sidebarContainers =
+      Array.prototype.slice.call(
+        document.querySelectorAll('div.sidebar-item-container')
+      )
+    
+    // Filter the actual containers
+    sidebarContainers = sidebarContainers.filter(
+      (container) => container.nextElementSibling != null
+    )
+    
+    // Close sidebar containers, except the last one
+    // sidebarContainers.pop();
+    sidebarContainers.forEach( (container) => {
+      container.nextElementSibling.classList.remove('show');
+    })
+
+  });
 </script>
 </head>
 <body class="nav-sidebar docked">
@@ -233,6 +251,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
 </li>
       </ul>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./materiales.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Recomendaciones para su proyecto final</span></a>
+  </div>
 </li>
     </ul>
 </div>

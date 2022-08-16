@@ -40,6 +40,7 @@ book:
     - part: "Sesión 5"
       chapters:
         - sesion_05.qmd
+    - materiales.qmd
 
 bibliography: references.bib
 

@@ -306,5 +306,12 @@
     "title": "7  Shiny + R Markdown",
     "section": "7.6 Tarea",
     "text": "7.6 Tarea\n\nAvanzar su proyecto personal del taller, para presentarlo el día miércoles 24 de agosto del 2022, en la última sesión de este taller."
+  },
+  {
+    "objectID": "materiales.html",
+    "href": "materiales.html",
+    "title": "8  Recomendaciones para su proyecto final",
+    "section": "",
+    "text": "Modelos de aplicaciones Shiny que podrían usar de referencia para su proyecto.\nPaquetes para crear los dashboards de manera más rápida, más interactiva y empleando menos código. Pueden ver demos en los comentarios del tweet.\nDatasets que podrían explorar para su proyecto, y, si lo desean, presentar sus hallazgos vía un dashboard interactivo, como se hizo en la sesión 5.\nDemo de cómo modificar fácilmente y de manera interactiva el diseño de nuestra aplicación Shiny.\nTutorial sobre cómo publicar en internet su aplicación Shiny.\nComunidad donde explorar paquetes de R, vía clubes de lectura. Ahí podrán encontrar una sección donde pueden hacer consultas sobre Shiny. Además, pueden unirse a su club de lectura de Shiny, donde usan el mismo libro que empleamos como guía en este taller."
   }
 ]

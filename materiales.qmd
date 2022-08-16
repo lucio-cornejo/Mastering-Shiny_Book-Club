@@ -1,0 +1,28 @@
+# Recomendaciones para su proyecto final
+
+Les comparto algunas herramientas que pueden servirles para
+el proyecto de aplicación Shiny que creen para este taller:
+
+- [Modelos](https://rstudio.github.io/flexdashboard/articles/examples.html)
+de [aplicaciones](https://jennadallen.shinyapps.io/pet-records-app/) **Shiny** 
+que podrían usar de referencia para su proyecto.
+
+- [Paquetes](https://twitter.com/NicholasStrayer/status/1552715767224930306)
+para crear los dashboards de manera más rápida, más interactiva y
+empleando menos código. Pueden ver demos en los comentarios del tweet.
+
+- [Datasets](https://github.com/rfordatascience/tidytuesday#datasets)
+que podrían explorar para su proyecto, y, si lo desean, presentar
+sus hallazgos vía un dashboard interactivo, como se hizo en la sesión 5.
+
+- [Demo](https://youtu.be/GHBwprI_Py4) de cómo modificar fácilmente y
+de manera interactiva el diseño de nuestra aplicación **Shiny**.
+
+- [Tutorial](https://towardsdatascience.com/how-to-publish-a-shiny-app-example-with-shinyapps-io-ec6c6604d8)
+sobre cómo publicar en internet su aplicación Shiny.
+
+- [Comunidad](http://r4ds.io/join) donde explorar paquetes de **R**,
+vía clubes de lectura. Ahí podrán encontrar una sección donde pueden hacer
+consultas sobre Shiny. Además, pueden unirse a su club de lectura de **Shiny**,
+donde usan el mismo [libro](https://mastering-shiny.org/)
+que empleamos como guía en este taller.
