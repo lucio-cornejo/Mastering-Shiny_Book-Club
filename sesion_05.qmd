@@ -87,6 +87,9 @@ paquete **flexdashboard**.
     - Otra [solución](https://stackoverflow.com/questions/59655905/r-shiny-downloadhandler-does-not-work-inside-flexdashboard)
     a problema del **botón de descarga** de Shiny, cuando se usa
     con **flexdashboard**.
+    - Uso de [bslib](https://rstudio.github.io/flexdashboard/articles/theme.html)
+    para actualizar **en vivo** el diseño de nuestro dashboard.
+
 
 ## Publicar una aplicación Shiny en internet
 
