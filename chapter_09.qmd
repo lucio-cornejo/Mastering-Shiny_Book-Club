@@ -189,3 +189,7 @@ de la ruta de la aplicación Shiny que está siendo ejecutada.
 
 Hacer los ejercicios 2 y 3 de esta 
 [sección](https://mastering-shiny.org/action-transfer.html#exercises-7).
+
+## Video de la sesión
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/R5vt0kD_6xA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

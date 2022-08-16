@@ -1,7 +1,7 @@
 # ::::::::::::::::::::::::::::::::::::::::::
 # Guardemos la data inicial en Google Sheets
 # ::::::::::::::::::::::::::::::::::::::::::
-url <- "https://docs.google.com/spreadsheets/d/1F1Uupju6kkJhwALZWMypdlT5b1VWsh3ZHadVQiFdsZ8"
+url <- "https://docs.google.com/spreadsheets/d/1jFY04uD5Rp8ZR-_YeCck50bfT5UmY1tJV1xd91G9T6c/"
 
 # googlesheets4::sheet_write(
 #   read.csv("./temperaturas.csv"),

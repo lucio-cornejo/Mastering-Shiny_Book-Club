@@ -468,3 +468,7 @@ el cual podemos estilizar por medio de **Bootstrap**.
 
 - [Una](https://stackoverflow.com/questions/25340847/control-the-height-in-fluidrow-in-r-shiny) 
 manera deestructurar la interfaz de usuario en forma de **malla**.
+
+## Video de la sesión
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vRUdRnX8m-c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

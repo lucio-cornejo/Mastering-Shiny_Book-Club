@@ -112,6 +112,13 @@
     "text": "2.3 Outputs\n\n2.3.1 Texto\n\ntextOutput(), junto con renderText({}), se emplean para imprimir texto estándar (cadenas de caracteres).\nverbatimTextOutput(), junto con renderPrint({}), se usa cuando se requiere imprimir el resultado (textual) del código dentro de renderPrint.\nLas llaves {} se utilizan para incluir más de una línea de código dentro de, por ejemplo, renderText({}), sin necesidad de usar comas como hemos estado haciendo para fluidPage().\n\nui <- fluidPage(\n  textOutput(\"texto\"),\n  verbatimTextOutput(\"codigo\")\n)\n\nserver <- function(input, output, session) {\n  output$texto <- renderText(\"Hola, buenas.\")\n  output$codigo <- renderPrint({\n    \"Hola, buenas.\"\n  })\n}\n\n\n2.3.2 Tablas\n\ntableOutput() y renderTable() se emplean para imprimir tablas en su totalidad. Resultado estático.\ndataTableOutput() y renderDataTable() sirven para mostrar solo una parte del total de filas de la tabla, además de permitir cambiar qué filas mostrar. Resultado dinámico.\n\nui <- fluidPage(\n  tableOutput(\"estatico\"),\n  dataTableOutput(\"dinamico\")\n)\nserver <- function(input, output, session) {\n  output$estatico <- renderTable(head(mtcars))\n  output$dinamico <- renderDataTable(mtcars, options = list(pageLength = 5))\n}\n\n\n2.3.3 Gráficos\nPara los gráficos fundamentales de R (plot(), ggplot(), etc), se emplea plotOutput() y renderPlot().\nui <- fluidPage(\n  plotOutput(\"grafico\", width = \"400px\")\n)\nserver <- function(input, output, session) {\n  output$grafico <- renderPlot(\n    plot(1:5), \n    # Resolucion del gráfico, en píxeles por pulgada\n    res = 96\n  )\n}\n\n\n2.3.4 Descargas\nEsto lo exploraremos en la tercera sesión.\n\n\n2.3.5 Resumen\n\nChuleta de Shiny widgets\n\n\n\n2.3.6 Ejercicios\n\nTodos los ejercicios de esta sección."
   },
   {
+    "objectID": "chapter_02.html#video-de-la-sesión",
+    "href": "chapter_02.html#video-de-la-sesión",
+    "title": "2  Interfaz básica de usuario",
+    "section": "2.4 Video de la sesión",
+    "text": "2.4 Video de la sesión"
+  },
+  {
     "objectID": "chapter_03.html",
     "href": "chapter_03.html",
     "title": "3  Reactividad básica",
@@ -196,6 +203,13 @@
     "text": "4.5 Extra\n\n\nUna manera deestructurar la interfaz de usuario en forma de malla."
   },
   {
+    "objectID": "chapter_06.html#video-de-la-sesión",
+    "href": "chapter_06.html#video-de-la-sesión",
+    "title": "\n4  Diseño, temas y HTML\n",
+    "section": "\n4.6 Video de la sesión",
+    "text": "4.6 Video de la sesión"
+  },
+  {
     "objectID": "chapter_09.html",
     "href": "chapter_09.html",
     "title": "5  Cargas y descargas",
@@ -224,17 +238,73 @@
     "text": "5.3 Tarea\nHacer los ejercicios 2 y 3 de esta sección."
   },
   {
-    "objectID": "chapter_NULL.html",
-    "href": "chapter_NULL.html",
+    "objectID": "chapter_09.html#video-de-la-sesión",
+    "href": "chapter_09.html#video-de-la-sesión",
+    "title": "5  Cargas y descargas",
+    "section": "5.4 Video de la sesión",
+    "text": "5.4 Video de la sesión"
+  },
+  {
+    "objectID": "sesion_04.html",
+    "href": "sesion_04.html",
     "title": "6  Un ejemplo práctico",
     "section": "",
     "text": "En esta sesión, no exploraremos los capítulos del libro Mastering Shiny que se propuso en el sílabo, sino, realizaremos una serie de ejemplos prácticos donde aplicamos algunas de las herramientas aprendidas hasta ahora, además de cómo crear reportes parametrizados usando R Markdown.\nEl material para esta sesión lo puede encontrar vía este link."
   },
   {
-    "objectID": "chapter_NULL.html#tarea",
-    "href": "chapter_NULL.html#tarea",
+    "objectID": "sesion_04.html#tarea",
+    "href": "sesion_04.html#tarea",
     "title": "6  Un ejemplo práctico",
     "section": "6.2 Tarea",
     "text": "6.2 Tarea\n\nEmpezar a crear una aplicación Shiny de su interés propio, sin importar si es simple o no. Hay que practicar."
+  },
+  {
+    "objectID": "sesion_04.html#video-de-la-sesión",
+    "href": "sesion_04.html#video-de-la-sesión",
+    "title": "6  Un ejemplo práctico",
+    "section": "6.3 Video de la sesión",
+    "text": "6.3 Video de la sesión"
+  },
+  {
+    "objectID": "sesion_05.html",
+    "href": "sesion_05.html",
+    "title": "7  Shiny + R Markdown",
+    "section": "",
+    "text": "En esta última sesión (práctica) del taller, exploraremos una manera diferente de emplear Shiny. En particular, no vía archivos de tipo .R, donde separamos claramente la interfaz de usuario, de la función servidor; sino, principalmente, vía un único documento, y de tipo .Rmd ."
+  },
+  {
+    "objectID": "sesion_05.html#motivación",
+    "href": "sesion_05.html#motivación",
+    "title": "7  Shiny + R Markdown",
+    "section": "7.2 Motivación",
+    "text": "7.2 Motivación\n¿Qué beneficios ganamos al emplear Shiny y R Markdown de manera conjunta?\n\nSintaxis más simple para introducir elementos Shiny a la página web.\nPoder crear reportes interactivos y/o parametrizados.\nVía el uso de chunks (bloques de código), es más sencillo organizar el código (sea de R, Python, CSS, JavaScript) de la aplicación, todo en un mismo documento de tipo .Rmd."
+  },
+  {
+    "objectID": "sesion_05.html#proyectos-finales-del-taller",
+    "href": "sesion_05.html#proyectos-finales-del-taller",
+    "title": "7  Shiny + R Markdown",
+    "section": "7.3 Proyectos finales del taller",
+    "text": "7.3 Proyectos finales del taller\n\n7.3.1 Actualizar una base de datos asociada a una app Shiny\nEl codigo de este proyecto lo pueden encontrar en este link.\nBásicamente, emplearemos el paquete googlesheets4 de R para, luego de crear una hoja de cálculo usando Google Sheets, utilizar R con el fin de actualizar el contenido de dicha hoja de cálculo, actualizando así nuestra base de datos que se estará leyendo por medio de una aplicación Shiny.\n\nLinks relevantes:\n\nPágina de la librería googlesheets4.\nOtras maneras de guardar data de manera remota para una aplicación Shiny.\nEjemplo sobre guardar data remotamente, usando Google Sheets y Shiny.\n\n\n\n\n7.3.2 Creación de un reporte parametrizado\nEl codigo de este proyecto lo pueden encontrar en este link.\nNos familizaremos con R Markdown, empleándolo para crear un reporte que nos permita renderizarlo de manera automática, tras fijas ciertos parámetros para el reporte, y generar así automáticamente diversas versiones de un mismo reporte modelo que habremos creado.\n\n\n7.3.3 Creación de un dashboard interactivo\nEl codigo de este proyecto lo pueden encontrar en este link.\nEn este último proyecto del taller, combinaremos tres paquetes de R: R Mardkown junto a flexdashboard, para crear un dashboard; y, Shiny, para añadir interactividad a aquel dashboard.\nEsto con la finalidad de combinar ambos proyectos previos, dentro de una misma aplicación Shiny, cuya interfaz de usuario es un dashboard.\nEjemplos de dashboards creados con el paquete flexdashboard.\nResulta más sencillo (respecto a la sintaxis) utilizar elementos interactivos de Shiny, en documentos de tipo .Rmd, que de tipo .R. Entonces, pese a que es más común emplear el paquete shinydashboard, para crear dashboards interactivos con Shiny, nosotros utilizaremos el paquete flexdashboard para poder crear nuestro dashboard vía un archivo .Rmd.\nAclaro que, para convertir un archivo .Rmd con output de tipo html, a una aplicación Shiny, en general basta añadir runtime: shiny en el encabezado YAML del documento .Rmd. Esta combinación de R Markdown y Shiny no requiere del paquete flexdashboard.\n\nLinks relevantes:\n\nDocumentación del paquete flexdashboard.\nOtra solución a problema del botón de descarga de Shiny, cuando se usa con flexdashboard."
+  },
+  {
+    "objectID": "sesion_05.html#publicar-una-aplicación-shiny-en-internet",
+    "href": "sesion_05.html#publicar-una-aplicación-shiny-en-internet",
+    "title": "7  Shiny + R Markdown",
+    "section": "7.4 Publicar una aplicación Shiny en internet",
+    "text": "7.4 Publicar una aplicación Shiny en internet\nLes recomiendo este tutorial sobre cómo subir a internet, por medio de una cuenta en shinyapps.io, una aplicación Shiny que hayas creado.\nPosiblemente requieran instalar el paquete rsconnect:\ninstalled.packages(\"rsconnect\")"
+  },
+  {
+    "objectID": "sesion_05.html#comentarios-finales",
+    "href": "sesion_05.html#comentarios-finales",
+    "title": "7  Shiny + R Markdown",
+    "section": "7.5 Comentarios finales",
+    "text": "7.5 Comentarios finales\n\n7.5.1 Shiny + JavaScript\nSegún el sílabo, en esta sesión se exploraria cómo emplear de manera conjunta Shiny y JavaScript, pero, por motivos de tiempo, no se logró.\nAsí que, si les interesa ese tema de enorme potencial, el cual, resulta ser la razón por la que Shiny es mi paquete favorito de R, les recomiendo leer la sección Web Development with Shiny del libro JavaScript for R.\n\n\n7.5.2 Seguir estudiando Shiny\nSi les interesa seguir avanzando con el libro que hemos estado usando en este taller, Mastering Shiny, les recomiendo unirse a esta comunidad.\nEn es grupo, hay un club de lectura sobre el libro Mastering Shiny, y, hasta el 16 de agosto del 2022, se encuentran en el capítulo 15 del libro.\nSin embargo, a partir del capítulo 5 de ese mismo libro, estos capítulos no están tan relacionados entre si, así que no se pierden gran cosa por unirse tarde a tal club de lectura.\nTras este taller, ustedes ya tienen suficiente base en Shiny, como para profundizar en un nivel básico-intermedio de Shiny."
+  },
+  {
+    "objectID": "sesion_05.html#tarea",
+    "href": "sesion_05.html#tarea",
+    "title": "7  Shiny + R Markdown",
+    "section": "7.6 Tarea",
+    "text": "7.6 Tarea\n\nAvanzar su proyecto personal del taller, para presentarlo el día miércoles 24 de agosto del 2022, en la última sesión de este taller."
   }
 ]

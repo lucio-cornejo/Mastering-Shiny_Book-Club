@@ -4,7 +4,7 @@ runtime: shiny
 output: 
   flexdashboard::flex_dashboard:
     theme: default
-      # version: 3
+      # version: 4
       # bootswatch: default  # minty
     orientation: columns
     vertical_layout: fill
@@ -42,6 +42,8 @@ div(
   br(), br(),
   downloadButton("reporte", "Generar reporte")
 )
+
+# bslib::bs_themer()
 ```
 
 ```{r}
@@ -206,12 +208,17 @@ output$reporte <- downloadHandler(
     )
   },
   content = function(file) {
+    # Añadir una caja de notificación, 
+    # a la página web
     id <- showNotification(
       "Creando el reporte ...", 
       duration = NULL, 
       closeButton = FALSE
     )
 
+    # Cuando termine de ejecutarse todo el código dentro
+    # de este contexto reactivo, eliminar la
+    # notificación creada previamente
     on.exit(removeNotification(id), add = TRUE)
 
     rmarkdown::render("reporte.Rmd", 
@@ -221,8 +228,4 @@ output$reporte <- downloadHandler(
     )
   }
 )
-```
-
-```{r}
-# bslib::bs_themer()
 ```

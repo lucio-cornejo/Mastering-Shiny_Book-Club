@@ -241,7 +241,7 @@ border-style: solid !important;
 border-color: transparent !important;
 }
 .irs {
-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 .irs--shiny {
 height: 40px;
@@ -260,9 +260,9 @@ border-radius: 8px;
 .irs--shiny .irs-bar {
 top: 25px;
 height: 8px;
-border-top: 1px solid #428bca;
-border-bottom: 1px solid #428bca;
-background: #428bca;
+border-top: 1px solid #007bff;
+border-bottom: 1px solid #007bff;
+background: #007bff;
 }
 .irs--shiny .irs-bar--single {
 border-radius: 8px 0 0 8px;
@@ -308,7 +308,7 @@ background: #cccccc;
 color: #fff;
 text-shadow: none;
 padding: 1px 3px;
-background-color: #428bca;
+background-color: #007bff;
 border-radius: 3px;
 font-size: 11px;
 line-height: 1.333;
@@ -2915,6 +2915,12 @@ window.FlexDashboardComponents.push({
 
 <div id="dashboard-container">
 
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
 <div id="inputs" class="section level1 sidebar">
 <h1 class="sidebar">Inputs</h1>
 <div class="knitr-options" data-fig-width="576" data-fig-height="460">
@@ -2924,9 +2930,24 @@ window.FlexDashboardComponents.push({
 <label class="control-label" id="anio-label" for="anio">Año</label>
 <input class="js-range-slider" id="anio" data-skin="shiny" data-min="1920" data-max="1939" data-from="1930" data-step="1" data-grid="true" data-grid-num="9.5" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number"></input>
 </div>
+<div class="form-group shiny-input-container">
+<label class="control-label shiny-label-null" for="carga" id="carga-label"></label>
+<div class="input-group">
+<label class="input-group-btn input-group-prepend">
+<span class="btn btn-default btn-file">
+Cargar archivo .csv
+<input id="carga" name="carga" type="file" style="position: absolute !important; top: -99999px !important; left: -99999px !important;" accept=".csv"></input>
+</span>
+</label>
+<input type="text" class="form-control" placeholder="No file selected" readonly="readonly"></input>
 </div>
-<div id="sección-1" class="section level1">
-<h1>Sección 1</h1>
+<div id="carga_progress" class="progress active shiny-file-input-progress">
+<div class="progress-bar"></div>
+</div>
+</div>
+</div>
+<div id="gráficos" class="section level1">
+<h1>Gráficos</h1>
 <div id="columna-1" class="section level2">
 <h2>Columna 1</h2>
 <div id="fila-1.1" class="section level3">
@@ -2940,11 +2961,13 @@ window.FlexDashboardComponents.push({
 <h2>Columna 2</h2>
 <div id="fila-2.1" class="section level3">
 <h3>Fila 2.1</h3>
-</div>
-<div id="fila-2.2" class="section level3">
-<h3>Fila 2.2</h3>
+<p>lorem ipsum</p>
 </div>
 </div>
+</div>
+<div id="reporte-parametrizado" class="section level1">
+<h1>Reporte parametrizado</h1>
+<p>hello, world</p>
 </div>
 
 </div>

@@ -15,9 +15,7 @@ params:
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(
-  echo = FALSE, message = FALSE
-)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 ```
 
 ```{r}

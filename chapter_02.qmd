@@ -204,3 +204,8 @@ Esto lo exploraremos en la tercera sesión.
 ### Ejercicios
 
 - Todos los ejercicios de esta [sección](https://mastering-shiny.org/basic-ui.html#exercises-1).
+
+
+## Video de la sesión
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/nSHdexumsWs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

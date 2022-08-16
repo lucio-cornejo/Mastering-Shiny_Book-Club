@@ -16,3 +16,7 @@ El material para esta sesión lo puede encontrar vía este
 
 - Empezar a crear una aplicación Shiny de su interés propio,
 sin importar si es simple o no. Hay que practicar.
+
+## Video de la sesión
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/nvUDW-6uDbU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

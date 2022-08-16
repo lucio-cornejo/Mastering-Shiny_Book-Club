@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Mastering Shiny Book Club - 7&nbsp; Shiny + R Markdown</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./sesion_04.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script>
+  // Do sth in every page of this book
+</script> 
+
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Shiny + R Markdown</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Mastering Shiny Book Club</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/lucio-cornejo/Mastering-Shiny_Bookclub" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Sílabo</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Sesión 1</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter_01.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Tu primera aplicación Shiny</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter_02.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Interfaz básica de usuario</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Sesión 2</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter_03.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Reactividad básica</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Sesión 3</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter_06.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diseño, temas y HTML</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter_09.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Cargas y descargas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Sesión 4</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sesion_04.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Un ejemplo práctico</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">Sesión 5</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sesion_05.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Shiny + R Markdown</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"> <span class="header-section-number">7.1</span> Introducción</a></li>
+  <li><a href="#motivación" id="toc-motivación" class="nav-link" data-scroll-target="#motivación"> <span class="header-section-number">7.2</span> Motivación</a></li>
+  <li><a href="#proyectos-finales-del-taller" id="toc-proyectos-finales-del-taller" class="nav-link" data-scroll-target="#proyectos-finales-del-taller"> <span class="header-section-number">7.3</span> Proyectos finales del taller</a>
+  <ul class="collapse">
+  <li><a href="#actualizar-una-base-de-datos-asociada-a-una-app-shiny" id="toc-actualizar-una-base-de-datos-asociada-a-una-app-shiny" class="nav-link" data-scroll-target="#actualizar-una-base-de-datos-asociada-a-una-app-shiny"> <span class="header-section-number">7.3.1</span> Actualizar una base de datos asociada a una app Shiny</a></li>
+  <li><a href="#creación-de-un-reporte-parametrizado" id="toc-creación-de-un-reporte-parametrizado" class="nav-link" data-scroll-target="#creación-de-un-reporte-parametrizado"> <span class="header-section-number">7.3.2</span> Creación de un reporte parametrizado</a></li>
+  <li><a href="#creación-de-un-dashboard-interactivo" id="toc-creación-de-un-dashboard-interactivo" class="nav-link" data-scroll-target="#creación-de-un-dashboard-interactivo"> <span class="header-section-number">7.3.3</span> Creación de un dashboard interactivo</a></li>
+  </ul></li>
+  <li><a href="#publicar-una-aplicación-shiny-en-internet" id="toc-publicar-una-aplicación-shiny-en-internet" class="nav-link" data-scroll-target="#publicar-una-aplicación-shiny-en-internet"> <span class="header-section-number">7.4</span> Publicar una aplicación Shiny en internet</a></li>
+  <li><a href="#comentarios-finales" id="toc-comentarios-finales" class="nav-link" data-scroll-target="#comentarios-finales"> <span class="header-section-number">7.5</span> Comentarios finales</a>
+  <ul class="collapse">
+  <li><a href="#shiny-javascript" id="toc-shiny-javascript" class="nav-link" data-scroll-target="#shiny-javascript"> <span class="header-section-number">7.5.1</span> Shiny + JavaScript</a></li>
+  <li><a href="#seguir-estudiando-shiny" id="toc-seguir-estudiando-shiny" class="nav-link" data-scroll-target="#seguir-estudiando-shiny"> <span class="header-section-number">7.5.2</span> Seguir estudiando Shiny</a></li>
+  </ul></li>
+  <li><a href="#tarea" id="toc-tarea" class="nav-link" data-scroll-target="#tarea"> <span class="header-section-number">7.6</span> Tarea</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Shiny + R Markdown</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="introducción" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="introducción"><span class="header-section-number">7.1</span> Introducción</h2>
+<p>En esta última sesión (práctica) del taller, exploraremos una manera diferente de emplear Shiny. En particular, no vía archivos de tipo <strong>.R</strong>, donde separamos claramente la <strong>interfaz de usuario</strong>, de la <strong>función servidor</strong>; sino, principalmente, vía un único documento, y de tipo <strong>.Rmd</strong> .</p>
+</section>
+<section id="motivación" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="motivación"><span class="header-section-number">7.2</span> Motivación</h2>
+<p><em>¿Qué beneficios ganamos al emplear Shiny</em> <em>y R Markdown de manera conjunta?</em></p>
+<ol type="1">
+<li>Sintaxis más simple para introducir elementos Shiny a la página web.</li>
+<li>Poder crear reportes <strong>interactivos</strong> y/o parametrizados.</li>
+<li>Vía el uso de <strong>chunks</strong> (bloques de código), es más sencillo organizar el código (sea de <strong>R</strong>, <strong>Python</strong>, <strong>CSS</strong>, <strong>JavaScript</strong>) de la aplicación, todo en un mismo documento de tipo <strong>.Rmd</strong>.</li>
+</ol>
+</section>
+<section id="proyectos-finales-del-taller" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="proyectos-finales-del-taller"><span class="header-section-number">7.3</span> Proyectos finales del taller</h2>
+<section id="actualizar-una-base-de-datos-asociada-a-una-app-shiny" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="actualizar-una-base-de-datos-asociada-a-una-app-shiny"><span class="header-section-number">7.3.1</span> Actualizar una base de datos asociada a una app Shiny</h3>
+<p>El codigo de este proyecto lo pueden encontrar en este <a href="https://github.com/lucio-cornejo/Mastering-Shiny_Book-Club/tree/main/ultima_sesion/paso_0">link</a>.</p>
+<p>Básicamente, emplearemos el paquete <strong>googlesheets4</strong> de <strong>R</strong> para, luego de crear una <em>hoja de cálculo</em> usando <strong>Google Sheets</strong>, utilizar <strong>R</strong> con el fin de actualizar el contenido de dicha <em>hoja de cálculo</em>, actualizando así nuestra base de datos que se estará leyendo por medio de una aplicación Shiny.</p>
+<ul>
+<li><strong>Links relevantes</strong>:
+<ul>
+<li><a href="https://googlesheets4.tidyverse.org/">Página</a> de la librería <strong>googlesheets4</strong>.</li>
+<li><a href="https://shiny.rstudio.com/articles/persistent-data-storage.html">Otras maneras</a> de guardar data de manera remota para una aplicación Shiny.</li>
+<li><a href="https://debruine.github.io/shinyintro/data.html">Ejemplo</a> sobre guardar data remotamente, usando <strong>Google Sheets</strong> y <strong>Shiny</strong>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="creación-de-un-reporte-parametrizado" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="creación-de-un-reporte-parametrizado"><span class="header-section-number">7.3.2</span> Creación de un reporte parametrizado</h3>
+<p>El codigo de este proyecto lo pueden encontrar en este <a href="https://github.com/lucio-cornejo/Mastering-Shiny_Book-Club/tree/main/ultima_sesion/paso_1">link</a>.</p>
+<p>Nos familizaremos con <strong>R Markdown</strong>, empleándolo para crear un reporte que nos permita renderizarlo de manera automática, tras fijas ciertos parámetros para el reporte, y generar así automáticamente diversas versiones de un mismo reporte modelo que habremos creado.</p>
+</section>
+<section id="creación-de-un-dashboard-interactivo" class="level3" data-number="7.3.3">
+<h3 data-number="7.3.3" class="anchored" data-anchor-id="creación-de-un-dashboard-interactivo"><span class="header-section-number">7.3.3</span> Creación de un dashboard interactivo</h3>
+<p>El codigo de este proyecto lo pueden encontrar en este <a href="https://github.com/lucio-cornejo/Mastering-Shiny_Book-Club/tree/main/ultima_sesion/paso_2">link</a>.</p>
+<p>En este último proyecto del taller, combinaremos <strong>tres</strong> paquetes de R: <strong>R Mardkown</strong> junto a <strong>flexdashboard</strong>, para crear un dashboard; y, <strong>Shiny</strong>, para añadir interactividad a aquel dashboard.</p>
+<p>Esto con la finalidad de combinar ambos proyectos previos, dentro de una misma aplicación Shiny, cuya interfaz de usuario es un dashboard.</p>
+<p><a href="https://rstudio.github.io/flexdashboard/articles/examples.html">Ejemplos</a> de dashboards creados con el paquete <strong>flexdashboard</strong>.</p>
+<p>Resulta más sencillo (respecto a la sintaxis) utilizar elementos interactivos de <strong>Shiny</strong>, en documentos de tipo <strong>.Rmd</strong>, que de tipo <strong>.R</strong>. Entonces, pese a que es más común emplear el paquete <strong>shinydashboard</strong>, para crear dashboards interactivos con <strong>Shiny</strong>, nosotros utilizaremos el paquete <strong>flexdashboard</strong> para poder crear nuestro dashboard vía un archivo <strong>.Rmd</strong>.</p>
+<p><strong>Aclaro</strong> que, para convertir un archivo <strong>.Rmd</strong> con output de tipo html, a una aplicación Shiny, en general basta añadir <code>runtime: shiny</code> en el encabezado <strong>YAML</strong> del documento <strong>.Rmd</strong>. Esta combinación de <strong>R Markdown</strong> y <strong>Shiny</strong> no requiere del paquete <strong>flexdashboard</strong>.</p>
+<ul>
+<li><strong>Links relevantes</strong>:
+<ul>
+<li><a href="https://cran.r-project.org/web/packages/flexdashboard/flexdashboard.pdf">Documentación</a> del paquete <strong>flexdashboard</strong>.</li>
+<li>Otra <a href="https://stackoverflow.com/questions/59655905/r-shiny-downloadhandler-does-not-work-inside-flexdashboard">solución</a> a problema del <strong>botón de descarga</strong> de Shiny, cuando se usa con <strong>flexdashboard</strong>.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="publicar-una-aplicación-shiny-en-internet" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="publicar-una-aplicación-shiny-en-internet"><span class="header-section-number">7.4</span> Publicar una aplicación Shiny en internet</h2>
+<p>Les recomiendo este <a href="https://towardsdatascience.com/how-to-publish-a-shiny-app-example-with-shinyapps-io-ec6c6604d8">tutorial</a> sobre cómo subir a internet, por medio de una cuenta en <strong>shinyapps.io</strong>, una aplicación Shiny que hayas creado.</p>
+<p>Posiblemente requieran instalar el paquete <strong>rsconnect</strong>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">installed.packages</span>(<span class="st">"rsconnect"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="comentarios-finales" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="comentarios-finales"><span class="header-section-number">7.5</span> Comentarios finales</h2>
+<section id="shiny-javascript" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="shiny-javascript"><span class="header-section-number">7.5.1</span> Shiny + JavaScript</h3>
+<p>Según el sílabo, en esta sesión se exploraria cómo emplear de manera conjunta <strong>Shiny</strong> y <strong>JavaScript</strong>, pero, por motivos de tiempo, no se logró.</p>
+<p>Así que, si les interesa ese tema de enorme potencial, el cual, resulta ser la razón por la que <strong>Shiny</strong> es mi paquete favorito de <strong>R</strong>, les recomiendo leer la sección <strong>Web Development with Shiny</strong> del libro <a href="https://book.javascript-for-r.com/shiny-intro.html">JavaScript for R</a>.</p>
+</section>
+<section id="seguir-estudiando-shiny" class="level3" data-number="7.5.2">
+<h3 data-number="7.5.2" class="anchored" data-anchor-id="seguir-estudiando-shiny"><span class="header-section-number">7.5.2</span> Seguir estudiando Shiny</h3>
+<p>Si les interesa seguir avanzando con el libro que hemos estado usando en este taller, <a href="https://mastering-shiny.org/">Mastering Shiny</a>, les recomiendo unirse a esta <a href="http://r4ds.io/join">comunidad</a>.</p>
+<p>En es grupo, hay un club de lectura sobre el libro <strong>Mastering Shiny</strong>, y, hasta el 16 de agosto del 2022, se encuentran en el capítulo 15 del libro.</p>
+<p>Sin embargo, a partir del capítulo 5 de ese mismo libro, estos capítulos no están tan relacionados entre si, así que no se pierden gran cosa por unirse <strong>tarde</strong> a tal club de lectura.</p>
+<p>Tras este taller, ustedes ya tienen suficiente base en <strong>Shiny</strong>, como para profundizar en un nivel básico-intermedio de <strong>Shiny</strong>.</p>
+</section>
+</section>
+<section id="tarea" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="tarea"><span class="header-section-number">7.6</span> Tarea</h2>
+<ul>
+<li>Avanzar su proyecto personal del taller, para presentarlo el día <strong>miércoles 24</strong> de agosto del 2022, en la última sesión de este taller.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./sesion_04.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Un ejemplo práctico</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">R-Ladies Lima</div>   
+  </div>
+</footer>
+
+
+
+</body></html>

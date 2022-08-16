@@ -4,29 +4,133 @@
 
 En esta última sesión (práctica) del taller,
 exploraremos una manera diferente de emplear 
-Shiny. En particular, no vía archivos de tipo .R
+Shiny. En particular, no vía archivos de tipo **.R**,
 donde separamos claramente la 
 **interfaz de usuario**, de la
 **función servidor**; sino, principalmente,
-de un único documento, y de tipo .Rmd .
+vía un único documento, y de tipo **.Rmd** .
 
 ## Motivación
 
 *¿Qué beneficios ganamos al emplear Shiny*
 *y R Markdown de manera conjunta?* 
 
+1. Sintaxis más simple para introducir elementos Shiny
+a la página web.
+1. Poder crear reportes **interactivos** y/o parametrizados.
+1. Vía el uso de **chunks** (bloques de código), es más 
+sencillo organizar el código (sea de **R**, **Python**, **CSS**,
+**JavaScript**) de la aplicación, todo en un mismo documento
+de tipo **.Rmd**.
 
+## Proyectos finales del taller
 
-## Extra
+### Actualizar una base de datos asociada a una app Shiny
 
-- [Página](https://googlesheets4.tidyverse.org/) de la librería
-**googlesheets4**.
-- [Ejemplos](https://shiny.rstudio.com/articles/persistent-data-storage.html) sobre 
-guardar data de manera remota para una aplicación Shiny.
-- [Ejemplo](https://debruine.github.io/shinyintro/data.html) sobre guardar
-data remotamente, usando **Google Sheets** y **Shiny**.
-- [Documentación](https://cran.r-project.org/web/packages/flexdashboard/flexdashboard.pdf) 
-del paquete **flexdashboard**.
-- [Solución](https://stackoverflow.com/questions/59655905/r-shiny-downloadhandler-does-not-work-inside-flexdashboard)
-a problema del **botón de descarga** de Shiny, cuando se usa
-con flexdashboard.
+El codigo de este proyecto lo pueden encontrar en este
+[link](https://github.com/lucio-cornejo/Mastering-Shiny_Book-Club/tree/main/ultima_sesion/paso_0).
+
+Básicamente, emplearemos el paquete **googlesheets4** de **R** para, 
+luego de crear una *hoja de cálculo* usando **Google Sheets**, utilizar
+**R** con el fin de actualizar el contenido de dicha *hoja de cálculo*,
+actualizando así nuestra base de datos que se estará leyendo por medio
+de una aplicación Shiny.
+
+- **Links relevantes**:
+    - [Página](https://googlesheets4.tidyverse.org/) de la librería
+    **googlesheets4**.
+    - [Otras maneras](https://shiny.rstudio.com/articles/persistent-data-storage.html) de 
+    guardar data de manera remota para una aplicación Shiny.
+    - [Ejemplo](https://debruine.github.io/shinyintro/data.html) sobre guardar
+    data remotamente, usando **Google Sheets** y **Shiny**.
+
+### Creación de un reporte parametrizado
+
+El codigo de este proyecto lo pueden encontrar en este
+[link](https://github.com/lucio-cornejo/Mastering-Shiny_Book-Club/tree/main/ultima_sesion/paso_1).
+
+Nos familizaremos con **R Markdown**, empleándolo para crear un reporte
+que nos permita renderizarlo de manera automática, tras fijas ciertos parámetros
+para el reporte, y generar así automáticamente diversas versiones de un 
+mismo reporte modelo que habremos creado.
+
+### Creación de un dashboard interactivo
+
+El codigo de este proyecto lo pueden encontrar en este
+[link](https://github.com/lucio-cornejo/Mastering-Shiny_Book-Club/tree/main/ultima_sesion/paso_2).
+
+En este último proyecto del taller, combinaremos **tres** paquetes de R:
+**R Mardkown** junto a **flexdashboard**, para crear un dashboard; y,
+**Shiny**, para añadir interactividad a aquel dashboard. 
+
+Esto con la finalidad de combinar ambos proyectos previos, dentro de 
+una misma aplicación Shiny, cuya interfaz de usuario es un dashboard.
+
+[Ejemplos](https://rstudio.github.io/flexdashboard/articles/examples.html)
+de dashboards creados con el paquete **flexdashboard**.
+
+Resulta más sencillo (respecto a la sintaxis) utilizar elementos 
+interactivos de **Shiny**, en documentos de tipo **.Rmd**,
+que de tipo **.R**. Entonces, pese a que es más común emplear
+el paquete **shinydashboard**, para crear dashboards interactivos
+con **Shiny**, nosotros utilizaremos el paquete **flexdashboard**
+para poder crear nuestro dashboard vía un archivo **.Rmd**.
+
+**Aclaro** que, para convertir un archivo **.Rmd** con output
+de tipo html, a una aplicación Shiny, en general basta añadir
+`runtime: shiny` en el encabezado **YAML** del documento **.Rmd**.
+Esta combinación de **R Markdown** y **Shiny** no requiere del 
+paquete **flexdashboard**.
+
+- **Links relevantes**:
+    - [Documentación](https://cran.r-project.org/web/packages/flexdashboard/flexdashboard.pdf) del paquete **flexdashboard**.
+    - Otra [solución](https://stackoverflow.com/questions/59655905/r-shiny-downloadhandler-does-not-work-inside-flexdashboard)
+    a problema del **botón de descarga** de Shiny, cuando se usa
+    con **flexdashboard**.
+
+## Publicar una aplicación Shiny en internet
+
+Les recomiendo este [tutorial](https://towardsdatascience.com/how-to-publish-a-shiny-app-example-with-shinyapps-io-ec6c6604d8)
+sobre cómo subir a internet, por medio de una cuenta en 
+**shinyapps.io**, una aplicación Shiny que hayas creado.
+
+Posiblemente requieran instalar el paquete **rsconnect**:
+
+```{.r}
+installed.packages("rsconnect")
+```
+
+## Comentarios finales
+
+### Shiny + JavaScript
+
+Según el sílabo, en esta sesión se exploraria cómo emplear 
+de manera conjunta **Shiny** y **JavaScript**, pero, por 
+motivos de tiempo, no se logró.
+
+Así que, si les interesa ese tema de enorme potencial, el cual,
+resulta ser la razón por la que **Shiny** es mi paquete favorito
+de **R**, les recomiendo leer la sección 
+**Web Development with Shiny** del libro
+[JavaScript for R](https://book.javascript-for-r.com/shiny-intro.html).
+
+### Seguir estudiando Shiny
+
+Si les interesa seguir avanzando con el libro que hemos estado
+usando en este taller, [Mastering Shiny](https://mastering-shiny.org/),
+les recomiendo unirse a esta [comunidad](http://r4ds.io/join).
+
+En es grupo, hay un club de lectura sobre el libro **Mastering Shiny**,
+y, hasta el 16 de agosto del 2022, se encuentran en el capítulo 15 del libro.
+
+Sin embargo, a partir del capítulo 5 de ese mismo libro,
+estos capítulos no están tan relacionados entre si, así que no
+se pierden gran cosa por unirse **tarde** a tal club de lectura.
+
+Tras este taller, ustedes ya tienen suficiente base en **Shiny**, como
+para profundizar en un nivel básico-intermedio de **Shiny**.
+
+## Tarea
+
+- Avanzar su proyecto personal del taller, para presentarlo
+el día **miércoles 24** de agosto del 2022, en la última sesión de este taller.
