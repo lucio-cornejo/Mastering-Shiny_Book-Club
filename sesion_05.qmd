@@ -137,3 +137,7 @@ para profundizar en un nivel básico-intermedio de **Shiny**.
 
 - Avanzar su proyecto personal del taller, para presentarlo
 el día **miércoles 24** de agosto del 2022, en la última sesión de este taller.
+
+## Video de la sesión
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9z_OxwstL20" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

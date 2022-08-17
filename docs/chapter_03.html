@@ -122,22 +122,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script>
   window.addEventListener('DOMContentLoaded', function() {
     // Get containers in sidebar
-    let sidebarContainers =
-      Array.prototype.slice.call(
-        document.querySelectorAll('div.sidebar-item-container')
-      )
+    let sidebarContainers = Array.from(
+      document.querySelectorAll('div.sidebar-item-container')
+    );
     
     // Filter the actual containers
     sidebarContainers = sidebarContainers.filter(
       (container) => container.nextElementSibling != null
-    )
+    );
     
     // Close sidebar containers, except the last one
     // sidebarContainers.pop();
     sidebarContainers.forEach( (container) => {
       container.nextElementSibling.classList.remove('show');
-    })
-
+    });
   });
 </script>
 <script src="site_libs/quarto-diagram/mermaid.min.js"></script>
